@@ -1,0 +1,77 @@
+const Book = require('../../models').Book;
+
+module.exports = {
+  create(req, res) {
+    return Book
+      .create({
+        title: req.body.title,
+        description: req.body.description,
+        category: req.body.category,
+        quantity: req.body.quantity,
+        image: req.body.image,
+        libraryId: req.params.libraryId,
+      })
+      .then(book => res.status(201).send(book))
+      .catch(error => res.status(400).send(error.toString()));
+  },
+
+  list(req, res) {
+  return Book
+    .all()
+    .then(book => res.status(200).send({books:book, message:'All books'}))
+    .catch(error => res.status(400).send(error.toString()));
+  },
+
+  retrieve(req, res) {
+  return Book
+    .findById(req.params.bookId)
+    .then(book => {
+      if (!book) {
+        return res.status(404).send({
+          message: 'Book Not Found',
+        });
+      }
+      return res.status(200).send(book);
+    })
+    .catch(error => res.status(400).send(error.toString()));
+  },
+  
+  update(req, res) {
+  return Book
+    .findById(req.params.bookId)
+    .then(book => {
+      if (!book) {
+        return res.status(404).send({
+          message: 'Book Not Found',
+        });
+      }
+      return book
+        .update({
+          title: req.body.title || book.title,
+          description: req.body.description || book.description,
+          category: req.body.category || book.category,
+          quantity: req.body.quantity || book.quantity,
+          image: req.body.image || book.image,
+        })
+        .then(() => res.status(200).send(book))  // Send back the updated todo.
+        .catch((error) => res.status(400).send(error.toString()));
+    })
+    .catch((error) => res.status(400).send(error.toString()));
+  },
+  destroy(req, res) {
+  return Book
+    .findById(req.params.bookId)
+    .then(book => {
+      if (!book) {
+        return res.status(400).send({
+          message: 'Book Not Found',
+        });
+      }
+      return book
+        .destroy()
+        .then(() => res.status(204).send({ message: 'Book deleted successfully.' }))
+        .catch(error => res.status(400).send(error));
+    })
+    .catch(error => res.status(400).send(error));
+},
+};
