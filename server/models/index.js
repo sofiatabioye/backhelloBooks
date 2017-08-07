@@ -35,11 +35,11 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.library = require('../models/library.js')(sequelize, Sequelize);
-db.books = require('../models/book.js')(sequelize, Sequelize);
-db.users = require('../models/user.js')(sequelize, Sequelize);
+//db.library = require('../models/library.js')(sequelize, Sequelize);
+//db.books = require('../models/book.js')(sequelize, Sequelize);
+//db.users = require('../models/user.js')(sequelize, Sequelize);
 
-db.library.hasMany(db.books);
-db.books.belongsTo(db.library);
+//db.library.hasMany(db.books);
+//db.books.belongsTo(db.library);
 
 module.exports = db;

@@ -25,14 +25,27 @@ module.exports = {
         if (!user) {
           res.send('User not found');
         } else {
-          const myToken = jwt.sign({ user: user.id },
+          const myToken = jwt.sign({ user: user.id }, 
             'secret',
             { expiresIn: 24 * 60 * 60 });
           res.send(200, { token: myToken,
             userId: user.id,
-            userName: user.username });
+            userName: user.username,
+            role: user.role });
         }
       });
   },
 
+/**  logout(req, res) {
+    invalidToken.create({
+      token.req.headers['x-access-token'],
+    })
+    .then( () => {
+      res.send({message: 'You have logged out successfully'});
+    })
+    .catch( (error) => {
+      res.status(401).send(error);
+    });
+  },
+  **/
 }
