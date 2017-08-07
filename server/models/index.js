@@ -3,7 +3,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(`${__dirname}/../config/config.json`)[env];
+const config = require(`${__dirname}/../../config/config.json`)[env];
 const db = {};
 
 let sequelize;
@@ -34,5 +34,12 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.library = require('../models/library.js')(sequelize, Sequelize);
+db.books = require('../models/book.js')(sequelize, Sequelize);
+db.users = require('../models/user.js')(sequelize, Sequelize);
+
+db.library.hasMany(db.books);
+db.books.belongsTo(db.library);
 
 module.exports = db;

@@ -21,12 +21,33 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    author: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    ISBN: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bookEdition: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    publisher: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bookSize: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
     
   }, {
     classMethods: {
       associate: (models) => {
         Book.belongsTo(models.Library, {
-          through: models.Libraries,
+          through: Library,
           foreignKey: 'librariesId',
           as: 'books',
           onDelete: 'CASCADE',

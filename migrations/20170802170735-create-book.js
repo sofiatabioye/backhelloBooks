@@ -20,6 +20,22 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER
       },
+      author:{
+        type: Sequelize.STRING
+      },
+      ISBN:{
+        type: Sequelize.STRING
+      },
+      bookEdition: {
+        type: Sequelize.STRING
+      },
+      publisher:{
+        type: Sequelize.STRING
+      },
+      bookSize:{
+
+        type: Sequelize.INTEGER
+      },
       image: {
         type: Sequelize.STRING
       },
@@ -31,16 +47,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      libraryId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Libraries',
-          key: 'id',
-          as: 'libraryId',
-        },
-      },
+      
     });
   },
   down: function(queryInterface, Sequelize) {

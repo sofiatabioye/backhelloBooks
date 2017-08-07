@@ -1,4 +1,5 @@
-const Book = require('../../models').Book;
+const Book = require('../models').Book;
+const Library = require('../models').Library;
 
 module.exports = {
   create(req, res) {
@@ -9,7 +10,12 @@ module.exports = {
         category: req.body.category,
         quantity: req.body.quantity,
         image: req.body.image,
-        libraryId: req.params.libraryId,
+        author: req.body.author,
+        ISBN: req.body.isbn,
+        bookEdition: req.body.edition,
+        publisher: req.body.publisher,
+        bookSize: req.body.size,
+
       })
       .then(book => res.status(201).send(book))
       .catch(error => res.status(400).send(error.toString()));
@@ -17,7 +23,12 @@ module.exports = {
 
   list(req, res) {
   return Book
-    .all()
+    .findAll({
+      include: [{
+        model: Library,
+        as: 'libooks',
+      }],
+    })
     .then(book => res.status(200).send({books:book, message:'All books'}))
     .catch(error => res.status(400).send(error.toString()));
   },

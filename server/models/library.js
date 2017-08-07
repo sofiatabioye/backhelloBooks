@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Library.hasMany(models.Book, {
+        Library.hasMany(Book, {
           foreignKey: 'booksId',
           as: 'books',
-          through: models.Book
+          through:Book
         });
       },
     },
