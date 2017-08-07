@@ -1,0 +1,90 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <title>HelloBooks | View Book</title>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">HelloBooks</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     
+      <form class="navbar-form navbar-left navbar-search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+      </form>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Children</a></li>
+        <li><a href="#">IT</a></li>
+        <li><a href="#">Education</a></li>
+        <li><a href="#">Business</a></li>
+        <li><a href="#">Cooking</a></li>
+        <li><a href="#">Religion</a></li>
+        <li><a href="#">Career</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Categories<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Women</a></li>
+            <li><a href="#">Love</a></li>
+            <li><a href="#">Fiction</a></li>
+            <li><a href="#">Autobiographies</a></li>
+            <li><a href="#">Adventure</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="usr-img"></img><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="history.html">Rent History</a></li>
+           
+          </ul>
+        </li>
+          
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container container-me">
+  <div><h3>All Nigerian CookBook</h3>
+  <div class="row">
+    <div class="col-md-3">
+      <img src="images/cook.jpeg" class="book_image">
+    </div>
+    <div class="col-md-9 singlebook_details">This books contains all the delicious nigerian food recipes with good descriptions that are easy to follow</div>
+    <div class="col-ava">Book Available
+    <input type="submit" value="Borrow Book" class="btn btn-lg btn-info">
+    </div>
+  </div>
+ 
+  </div>
+</div>  
+
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+  <div class="container">
+    © HelloBooks. All Rights Reserved. Privacy Policy • Terms of Use
+  </div>
+</nav>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.dropdown-toggle').dropdown();
+  });
+</script>
+</body>
+</html>
