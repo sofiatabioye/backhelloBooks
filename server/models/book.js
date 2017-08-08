@@ -1,4 +1,6 @@
 'use strict';
+const Category = require('./category').Category;
+const Library = require('./library').Library;
 module.exports = (sequelize, DataTypes) => {
   const Book = sequelize.define('Book', {
     title: {
@@ -19,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     author: {
       type: DataTypes.STRING,
@@ -46,14 +48,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Book.belongsTo(models.Library, {
-          through: Library,
-          foreignKey: 'librariesId',
-          as: 'books',
-          onDelete: 'CASCADE',
-        });
+        
+        Book.belongsTo(Category, { foreignKey: 'categoriesId' });
+        Book.belongsTo(Library, {foreignKey: 'librariesId'});
       },
     },
   });
+ 
   return Book;
 };

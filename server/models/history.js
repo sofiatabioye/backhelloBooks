@@ -18,6 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         //
+          Category.hasMany(Book, { foreignKey: 'bookId' });
       }
     }
   });

@@ -97,15 +97,16 @@ module.exports = {
   },
    
   
- /** borrow(req, res) {
+ borrowBook(req, res) {
     Book.findById(req.body.bookId)
       .then(book => {
         if (!book) {
           res.status(404).send({ message: 'Not found' })
         }
-        return History.create({
+        return BorrowStatus.create({
           userId: req.params.userId,
-          book: book.title
+          bookId: book.id
+          return = false
         })
         .then(history => {
           res.status(201).send({ message: 'Book borrowed successfully.' })
@@ -113,7 +114,7 @@ module.exports = {
         .catch(error => res.status(400).send(error));
       })
   },
-
+/**
   userBooks(req, res) {
     return History.findAll({ where: { userId: req.params.userId }})
       .then(books => {
