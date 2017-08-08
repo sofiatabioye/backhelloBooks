@@ -1,7 +1,7 @@
 //import dotenv from '../dotenv';
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
-
+const user =  require('../models').User;
 dotenv.config();
 module.exports = {
 	
@@ -19,11 +19,17 @@ module.exports = {
 					return res.status(403).send(message);
 				}
 				req.decoded = decoded;
+				req.locals = decoded.role;
+				console.log(req.locals);
 				return next();
 			})
 		}
 		else{
 			res.status(412).send('Token not provided');
 		}
-	}
+	},
+
+	
+       
+	
 };

@@ -68,9 +68,9 @@ module.exports = {
           image: req.body.image || book.image,
         })
         .then(() => res.status(200).send(book))  // Send back the updated todo.
-        .catch((error) => res.status(400).send(error.toString()));
+        .catch((error) => res.status(400).send(error));
     })
-    .catch((error) => res.status(400).send(error.toString()));
+    .catch((error) => res.status(400).send(error));
   },
 
   destroy(req, res) {
@@ -90,30 +90,10 @@ module.exports = {
     .catch(error => res.status(400).send(error));
   },
 
-  borrowBook(req, res){ 
-  // return User
-   //.findById(req.params.userId)
-   
-  },
+ 
    
   
- borrowBook(req, res) {
-    Book.findById(req.body.bookId)
-      .then(book => {
-        if (!book) {
-          res.status(404).send({ message: 'Not found' })
-        }
-        return BorrowStatus.create({
-          userId: req.params.userId,
-          bookId: book.id
-          return = false
-        })
-        .then(history => {
-          res.status(201).send({ message: 'Book borrowed successfully.' })
-        })
-        .catch(error => res.status(400).send(error));
-      })
-  },
+ 
 /**
   userBooks(req, res) {
     return History.findAll({ where: { userId: req.params.userId }})

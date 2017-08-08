@@ -19,7 +19,21 @@ const request = require('supertest');
       
       });
 
-      
+      describe('Post /api/users/signup', () => {
+        it('responds with 500 bad request error', (done) => {
+        request(app)
+        .post('/api/users/signup')
+        .send(
+        {
+          username: ' ja skjss ',
+          email: '   ',
+          password: 'jonbull',
+        }
+      )
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(500, done);
+  });
 });
   
 

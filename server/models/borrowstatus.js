@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    status: {
+    returned: {
       type: DataTypes.BOOLEAN,
       allowNull : false,
     }

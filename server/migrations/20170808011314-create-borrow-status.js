@@ -17,7 +17,7 @@ module.exports = {
       bookTitle: {
         type: Sequelize.STRING
       },
-      status: {
+      returned: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {

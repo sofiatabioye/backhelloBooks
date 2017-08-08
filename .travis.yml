@@ -1,1 +1,14 @@
 language: node_js
+node_js:
+- "stable"
+services:
+  - postgresql
+before_script:
+  - npm install sequelize-cli -g
+- export DEV_DB=
+after_success:
+- npm run cover
+after_script: 
+  - nyc npm test && nyc report --reporter=text-lcov | coveralls
+env:
+  -TOKEN_SECRET =travis-secret
