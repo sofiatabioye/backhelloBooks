@@ -11,18 +11,14 @@ module.exports = (app) => {
   }));
 
 
-  
-  app.get('/api/library', librariesController.list);
-
   // User Login Routes
   app.post('/api/users/signup', usersController.create);
   app.post('/api/users/login', usersController.login);
-  //app.post('/api/library/user/logout', usersController.logout);
 
   //This contains the routes that allow a logged in admin user to modify and create books
   app.post('/api/books/create', authorize, checkadmin, booksController.create);
-  app.get('/api/books', authorize, checkadmin, booksController.list);
-  app.get('/api/books/:bookId', authorize, checkadmin, booksController.retrieve);
+  app.get('/api/books', authorize, booksController.list);
+  app.get('/api/books/:bookId', authorize, booksController.retrieve);
   app.put('/api/books/:bookId', authorize, checkadmin, booksController.update);
   app.delete('/api/books/:bookId',authorize, checkadmin, booksController.destroy);
   
@@ -38,6 +34,8 @@ module.exports = (app) => {
   //This contains routes that allow a logged in user to borrow and return books
   app.post('/api/users/:userId/books/:bookId/borrow', authorize, usersController.borrowBook);
   app.put('/api/users/:userId/books/:bookId/return', authorize, usersController.returnBook);
+  app.get('/api/users/:userId/history', authorize, usersController.borrowHistory);
+  app.get('/api/users/:userId/books', authorize, usersController.userNotReturned);
 
 
   // Method not allowed

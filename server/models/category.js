@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     title: {
       type : DataTypes.STRING,
       allowNull: false,
+      unique: true,
     } 
   }, {
     classMethods: {
@@ -15,6 +16,9 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-
+  Category.associate = (models) => {
+  Category.hasMany(models.Book, {foreignKey: 'cat_id'});
+  }
   return Category;
+
 };

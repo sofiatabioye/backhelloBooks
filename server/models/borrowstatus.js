@@ -1,30 +1,29 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var BorrowStatus = sequelize.define('BorrowStatus', {
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull : false,
-    },
-    bookId: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    bookTitle: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+const BorrowStatus = sequelize.define('BorrowStatus', {
+ 
     returned: {
       type: DataTypes.BOOLEAN,
       allowNull : false,
+    },
+    borrowDate: {
+      type: DataTypes.DATE,
+      allowNull : false,
+    },
+    expectedReturnDate: {
+      type: DataTypes.DATE,
+      allowNull : false,
+    },
+    dateReturned: {
+      type: DataTypes.DATE,
+      allowNull : true,
     }
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-        BorrowStatus.belongsTo(Book, { foreignKey: 'bookId' });
-      }
-    }
+
   });
   
+  BorrowStatus.associate = (models) => {
+    BorrowStatus.belongsTo(models.Book, {foreignKey: 'book_id', targetKey: 'id'});
+    BorrowStatus.belongsTo(models.User, {foreignKey: 'user_id', targetKey: 'id'});
+  }
   return BorrowStatus;
 };

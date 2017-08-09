@@ -1,14 +1,15 @@
 const Category = require('../models').Category;
 
 module.exports = {
-  create(req, res) {  
+  create(req, res) { 
+     
      return Category
       .create({
         title: req.body.title
       })
-      .then(category => res.status(201).send(category))
+      .then(category => res.status(201).send({category, message: 'Category Created Successfully'}))
       .catch(error => res.status(400).send(error));
-  
+
 },
 
 list(req, res) {

@@ -1,13 +1,9 @@
-
-//import Book from "../models/book";
-//import User from "../models/user";
 const Book = require('../models').Book;
 const User = require('../models').User;
-//const History = require('../db/models').History;
-const Library = require('../models').Library;
+
 
 module.exports = {
-  create(req, res) {  
+  create(req, res) { 
      return Book
       .create({
         title: req.body.title,
@@ -21,7 +17,7 @@ module.exports = {
         publisher: req.body.publisher,
         bookSize: req.body.size,
       })
-      .then(user => res.status(201).send(user))
+      .then(book => res.status(201).send({message: 'Book Created Successfully.'}))
       .catch(error => res.status(400).send(error));
   
 },
@@ -67,7 +63,7 @@ module.exports = {
           quantity: req.body.quantity || book.quantity,
           image: req.body.image || book.image,
         })
-        .then(() => res.status(200).send(book))  // Send back the updated todo.
+        .then(() => res.status(200).send(book))  // Send back the updated book.
         .catch((error) => res.status(400).send(error));
     })
     .catch((error) => res.status(400).send(error));
@@ -91,16 +87,5 @@ module.exports = {
   },
 
  
-   
-  
  
-/**
-  userBooks(req, res) {
-    return History.findAll({ where: { userId: req.params.userId }})
-      .then(books => {
-        res.status(200).send(books)
-      })
-      .catch(err => res.status(400).send(err));    
-  }
-  **/
 };

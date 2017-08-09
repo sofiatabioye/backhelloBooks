@@ -1,31 +1,29 @@
 //import dotenv from '../dotenv';
-const dotenv = require('dotenv');
+const dotenv = require('dotenv').config;
 const jwt = require('jsonwebtoken');
-const user =  require('../models').User;
-dotenv.config();
+//const secret = process.env.TOKEN_SECRET;
+
 module.exports = {
 	
 	authorize(req, res, next){
+		
 		const auth = req.headers.authorization;
 		const token = req.body.token || req.headers['x-access-token'] || auth;
 		if (token){
-			jwt.verify(token, 'secret', (err, decoded) => {
+			jwt.verify(token, 'bootcamp', (err, decoded) => {
                console.log(err);
 				if (err){
-					const message = {
-						message: 'You are not signed in'
-					}
-
-					return res.status(403).send(message);
+					const reply = 'You are not signed in'; 
+					res.status(403).send({message: reply});   
 				}
-				req.decoded = decoded;
-				req.locals = decoded.role;
-				console.log(req.locals);
-				return next();
+                else{
+				userRole = decoded.role;
+				next();
+				}
 			})
 		}
 		else{
-			res.status(412).send('Token not provided');
+			res.status(412).send({message:'Token not provided'});
 		}
 	},
 
