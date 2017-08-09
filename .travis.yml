@@ -1,14 +1,9 @@
-language: node_js
-node_js:
-- "stable"
-services:
-  - postgresql
-before_script:
-  - npm install sequelize-cli -g
-- export DEV_DB=
-after_success:
-- npm run cover
-after_script: 
-  - nyc npm test && nyc report --reporter=text-lcov | coveralls
-env:
-  -TOKEN_SECRET =travis-secret
+language: node_js 
+node_js:  
+  - node 
+before_script:  
+  - npm install -g codeclimate-test-reporter 
+script:  
+  - npm test 
+after_success:  
+  - CODECLIMATE_REPO_TOKEN=CODECLIMATE_TOKEN codeclimate-test-reporter < coverage/lcov.info
