@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
-    "start": "node ./server/bin/www",
+    "start": "babel-node ./server/bin/www",
     "lint": "./node_modules/.bin/eslint.",
     "test": "mocha ./server/test/* --compilers js:babel-register"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "dependencies":{
     "body-parser": "^1.17.2",
     "chai-http": "^3.0.0",
     "dotenv": "^4.0.0",
