@@ -10,7 +10,8 @@ const salt = bcrypt.genSaltSync(10);
      const today = new Date();
      const DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14));
      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjM2NjU0MywiZXhwIjoxNTAyNDUyOTQzfQ.JYEGFMoLgOUOV4aq1iE1m9C55478Boe8jyhXk3OnDIw'; 
-      describe('should be able to find out if user exists', () => {
+    
+     describe('should be able to find out if user exists', () => {
     it('return 401 error if user does not exist', (done) => {
         const user = {
         username: 'does_not_exist',
@@ -76,7 +77,7 @@ const salt = bcrypt.genSaltSync(10);
         expectedReturnDate: DueDate,
         token: token
       };
-      supertest(app).post('/api/users/1/books/1/borrow').set('token', token).send(borrowstatus).end((err, res) => {
+      supertest(app).post('/api/users/1/books/1/borrow').send(borrowstatus).end((err, res) => {
       assert.equal(res.statusCode, 400);
       assert.equal(res.body.message, 'You have already borrowed this book');
       done();      

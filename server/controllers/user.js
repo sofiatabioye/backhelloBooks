@@ -32,12 +32,12 @@ export default {
                     res.status(201).send({ message: 'User Created Successfully.' })
                     })
       .catch(error => res.status(401).send(error));
-    })
+      })
       }
     })
 
    .catch(error => res.status(400).send(error));
-    
+   
   },
 
   login(req, res) {
@@ -65,9 +65,12 @@ export default {
           }
         });  
         }
-      });
+      })
+      .catch(error => res.status(400).send(error));
   },
   
+
+
   borrowBook(req, res){
     const today = new Date();
     const DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14000));
