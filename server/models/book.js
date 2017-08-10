@@ -1,7 +1,8 @@
 'use strict';
-const Category = require('./category').Category;
+import models from './category';
+const Category = models.Category;
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Book = sequelize.define('Book', {
     title: {
       type: DataTypes.STRING,

@@ -1,14 +1,16 @@
-const User = require('../models').User;
-const Book = require('../models').Book;
-const BorrowStatus = require('../models').BorrowStatus;
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const salt = require('bcrypt').genSaltSync(10);
+import models from '../models/index';
+const Book = models.Book;
+const User = models.User;
+const BorrowStatus = models.BorrowStatus;
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+const dotenv2 = dotenv.config();
+const salt = bcrypt.genSaltSync(10);
 const secret = process.env.TOKEN_SECRET;
-const invalidToken = require('../models').InvalidToken;
-const dotenv = require('dotenv').config;
 
-module.exports = {
+
+export default {
   create(req, res) {
     User .findOne({where: {username: req.body.username}})
     .then(user => {
@@ -49,8 +51,9 @@ module.exports = {
         } else {
         bcrypt.compare(req.body.password, user.password, (err, result)=> {
           if(result){
+            console.log(secret);
              const myToken = jwt.sign({ user: user.id, role: user.role }, 
-            'bootcamp',
+            secret,
             { expiresIn: 24 * 60 * 60 });
             res.send(200, { token: myToken,
             userId: user.id,

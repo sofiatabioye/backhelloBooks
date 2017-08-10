@@ -1,17 +1,17 @@
-const app = require('../../app');
-const assert  = require('chai').assert;
-const supertest = require('supertest');
-const bcrypt = require('bcrypt');
-const salt = require('bcrypt').genSaltSync(10);
+import app from '../../app';
+import assert from 'chai';
+import supertest from 'supertest';
+import bcrypt from 'bcrypt';
+const salt = bcrypt.genSaltSync(10);
 
 
 
   describe('User, ', () => {
      const today = new Date();
      const DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14));
-     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjI3NDQwNiwiZXhwIjoxNTAyMzYwODA2fQ.FSfuz2gOrr1AGlTIftqBCkTaajrxJ6JwlwmzD1_CfnA';
+     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjM2NjU0MywiZXhwIjoxNTAyNDUyOTQzfQ.JYEGFMoLgOUOV4aq1iE1m9C55478Boe8jyhXk3OnDIw'; 
       describe('should be able to find out if user exists', () => {
-        it('return 401 error if user does not exist', (done) => {
+    it('return 401 error if user does not exist', (done) => {
         const user = {
         username: 'does_not_exist',
         password: 'password',
@@ -88,8 +88,7 @@ const salt = require('bcrypt').genSaltSync(10);
       it('should return "book not available" when book quantity is less than 1', (done) => {
        const today = new Date();
        const DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14));
-       const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjI3NDQwNiwiZXhwIjoxNTAyMzYwODA2fQ.FSfuz2gOrr1AGlTIftqBCkTaajrxJ6JwlwmzD1_CfnA';
-       const borrowdetails = {
+       const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjM2NjU0MywiZXhwIjoxNTAyNDUyOTQzfQ.JYEGFMoLgOUOV4aq1iE1m9C55478Boe8jyhXk3OnDIw';      const borrowdetails = {
         user_id: 1,
         book_id: 5,
         returned: false,

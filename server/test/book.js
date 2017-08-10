@@ -1,12 +1,11 @@
-const app = require('../../app');
-const assert  = require('chai').assert;
-const supertest = require('supertest');
+import app from '../../app';
+import assert from 'chai';
+import supertest from 'supertest';
 
 
   describe('In the Book controller, ', () => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjI4MjA0OSwiZXhwIjoxNTAyMzY4NDQ5fQ.xX9wr6egZc9BGqnyYpanwn4dHGwzJ4IQhS_yCSN-x0A';
-    const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDIyODIyNTgsImV4cCI6MTUwMjM2ODY1OH0.rcevaA1BxqoxhNzYp4USIfw5PHHhdKmWUerxDl2ijCI'; 
-      
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjM2NjU0MywiZXhwIjoxNTAyNDUyOTQzfQ.JYEGFMoLgOUOV4aq1iE1m9C55478Boe8jyhXk3OnDIw';
+   const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDIyODIyNTgsImV4cCI6MTUwMjM2ODY1OH0.rcevaA1BxqoxhNzYp4USIfw5PHHhdKmWUerxDl2ijCI';      
     
     //tests if user can get all books
     

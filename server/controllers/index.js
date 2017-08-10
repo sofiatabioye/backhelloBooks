@@ -1,7 +1,9 @@
-const books = require('./book');
-const users = require('./user');
-const categories = require('./category');
-module.exports = {
+import books from './book';
+import users from './user';
+import categories from './category';
+
+
+export default {
   books,
   users,
   categories,

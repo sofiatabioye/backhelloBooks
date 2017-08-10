@@ -1,41 +1,46 @@
 {
-  "name": "tutorial",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start:dev": "nodemon ./server/bin/www --exec babel-node --presets env",
-    "lint": "./node_modules/.bin/eslint .",
-    "test": "mocha ./server/test/index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.17.2",
-    "chai-http": "^3.0.0",
-    "dotenv": "^4.0.0",
-    "express": "^4.15.3",
-    "jsonwebtoken": "^7.4.1",
-    "morgan": "^1.8.2",
-    "pg": "^7.0.2",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.4.2",
-    "supertest": "^3.0.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "chai": "^4.1.1",
-    "es2015": "0.0.0",
-    "eslint": "^4.3.0",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
-    "mocha": "^3.5.0",
-    "nodemon": "^1.11.0"
-  }
+ "name": "tutorial",
+ "version": "1.0.0",
+ "description": "",
+ "main": "index.js",
+ "scripts": {
+   "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
+   "lint": "./node_modules/.bin/eslint.",
+   "test": "mocha ./server/test/* --compilers js:babel-register"
+ },
+ "keywords": [],
+ "author": "",
+ "license": "ISC",
+ "dependencies": {
+   "body-parser": "^1.17.2",
+   "chai-http": "^3.0.0",
+   "dotenv": "^4.0.0",
+   "express": "^4.15.3",
+   "jsonwebtoken": "^7.4.1",
+   "morgan": "^1.8.2",
+   "pg": "^7.0.2",
+   "pg-hstore": "^2.3.2",
+   "sequelize": "^4.4.2",
+   "supertest": "^3.0.0"
+ },
+ "devDependencies": {
+   "babel-cli": "^6.24.1",
+   "babel-core": "^6.25.0",
+   "babel-mocha-es6-compiler": "^0.1.0",
+   "babel-polyfill": "^6.23.0",
+   "babel-preset-env": "^1.6.0",
+   "babel-register": "^6.24.1",
+   "chai": "^4.1.1",
+   "es2015": "0.0.0",
+   "eslint": "^4.3.0",
+   "eslint-config-airbnb": "^15.1.0",
+   "eslint-config-airbnb-base": "^11.3.1",
+   "eslint-plugin-import": "^2.7.0",
+   "eslint-plugin-jsx-a11y": "^5.1.1",
+   "eslint-plugin-react": "^7.1.0",
+   "mocha": "^3.5.0",
+   "nodemon": "^1.11.0"
+ }
 }
+
+

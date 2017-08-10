@@ -1,6 +1,7 @@
-const Category = require('../models').Category;
+import models from '../models/index';
+const Category = models.Category;
 
-module.exports = {
+export default {
   create(req, res) { 
      
      return Category

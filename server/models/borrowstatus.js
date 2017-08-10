@@ -1,5 +1,4 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
 const BorrowStatus = sequelize.define('BorrowStatus', {
  
     returned: {

@@ -1,5 +1,6 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
+import models from './borrowstatus';
+const BorrowStatus = models.BorrowStatus;
+export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,

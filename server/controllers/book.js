@@ -1,8 +1,10 @@
-const Book = require('../models').Book;
-const User = require('../models').User;
+'use strict';
+import models from '../models/index';
+const Book = models.Book;
+const User = models.User;
 
 
-module.exports = {
+export default {
   create(req, res) { 
      return Book
       .create({
