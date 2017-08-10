@@ -24,7 +24,7 @@ export default {
         username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
-        role: "user",
+        role: "admin",
         level: "silver",
         image: "none-for-now",
         })
