@@ -38,7 +38,7 @@ const salt = bcrypt.genSaltSync(10);
     });
    describe('return User created for new user ', () => {
       it('create a new user', (done) => {
-      let salt = bcrypt.genSaltSync(10);
+      const salt = bcrypt.genSaltSync(10);
       const password = bcrypt.hashSync("mypassword", salt);
       function makeUser() {
         var text = "";

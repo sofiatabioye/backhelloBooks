@@ -69,8 +69,8 @@ export default {
   },
   
   borrowBook(req, res){
-    today = new Date();
-    DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14000));
+    const today = new Date();
+    const DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14000));
       //This checks if the user Id exists
      User .findById(req.params.userId) 
       .then(user => {
@@ -122,7 +122,7 @@ export default {
   },
 
   returnBook(req, res){
-    today = new Date();
+    const today = new Date();
      User .findById(req.params.userId) 
       .then(user => {
         if (!user) {
@@ -185,7 +185,6 @@ export default {
        .catch(error => res.status(400).send(error));
   },
   userNotReturned(req, res){
-    console.log(req.query.returned);
      User .findById(req.params.userId) 
       .then(user => {
         if (!user) {

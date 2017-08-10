@@ -5,8 +5,7 @@ import supertest from 'supertest';
 
   describe('In the Book controller, ', () => {
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjM2NjU0MywiZXhwIjoxNTAyNDUyOTQzfQ.JYEGFMoLgOUOV4aq1iE1m9C55478Boe8jyhXk3OnDIw';
-   const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDIyODIyNTgsImV4cCI6MTUwMjM2ODY1OH0.rcevaA1BxqoxhNzYp4USIfw5PHHhdKmWUerxDl2ijCI';      
-    
+    const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDIzNjcyNDIsImV4cCI6MTUwMjQ1MzY0Mn0.nq01UVvZ2pSpQryoztJdqNOFTpl-U2wVuYaiaEKeeIc';
     //tests if user can get all books
     
     describe('test if user can get all books, ', () => {
@@ -29,7 +28,6 @@ import supertest from 'supertest';
            text += possible.charAt(Math.floor(Math.random() * possible.length));
            return text;
       }
-      const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDIyODIyNTgsImV4cCI6MTUwMjM2ODY1OH0.rcevaA1BxqoxhNzYp4USIfw5PHHhdKmWUerxDl2ijCI'; 
       const book = {
       title: makeText(),
       description: makeText(),
@@ -64,7 +62,6 @@ import supertest from 'supertest';
            text += possible.charAt(Math.floor(Math.random() * possible.length));
            return text;
       }
-      const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDIyODIyNTgsImV4cCI6MTUwMjM2ODY1OH0.rcevaA1BxqoxhNzYp4USIfw5PHHhdKmWUerxDl2ijCI'; 
       const book = {
       title: makeText(),
       description: makeText(),
