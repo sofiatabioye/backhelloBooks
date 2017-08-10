@@ -6,7 +6,7 @@ export default {
         const userRole = userRole;
         if (userRole !== "admin"){
             const message =  "You do not have the privilege";
-            res.status(403).send({message: message});
+            res.status(401).send({message: message});
         }
 
         next();

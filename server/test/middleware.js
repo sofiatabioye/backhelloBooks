@@ -46,7 +46,7 @@ import supertest from 'supertest';
      describe('should test if user can get all categories which is specific to admin, ', () => {
         it('return user not priviledged', (done) => {      
           supertest(app).get('/api/categories').set('x-access-token', usertoken).send().end((err, res) => {
-          assert.equal(res.statusCode, 403);
+          assert.equal(res.statusCode, 401);
           assert.equal(res.body.message, 'You do not have the privilege');
           done();
           });
