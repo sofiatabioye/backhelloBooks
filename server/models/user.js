@@ -1,4 +1,5 @@
 import models from './borrowstatus';
+
 const BorrowStatus = models.BorrowStatus;
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -30,14 +31,14 @@ export default (sequelize, DataTypes) => {
     },
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         // associations can be defined here
         User.hasMany(BorrowStatus, { foreignKey: 'userId' });
       }
     }
   });
   User.associate = (models) => {
-    User.hasMany(models.BorrowStatus, {foreignKey: 'user_id'});
-  }
+    User.hasMany(models.BorrowStatus, { foreignKey: 'user_id' });
+  };
   return User;
 };

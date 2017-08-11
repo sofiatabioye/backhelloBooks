@@ -8,8 +8,6 @@ const env = process.env.NODE_ENV || 'development';
 const config = databaseConfiguration[env];
 const db = {};
 
-// console.log(databaseConfiguration[env]);
-
 
 let sequelize;
 if (config.use_env_variable) {
@@ -40,7 +38,7 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//sequelize.sync({force: true});
+// sequelize.sync({force: true});
 
 export default db;
- 
+

@@ -1,6 +1,4 @@
-'use strict';
 import models from './category';
-const Category = models.Category;
 
 export default (sequelize, DataTypes) => {
   const Book = sequelize.define('Book', {
@@ -46,16 +44,16 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
 
-    
+
   }, {
     classMethods: {
       associate: (models) => {
-        
+
       },
     },
   });
-   Book.associate = (models) => {
-    Book.belongsTo(models.Category, {foreignKey: 'cat_id', targetKey: 'id'});
-  }
+  Book.associate = (models) => {
+    Book.belongsTo(models.Category, { foreignKey: 'cat_id', targetKey: 'id' });
+  };
   return Book;
 };

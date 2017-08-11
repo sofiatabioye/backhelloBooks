@@ -1,28 +1,28 @@
 export default (sequelize, DataTypes) => {
-const BorrowStatus = sequelize.define('BorrowStatus', {
- 
+  const BorrowStatus = sequelize.define('BorrowStatus', {
+
     returned: {
       type: DataTypes.BOOLEAN,
-      allowNull : false,
+      allowNull: false,
     },
     borrowDate: {
       type: DataTypes.DATE,
-      allowNull : false,
+      allowNull: false,
     },
     expectedReturnDate: {
       type: DataTypes.DATE,
-      allowNull : false,
+      allowNull: false,
     },
     dateReturned: {
       type: DataTypes.DATE,
-      allowNull : true,
+      allowNull: true,
     }
 
   });
-  
+
   BorrowStatus.associate = (models) => {
-    BorrowStatus.belongsTo(models.Book, {foreignKey: 'book_id', targetKey: 'id'});
-    BorrowStatus.belongsTo(models.User, {foreignKey: 'user_id', targetKey: 'id'});
-  }
+    BorrowStatus.belongsTo(models.Book, { foreignKey: 'book_id', targetKey: 'id' });
+    BorrowStatus.belongsTo(models.User, { foreignKey: 'user_id', targetKey: 'id' });
+  };
   return BorrowStatus;
 };

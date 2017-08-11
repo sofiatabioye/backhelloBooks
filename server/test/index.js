@@ -1,4 +1,6 @@
-const assert = require('chai').assert;
+import chai from 'chai';
+
+const assert = chai.assert;
 
 describe('SimpleTest', () => {
   it('handle addition', () => {
