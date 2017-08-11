@@ -1,4 +1,5 @@
-https://travis-ci.org/kidah/backhelloBooks.svg?branch=feature-finals
+
+[![Build Status](https://travis-ci.org/kidah/backhelloBooks.svg?branch=feature-finals)](https://travis-ci.org/kidah/backhelloBooks)
 Hello Books
 
 This is an online library management system where you can browse, borrow and/or return books from the library. It is built with node-js, 
