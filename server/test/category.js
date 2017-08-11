@@ -6,14 +6,13 @@ const assert = chai.assert;
 
 describe('Category, ', () => {
   const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDI0MTgwNzQsImV4cCI6MTUwMjY3NzI3NH0.JZENWc5qBOCpYrGTPJeBnnyxy7ugjeKsJN-jvVdGAL8';
-  const makeText = () => {
+  function makeText() {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i + 1) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
+
+    for (let i = 0; i < 5; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
     return text;
-  };
+  }
 
   // tests if admin can get all categories
 
@@ -30,9 +29,11 @@ describe('Category, ', () => {
   // tests if admin can create book with correct information
   describe('test if categories can be created with correct parameters', () => {
     it('returns a new category', (done) => {
-      const title = makeText;
-      const token = adminToken;
-      supertest(app).post('/api/v1/categories/create').send({ title, token }).end((err, res) => {
+      const cat = {
+        title: makeText(),
+        token: adminToken
+      };
+      supertest(app).post('/api/v1/categories/create').send(cat).end((err, res) => {
         assert.equal(res.statusCode, 201);
         assert.equal(res.body.message, 'Category Created Successfully');
         done();
@@ -45,11 +46,11 @@ describe('Category, ', () => {
 
   describe('test if category title may not be unique', () => {
     it('does not returns a new book', (done) => {
-      const book = {
+      const cat = {
         title: 'Fiction',
         token: adminToken
       };
-      supertest(app).post('/api/v1/categories/create').send(book).end((err, res) => {
+      supertest(app).post('/api/v1/categories/create').send(cat).end((err, res) => {
         assert.equal(res.statusCode, 400);
         done();
       });

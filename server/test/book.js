@@ -7,14 +7,13 @@ const assert = chai.assert;
 describe('In the Book controller, ', () => {
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjQxODY2MCwiZXhwIjoxNTAyNjc3ODYwfQ.Z6peJWYhH3QUkRfC5mnHyaHEs73UFpNiWAiMtRG_IPg';
   const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDI0MTgwNzQsImV4cCI6MTUwMjY3NzI3NH0.JZENWc5qBOCpYrGTPJeBnnyxy7ugjeKsJN-jvVdGAL8';
-  const makeText = () => {
+  function makeText() {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i + 1) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
+
+    for (let i = 0; i < 5; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
     return text;
-  };
+  }
   // tests if user can get all books
 
   describe('test if user can get all books, ', () => {
@@ -31,11 +30,11 @@ describe('In the Book controller, ', () => {
   describe('test if book can be created with correct and complete parameters', () => {
     it('returns a new book', (done) => {
       const book = {
-        title: makeText,
-        description: makeText,
+        title: makeText(),
+        description: makeText(),
         quantity: '5',
         image: 'none for now',
-        category: makeText,
+        category: makeText(),
         publisher: 'Test',
         author: 'Testing Test',
         bookSize: 250,
@@ -57,11 +56,11 @@ describe('In the Book controller, ', () => {
   describe('test if book can be created with incorrect complete parameters', () => {
     it('does not returns a new book', (done) => {
       const book = {
-        title: makeText,
-        description: makeText,
+        title: makeText(),
+        description: makeText(),
         quantity: '5',
         image: 'none for now',
-        category: makeText,
+        category: makeText(),
         publisher: 'Test',
         token: adminToken
       };
@@ -102,9 +101,9 @@ describe('In the Book controller, ', () => {
   describe('should update book information if user is admin', () => {
     it('updates book information', (done) => {
       const book = {
-        title: makeText,
-        description: makeText,
-        category: makeText,
+        title: makeText(),
+        description: makeText(),
+        category: makeText(),
         publisher: 'Test',
         token: adminToken
       };

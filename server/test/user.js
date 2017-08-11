@@ -10,6 +10,8 @@ describe('User, ', () => {
   const today = new Date();
   const DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14));
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjQxODY2MCwiZXhwIjoxNTAyNjc3ODYwfQ.Z6peJWYhH3QUkRfC5mnHyaHEs73UFpNiWAiMtRG_IPg';
+
+  // tests if user exists
   describe('should be able to find out if user exists', () => {
     it('return 401 error if user does not exist', (done) => {
       const user = {
@@ -24,6 +26,7 @@ describe('User, ', () => {
     });
   });
 
+  // generate token for user on successfull login
   describe('should generate a token for user on successful login', () => {
     it('return a token on successful login', (done) => {
       const user = {
@@ -36,22 +39,23 @@ describe('User, ', () => {
       });
     });
   });
+
+  // create a new user account
   describe('return User created for new user ', () => {
     it('create a new user', (done) => {
       const passwordHash = bcrypt.hashSync('mypassword', salt);
-      const makeUser = () => {
+      function makeUser() {
         let text = '';
         const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i + 1) {
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
+
+        for (let i = 0; i < 5; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
         return text;
-      };
+      }
       const user = {
         username: makeUser,
         password: passwordHash,
         role: 'user',
-        email: `${makeUser}@gmail.com`,
+        email: `${makeUser()}@gmail.com`,
         level: 'silver',
         image: 'none'
       };
@@ -64,7 +68,7 @@ describe('User, ', () => {
     });
   });
 
-
+  // test if user can borrow an unreturned book again
   describe('test if user can borrow book again before returning the previously borrowed copy of the same book ', () => {
     it('should return "You have already borrowed this book" for book borrowed before without returning', (done) => {
       const borrowstatus = {
