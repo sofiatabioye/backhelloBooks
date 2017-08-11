@@ -1,17 +1,22 @@
 
 [![Build Status](https://travis-ci.org/kidah/backhelloBooks.svg?branch=feature-finals)](https://travis-ci.org/kidah/backhelloBooks)
 [![Coverage Status](https://coveralls.io/repos/github/kidah/backhelloBooks/badge.svg?branch=master)](https://coveralls.io/github/kidah/backhelloBooks?branch=master)
-Hello Books
+# Hello Books
 
 This is an online library management system where you can browse, borrow and/or return books from the library. It is built with node-js, 
-Postgre and sequelize ORM. 
+Postgre and sequelize ORM.
 
+## Getting Started
 Here is a link to the template files hosted on github pages :  https://kidah.github.io/hellobooksophy.github.io/index.html
 
 Here is a link to the heroku hosted version : https://hello--books.herokuapp.com
 
- **  API ROUTES **
- 
+This app was built using the express fraamework with Node Js, Postgres and Sequelize ORM. 
+
+
+
+## API ROUTES
+
   // User Login Routes
   app.post('/api/v1/users/signup', usersController.create);
   app.post('/api/v1/users/login', usersController.login);
@@ -37,6 +42,28 @@ Here is a link to the heroku hosted version : https://hello--books.herokuapp.com
   app.put('/api/v1/users/:userId/books/:bookId/return', authorize.authorize, usersController.returnBook);
   app.get('/api/v1/users/:userId/history', authorize.authorize, usersController.borrowHistory);
   app.get('/api/v1/users/:userId/books', authorize.authorize, usersController.booksNotReturned);
+
+
+## The tests
+* Travis and Hounds CI coverage
+* Coveralls and codeclimate coverage
+
+
+
+
+## Authors
+
+* **Sofiat Abioye **  *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+
+## Acknowledgments
+
+* Andela Bootamp Facilitators
+* Fellow Bootcampers
+* Fam.
+
+
+ 
+
 
 
 
