@@ -37,9 +37,9 @@ describe('In the Book controller, ', () => {
         category: makeText(),
         publisher: 'Test',
         author: 'Testing Test',
-        bookSize: 250,
-        bookEdition: 2010,
-        ISBN: Math.random(),
+        size: 250,
+        edition: 2010,
+        isbn: Math.random(),
         token: adminToken
       };
       supertest(app).post('/api/v1/books/create').send(book).end((err, res) => {

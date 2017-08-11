@@ -101,8 +101,8 @@ describe('Category, ', () => {
 
   describe('should delete category if user is admin', () => {
     it('delete book ', (done) => {
-      const id = Math.floor(Math.random() * 20) + 8;
-      supertest(app).del(`/api/v1/categories/${id}`).send({ token: adminToken }).end((err, res) => {
+      // const id = Math.floor(Math.random() * 20) + 8;
+      supertest(app).del('/api/v1/categories/37').send({ token: adminToken }).end((err, res) => {
         assert.equal(res.statusCode, 204);
         done();
       });
