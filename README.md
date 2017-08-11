@@ -3,8 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/kidah/backhelloBooks/badge.svg?branch=master)](https://coveralls.io/github/kidah/backhelloBooks?branch=master)
 # Hello Books
 
-This is an online library management system where you can browse, borrow and/or return books from the library. It is built with node-js, 
-Postgre and sequelize ORM.
+This is an online library management system where you can browse, borrow and/or return books from the library. 
 
 ## Getting Started
 Here is a link to the template files hosted on github pages :  https://kidah.github.io/hellobooksophy.github.io/index.html
