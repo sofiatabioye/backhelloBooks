@@ -10,7 +10,13 @@ describe('User, ', () => {
   const today = new Date();
   const DueDate = new Date(today.getTime() + (24 * 60 * 60 * 14));
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozLCJyb2xlIjoidXNlciIsImlhdCI6MTUwMjQxODY2MCwiZXhwIjoxNTAyNjc3ODYwfQ.Z6peJWYhH3QUkRfC5mnHyaHEs73UFpNiWAiMtRG_IPg';
+  function makeUser() {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
+    for (let i = 0; i < 5; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
+    return text;
+  }
   // tests if user exists
   describe('should be able to find out if user exists', () => {
     it('return 401 error if user does not exist', (done) => {
@@ -44,15 +50,8 @@ describe('User, ', () => {
   describe('return User created for new user ', () => {
     it('create a new user', (done) => {
       const passwordHash = bcrypt.hashSync('mypassword', salt);
-      function makeUser() {
-        let text = '';
-        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < 5; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
-        return text;
-      }
       const user = {
-        username: makeUser,
+        username: makeUser(),
         password: passwordHash,
         role: 'user',
         email: `${makeUser()}@gmail.com`,
