@@ -99,13 +99,5 @@ describe('Category, ', () => {
 
   // tests if admin can delete category
 
-  describe('should not delete category if category has been deleted previously by admin', () => {
-    it('should not delete category ', (done) => {
-      // const id = Math.floor(Math.random() * 20) + 8;
-      supertest(app).del('/api/v1/categories/37').send({ token: adminToken }).end((err, res) => {
-        assert.equal(res.statusCode, 404);
-        done();
-      });
-    });
-  });
+  
 });
