@@ -7,8 +7,8 @@
     "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
     "start": "babel-node ./server/bin/www",
     "lint": "./node_modules/.bin/eslint.",
-    "test": "mocha ./server/test/* --compilers js:babel-register",
-    "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter = text --reporter=lcovonly mocha --compilers js:babel-register test/*.js"
+    "test": "nyc mocha ./server/test/* --compilers js:babel-register",
+    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
   "author": "",
@@ -44,6 +44,7 @@
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0"
+    "eslint-plugin-react": "^7.1.0",
+    "nyc": "^11.1.0"
   }
 }
