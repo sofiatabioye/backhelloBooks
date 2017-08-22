@@ -29,12 +29,13 @@ before_script:
   - npm install -g sequelize
   - psql -c 'drop database if exists travis;' -U postgres
   - psql -c 'create database travis;' -U postgres
-  - NODE_ENV=test npm run test:db
+  
 script:
   - npm test
 after_success:
   - npm run coverage #this line generates the report
   - codeclimate-test-reporter < coverage/lcov.info #this line sends report to codeclimate
   - coveralls < coverage/lcov.info #this line sends report to coveralls
+  - NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 
 
