@@ -7,7 +7,9 @@
     "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
     "start": "babel-node ./server/bin/www",
     "lint": "./node_modules/.bin/eslint.",
-    "test": "mocha ./server/test/* --compilers js:babel-register"
+    "test": "mocha ./server/test/* --compilers js:babel-register",
+    "test:db": "sequelize db:migrate",
+    "coverage": "cross-env NODE_ENV=test nyc --reporter=Icov --reporter = text --reporter=Icovonly mocha --compilers js:babel-register test/*.js"
   },
   "keywords": [],
   "author": "",
