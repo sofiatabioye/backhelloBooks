@@ -8,7 +8,7 @@
     "start": "babel-node ./server/bin/www",
     "lint": "./node_modules/.bin/eslint.",
     "test": "mocha ./server/test/* --compilers js:babel-register",
-    "coverage": "cross-env NODE_ENV=test nyc --reporter=Icov --reporter = text --reporter=Icovonly mocha --compilers js:babel-register test/*.js"
+    "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter = text --reporter=lcovonly mocha --compilers js:babel-register test/*.js"
   },
   "keywords": [],
   "author": "",
