@@ -7,3 +7,4 @@ script:
   - npm test 
 after_success:  
   - CODECLIMATE_REPO_TOKEN=CODECLIMATE_TOKEN codeclimate-test-reporter < coverage/lcov.info
+  - npm run coverage

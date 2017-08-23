@@ -175,7 +175,7 @@ export default {
               } else {
                 BorrowStatus
                   .findAll({ where: { user_id: req.params.userId } })
-                  .then(() => {
+                  .then((borrowstatus) => {
                     res.status(200).send({ UserBorrowHistory: borrowstatus });
                   })
                   .catch(error => res.status(400).send(error));
@@ -202,7 +202,7 @@ export default {
               } else {
                 BorrowStatus
                   .findAll({ where: { user_id: req.params.userId, returned: false } })
-                  .then(() => {
+                  .then((borrowstatus) => {
                     res.status(200).send({ UserBorrowHistory: borrowstatus });
                   })
                   .catch(error => res.status(400).send(error));

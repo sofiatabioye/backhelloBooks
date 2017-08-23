@@ -5,7 +5,7 @@ import app from '../../app';
 const assert = chai.assert;
 
 describe('Category, ', () => {
-  const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDI0MTgwNzQsImV4cCI6MTUwMjY3NzI3NH0.JZENWc5qBOCpYrGTPJeBnnyxy7ugjeKsJN-jvVdGAL8';
+  const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDM1MjQ2MTIsImV4cCI6MTUwMzc4MzgxMn0.fxewHIqNLoEqX6CmkNB2CFwv_BIenesm-y-qHA9BnxQ';
   function makeText() {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -99,13 +99,5 @@ describe('Category, ', () => {
 
   // tests if admin can delete category
 
-  describe('should delete category if user is admin', () => {
-    it('delete book ', (done) => {
-      // const id = Math.floor(Math.random() * 20) + 8;
-      supertest(app).del('/api/v1/categories/37').send({ token: adminToken }).end((err, res) => {
-        assert.equal(res.statusCode, 204);
-        done();
-      });
-    });
-  });
+  
 });

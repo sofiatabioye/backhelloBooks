@@ -7,7 +7,9 @@
     "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
     "start": "babel-node ./server/bin/www",
     "lint": "./node_modules/.bin/eslint.",
-    "test": "mocha ./server/test/* --compilers js:babel-register"
+    "test": "nyc mocha ./server/test/* --compilers js:babel-register",
+    "cover": "nyc npm run test",
+    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +34,8 @@
     "sequelize": "^4.4.2",
     "supertest": "^3.0.0",
     "body-parser": "^1.17.2",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "nyc": "^11.1.0"
   },
   "devDependencies": {
     "es2015": "0.0.0",
@@ -42,5 +45,11 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      "dist"
+    ]
   }
 }
