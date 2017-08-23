@@ -9,7 +9,7 @@
     "lint": "./node_modules/.bin/eslint.",
     "test": "nyc mocha ./server/test/* --compilers js:babel-register",
     "cover": "nyc npm run test",
-    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test"
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "keywords": [],
   "author": "",
