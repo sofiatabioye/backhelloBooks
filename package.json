@@ -8,7 +8,8 @@
     "start": "babel-node ./server/bin/www",
     "lint": "./node_modules/.bin/eslint.",
     "test": "nyc mocha ./server/test/* --compilers js:babel-register",
-    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls"
+    "cover": "nyc npm run test",
+    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "keywords": [],
   "author": "",
