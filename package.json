@@ -24,6 +24,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-register": "^6.24.1",
     "chai-http": "^3.0.0",
+    "coveralls": "^2.13.1",
     "express": "^4.15.4",
     "jsonwebtoken": "^7.4.2",
     "mocha": "^3.5.0",
@@ -38,7 +39,6 @@
     "nyc": "^11.1.0"
   },
   "devDependencies": {
-    "coveralls": "^2.13.1",
     "es2015": "0.0.0",
     "eslint": "^4.3.0",
     "eslint-config-airbnb": "^15.1.0",
