@@ -140,7 +140,7 @@ export default {
               .findOne({ where: { user_id: req.params.userId, book_id: req.params.bookId } })
               .then((borrowstatus) => {
                 if (!borrowstatus) {
-                  res.status(412).send({ message: 'User did not borrow Book' });
+                  res.status(412).send({ message: 'You did not borrow this book' });
                 }
                 book.update({ quantity: book.quantity + 1 });
                 return borrowstatus
