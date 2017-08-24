@@ -17,11 +17,11 @@ This app was built using the express fraamework with Node Js, Postgres and Seque
 
 ## API ROUTES
 
-  // User Login Routes
+  * User Login Routes
   app.post('/api/v1/users/signup', usersController.create);
   app.post('/api/v1/users/login', usersController.login);
 
-  // This contains the routes that allow a logged in admin user to modify and create books
+  * This contains the routes that allow a logged in admin user to modify and create books
 
   app.post('/api/v1/books/create', authorize.authorize, checkadmin.checkAdmin, booksController.create);
   app.get('/api/v1/books', authorize.authorize, booksController.list);
@@ -29,7 +29,7 @@ This app was built using the express fraamework with Node Js, Postgres and Seque
   app.put('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.update);
   app.delete('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.destroy);
 
-  // This contains the routes that  allow a logged in admin to modify and create categories
+  * This contains the routes that  allow a logged in admin to modify and create categories
   app.post('/api/v1/categories/create', authorize.authorize, checkadmin.checkAdmin, categoriesController.create);
   app.get('/api/v1/categories', authorize.authorize, checkadmin.checkAdmin, categoriesController.list);
   app.get('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.retrieve);
@@ -37,7 +37,7 @@ This app was built using the express fraamework with Node Js, Postgres and Seque
   app.delete('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.destroy);
 
 
-  // This contains routes that allow a logged in user to borrow and return books and borrow history
+  * This contains routes that allow a logged in user to borrow and return books and borrow history
   app.post('/api/v1/users/:userId/books/:bookId/borrow', authorize.authorize, usersController.borrowBook);
   app.put('/api/v1/users/:userId/books/:bookId/return', authorize.authorize, usersController.returnBook);
   app.get('/api/v1/users/:userId/history', authorize.authorize, usersController.borrowHistory);
@@ -53,7 +53,7 @@ This app was built using the express fraamework with Node Js, Postgres and Seque
 
 ## Authors
 
-* **Sofiat Abioye **  *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Sofiat Abioye ** 
 
 ## Acknowledgments
 
