@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/kidah/backhelloBooks.svg?branch=feature-finals)](https://travis-ci.org/kidah/backhelloBooks)
+https://travis-ci.org/kidah/backhelloBooks.svg?branch=master
 [![Coverage Status](https://coveralls.io/repos/github/kidah/backhelloBooks/badge.svg)](https://coveralls.io/github/kidah/backhelloBooks)
 # Hello Books
 
