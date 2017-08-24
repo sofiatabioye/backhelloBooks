@@ -1,7 +1,7 @@
 
 [![Build Status](https://travis-ci.org/kidah/backhelloBooks.svg?branch=master)](https://travis-ci.org/kidah/backhelloBooks)
 [![Coverage Status](https://coveralls.io/repos/github/kidah/backhelloBooks/badge.svg)](https://coveralls.io/github/kidah/backhelloBooks)
-[![Code Climate](https://codeclimate.com/github/kidah/backHelloBooks/badges/gpa.svg)](https://codeclimate.com/github/kidah/backHelloBooks?branch=master)
+[![Code Climate](https://codeclimate.com/github/kidah/backhelloBooks/badges/gpa.svg)](https://codeclimate.com/github/kidah/backhelloBooks?branch=master)
 # Hello Books
 
 This is an online library management system where you can browse, borrow and/or return books from the library. 
