@@ -1,7 +1,18 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
 import models from '../models/index';
+
+
+const transporter = nodemailer.createTransport(smtpTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'abisoph16@gmail.com',
+    pass: 'farouk14'
+  }
+}));
 
 const Book = models.Book;
 const User = models.User;
@@ -101,6 +112,14 @@ export default {
                   } else {
                     // updates quantity of book borrowed and create borrow history
                     book.update({ quantity: book.quantity - 1 });
+                    transporter.sendMail({
+                      from: 'no-reply@hellobooks.com',
+                      to: 'abioye.sofiat@outlook.com',
+                      subject: 'New Book has been borrowed',
+                      html: '<b>Book Borrowed Notification</b>',
+                      text: 'Book has been borrowed by user'
+                    });
+                    transporter.close();
                     return BorrowStatus.create({
                       user_id: req.params.userId,
                       book_id: book.id,
@@ -108,6 +127,7 @@ export default {
                       borrowDate: today,
                       expectedReturnDate: DueDate
                     })
+
                       .then(() => {
                         res.status(201).send({ message: 'Book Borrowed Successfully.' });
                       })
