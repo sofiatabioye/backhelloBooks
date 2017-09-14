@@ -1,55 +1,107 @@
 import React from 'react';
-import Books from './allbooks';
+import { connect } from 'react-redux';
 
- const Login = React.createClass({
-   render: function() {
-     return (
-     <div>
-       <nav className="navbar navbar-inverse navbar-me">
-         <div className="container-fluid">
-           <div className="navbar-header">
-             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-               <span className="sr-only">Toggle navigation</span>
-               <span className="icon-bar" />
-               <span className="icon-bar" />
-               <span className="icon-bar" />
-             </button>
-             <a className="navbar-brand" href="#">HelloBooks</a>
-           </div>
-           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-             <div className="navbar-me">
-               <ul className="nav navbar-nav navbar-right">
-                 <li><a href="#">DONT HAVE AN ACCOUNT? Sign Up</a></li>
-               </ul>
-             </div>
-           </div>
-         </div>
-       </nav>
+import Header from './Header/header';
+import Footer from './Footer/footer';
+import { login } from '../actions/auth';
 
-       <div className="login-box" method="GET" action="#">
-          <form className="login-form form-responsive">
-            <label className="signin"><h3>Sign In</h3></label>
-            <div className="form-group">
-              <label htmlFor="usr">Email/Username</label>
-              <input type="textbox" name="email" placeholder="Email/Username" className="form-control" />
+import validateInput from './utils/validation';
+import { addFlashMessage } from '../actions/flashmessages';
+import FlashMessagesList from './flash/FlashMessagesList';
+
+/**
+ * 
+ * 
+ * @class Login
+ * @extends {React.Component}
+ */
+/* eslint-disable require-jsdoc */
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            identifier: '',
+            password: '',
+            errors: {},
+            isLoading: false
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    isValid() {
+        const { errors, isValid } = validateInput(this.state);
+        if (!isValid) {
+            this.setState({ errors });
+            return;
+        }
+        return isValid;
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        if (this.isValid()) {
+            this.props.login(this.state).then(
+                (res) => {
+                    console.log(res);
+                    this.context.router.history.push('/books');
+                },
+                (err) => {
+                    this.setState({
+                        isLoading: false
+                    });
+                    if (err.data) {
+                        this.props.addFlashMessage({
+                            type: 'error',
+                            text: err.data.errors
+                        });
+                    }
+                }
+            );
+        }
+    }
+    render() {
+        const { errors, identifier, password, isLoading } = this.state;
+
+        return (
+            <div>
+                <Header />
+
+                <div className="login-box">
+                    <FlashMessagesList />
+
+                    { errors.form && <div className="alert alert-danger">{errors.form}</div> }
+                    <form onSubmit= {this.onSubmit} className="login-form form-responsive">
+                        <label className="signin"><h3>Sign In</h3></label>
+                        <div className="form-group">
+                            <label htmlFor="usr">Email/Username</label>
+                            <input type="text" value={this.state.identifier} onChange={this.onChange} name="identifier"
+                                placeholder="Email/Username" className="form-control" />
+                            {errors.identifier && <span className="help-text">{errors.identifier}</span> }
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="pwd">Password</label>
+                            <input type="password" value={this.state.password} onChange={this.onChange} name="password" placeholder="Password" className="form-control" />
+                            <span className="help-text">{errors.password}</span>
+                        </div>
+
+                        <button type="submit" className="btn btn-lg btn-me" disabled={isLoading}>Sign In</button><div><a href={"/forgotpassword"}>Forgot Password?</a></div>
+                    </form>
+                </div>
+                <Footer />
             </div>
-            <div className="form-group">
-              <label htmlFor="pwd">Password</label>
-              <input type="password" name="password" placeholder="Password" className="form-control" />
-            </div>
+        );
+    }
+}
 
+Login.protoTypes = {
+    login: React.PropTypes.func.isRequired
+};
+Login.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
-            <a href="/allbooks" className="btn btn-lg btn-me">Sign In </a><div><a href="#">Forgot Password?</a></div>
-          </form>
-        </div>
-        <nav className="navbar navbar-inverse navbar-fixed-bottom">
-          <div className="container">
-            © HelloBooks. All Rights Reserved. Privacy Policy • Terms of Use
-          </div>
-        </nav>
-      </div>
-     );
-   }
- });
-
-export default Login;
+export default connect(null, { login, FlashMessagesList, addFlashMessage })(Login);

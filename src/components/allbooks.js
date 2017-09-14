@@ -1,159 +1,61 @@
 import React, { Component } from 'react';
+import Header from './Header/header';
+import { Link } from 'react-router-dom';
+import Footer from './Footer/footer';
+import { connect } from 'react-redux';
+import { getBooks } from '../actions/books';
 
-
-/**
- *
- */
+/* eslint-disable require-jsdoc */
 class Books extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
-  render() {
-    return (
-      <div>
-           <nav className="navbar navbar-inverse">
-             <div className="container-fluid">
-               <div className="navbar-header">
-                 <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                   <span className="sr-only">Toggle navigation</span>
-                   <span className="icon-bar" />
-                   <span className="icon-bar" />
-                   <span className="icon-bar" />
-                 </button>
-                 <a className="navbar-brand" href="index.html">HelloBooks</a>
-               </div>
-               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                 <form className="navbar-form navbar-left navbar-search">
-                   <div className="form-group">
-                     <input type="text" className="form-control" placeholder="Search" />
-                   </div>
-                 </form>
-                 <ul className="nav navbar-nav navbar-right">
-                   <li><a href="#">Children</a></li>
-                   <li><a href="#">IT</a></li>
-                   <li><a href="#">Education</a></li>
-                   <li><a href="#">Business</a></li>
-                   <li><a href="#">Cooking</a></li>
-                   <li><a href="#">Religion</a></li>
-                   <li><a href="#">Career</a></li>
-                   <li className="dropdown">
-                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Categories<span className="caret" /></a>
-                     <ul className="dropdown-menu">
-                       <li><a href="#">Women</a></li>
-                       <li><a href="#">Love</a></li>
-                       <li><a href="#">Fiction</a></li>
-                       <li><a href="#">Autobiographies</a></li>
-                       <li><a href="#">Adventure</a></li>
-                     </ul>
-                   </li>
-                   <li className="dropdown">
-                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img className="usr-img" /><span className="caret" /></a>
-                     <ul className="dropdown-menu">
-                       <li><a href="profile.html">My Profile</a></li>
-                       <li><a href="history.html">Rent History</a></li>
-                     </ul>
-                   </li>
-                 </ul>
-               </div>
-             </div>
-           </nav>
-           <div className="container">
-             <div><h3>Our Collection</h3></div>
-             <div className="row">
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/cook.jpeg" className="bookcover" />
-                     <div className="booktitle">My Nigerian Cookbook</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Cooking</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good... </div>
-                   </div>
-                 </a>
-               </div>
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/tales.jpg" className="bookcover" />
-                     <div className="booktitle">Tales By Moonlight</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Children</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good..
-                     </div>
-                   </div>
-                 </a>
-               </div>
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/butterfly.png" className="bookcover" />
-                     <div className="booktitle">Tales By Moonlight</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Cooking</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good...
-                     </div>
-                   </div>
-                 </a>
-               </div>
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/home.png" className="bookcover" />
-                     <div className="booktitle">Tales By Moonlight</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Children</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good..
-                     </div>
-                   </div>
-                 </a>
-               </div>
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/butterfly.png" className="bookcover" />
-                     <div className="booktitle">Tales By Moonlight</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Children</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good..
-                     </div>
-                   </div>
-                 </a>
-               </div>
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/home.png" className="bookcover" />
-                     <div className="booktitle">Tales By Moonlight</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Children</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good...
-                     </div>
-                   </div>
-                 </a>
-               </div>
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/cook.jpeg" className="bookcover" />
-                     <div className="booktitle">My Nigerian Cookbook</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Children</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good...</div>
-                   </div>
-                 </a>
-               </div>
-               <div className="col-md-3">
-                 <a href="singlebook.html">
-                   <div className="bookbox">
-                     <img src="images/tales.jpg" className="bookcover" />
-                     <div className="booktitle">My Nigerian Cookbook</div>
-                     <div className="bookcat"><span className="glyphicon glyphicon-tag" /> Children</div>
-                     <div className="description">This books contains all the delicious nigerian food recipes with good...
-                     </div>
-                   </div>
-                 </a>
-               </div>
-             </div>
-           </div>
-           <nav className="navbar navbar-inverse navbar-fixed-bottom">
-             <div className="container">
-               © HelloBooks. All Rights Reserved. Privacy Policy • Terms of Use
-             </div>
-           </nav>
-         </div>
-    );
-  }
+    componentDidMount() {
+        this.props.getBooks();
+        // .then(() => this.setState(() => ({ books: this.props.books })));
+    }
+
+    render() {
+        const bookList = this.props.books && this.props.books[0] && this.props.books[0].length ?
+            this.props.books[0].map((book) => (
+                <div className="col-md-3" key={book.id}>
+                    <a href="/singlebook">
+                        <div className="bookbox">
+                            <img src="../assets/images/home.png" className="bookcover" />
+                            <div className="booktitle">{book.title}</div>
+                            <div className="bookcat"><span className="glyphicon glyphicon-tag" /> {book.category}</div>
+                            <div className="description">{book.description}...</div>
+                        </div>
+                    </a>
+                </div>
+
+            )) : <h4>There are no books in the library</h4>;
+
+        return (
+            <div>
+                <Header />
+                {bookList}
+                <Footer />
+            </div>
+        );
+    }
 }
 
-export default Books;
+Books.proptypes = {
+    books: React.PropTypes.array.isRequired,
+    getBooks: React.PropTypes.func.isRequired
+};
+
+Books.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    books: state.books,
+});
+
+
+export default connect(mapStateToProps, { getBooks, })(Books);
+

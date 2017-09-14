@@ -1,8 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { Provider } from 'react-redux';
+import jwt from 'jsonwebtoken';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import store from './store/store';
+import './assets/css/main.css';
+import App from './App';
+import './App.css';
+import registerServiceWorker from './registerServiceWorker';
+import setAuthorizationToken from './utils/setAuthorizationToken';
+import { setCurrentUser } from './actions/auth';
+
+
+if (localStorage['x-access-token']) {
+    setAuthorizationToken(localStorage['x-access-token']);
+    store.dispatch(setCurrentUser(jwt.decode(localStorage['x-access-token'])));
+    console.log(localStorage['x-access-token']);
+}
+
+
+ReactDOM.render(
+    <Provider store = {store}>
+        <App />
+    </Provider>, document.getElementById('root'));
 registerServiceWorker();

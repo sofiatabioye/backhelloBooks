@@ -1,9 +1,14 @@
+body {
+	padding-bottom: 60px;
+}
+
+
 .login-box{
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	width: 600px;
 	padding: 30px;
-	margin: 100px 0px 0px 350px;
+	margin: 50px 0px 0px 350px;
 	font-size: 14px;
 }
 
@@ -21,21 +26,39 @@
 .navbar-inverse .navbar-nav > li > a{
 	color: #fff;
 }
+
+ul > li > a{
+	color: #fff;
+	font-size: 14px;
+}
 .navbar-inverse .navbar-nav > li > a:hover, a:visited{
 	text-decoration: none;
 	color: #ccc;
 	
 }
-a:hover, a:visited; a:link; a:active{
-	text-decoration: none;
 
+.dropdown-menu > li > a {
+	font-size: 14px;
+}
+a:hover; a:visited; a:link; a:active{
+	text-decoration: none;
+	color: #000;
+}
+
+.navbar-search input {
+	color: #fff;
+	font-size: 14px;
 }
 .container-me {
 	min-height: 520px;
 	text-align: center;
 }
+.container-me input{
+	font-size: 12px;
+	padding-left: 5px;
+}
 
-.signin{
+label .signin h3{
 	text-align: center;
 	font-size: 32px;
 }
@@ -46,6 +69,15 @@ a:hover, a:visited; a:link; a:active{
 	border-radius: 15px;
 	margin-right: 5px;
 }
+
+.profile-img{
+	height:100px;
+	width: 100px;
+	background-color: #fff;
+	border-radius: 50px;
+	margin-right: 5px;
+}
+
 .big-usr-img{
 	height: 100px;
 	width: 100px;
@@ -103,6 +135,7 @@ a:hover, a:visited; a:link; a:active{
 	font-size: 14px;
 	color: #000;
 	padding-left: 10px;
+	padding-bottom: 5px;
 }
 
 a:hover .bookbox{
@@ -118,13 +151,28 @@ a:hover .bookbox{
 	font-size: 16px;
 }
 .btn-borrow{
-	margin-top: 20px; 
+	margin-top: 0px; 
 }
 .singlebook_details{
+	padding: 40px;
     font-size: 16px;
+    text-align: left;
 }
+.singlebook_details .fa{
+	color: #ccc;
+	padding-right: 5px;
+} 
 .col-ava{
 	padding: 50px;
+	font-size: 18px;
+}
+
+.password-box{
+    text-align: center;
+    padding: 0px 100px 0px 100px;
+}
+
+.password-box input {
 	font-size: 18px;
 }
 
@@ -149,5 +197,35 @@ a:hover .bookbox{
 	border: 1px solid #ccc;
 	padding: 20px;
 	margin:  0 auto;
+	margin-bottom: 50px;
+}
+
+.profile-usertitle{
+	text-align: center;
+	padding: 10px 0px 10px 0px;
+}
+.profile-userpic {
+	text-align: center;
+}
+.profile-sidebar {
+	border-right: 1px solid #ccc;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+.profile-usermenu{
+	text-align: center;
+}
+.profile-usertitle-job {
+	color: #ccc;
+}
+.profile-content td {
+	font-size: 14px;
+}
+.profile-content th {
+	font-size: 14px;
+}
+.profile-content a{
+    color: blue;
+    text-decoration: none;
 }
 

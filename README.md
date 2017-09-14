@@ -1002,7 +1002,7 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 ### "Invalid Host Header" Errors After Configuring Proxy
 
-When you enable the `proxy` option, you opt into a more strict set of host checks. This is necessary because leaving the backend open to remote hosts makes your computer vulnerable to DNS rebinding attacks. The issue is explained in [this article](https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a) and [this issue](https://github.com/webpack/webpack-dev-server/issues/887).
+When you enable the `proxy` option, you opt into a more strict set of host checks. This is necessary because leaving the backend open to remote hosts makes your computer vulnerable to DNS rebinding attacks. The issue is explained in [this article](https://medium.com/webpack/webpack-dev-server-Authenticate-security-issues-1489d950874a) and [this issue](https://github.com/webpack/webpack-dev-server/issues/887).
 
 This shouldn’t affect you when developing on `localhost`, but if you develop remotely like [described here](https://github.com/facebookincubator/create-react-app/issues/2271), you will see this error in the browser after enabling the `proxy` option:
 
@@ -1031,7 +1031,7 @@ We don’t recommend this approach.
 >Note: this feature is available with `react-scripts@1.0.0` and higher.
 
 If the `proxy` option is **not** flexible enough for you, you can specify an object in the following form (in `package.json`).<br>
-You may also specify any configuration value [`http-proxy-middleware`](https://github.com/chimurai/http-proxy-middleware#options) or [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options) supports.
+You may also specify any configuration value [`http-proxy-Authenticate`](https://github.com/chimurai/http-proxy-Authenticate#options) or [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options) supports.
 ```js
 {
   // ...
@@ -1103,9 +1103,9 @@ Either way, you can proxy WebSocket requests manually in `package.json`:
     "/socket": {
       // Your compatible WebSocket server
       "target": "ws://<socket_url>",
-      // Tell http-proxy-middleware that this is a WebSocket proxy.
+      // Tell http-proxy-Authenticate that this is a WebSocket proxy.
       // Also allows you to proxy WebSocket requests without an additional HTTP request
-      // https://github.com/chimurai/http-proxy-middleware#external-websocket-upgrade
+      // https://github.com/chimurai/http-proxy-Authenticate#external-websocket-upgrade
       "ws": true
       // ...
     }
