@@ -174,9 +174,17 @@ export default {
                 res.status(201).send({ message: 'You have not borrowed any book' });
               } else {
                 BorrowStatus
-                  .findAll({ where: { user_id: req.params.userId } })
+                  .findAll({ 
+                    where: { user_id: req.params.userId },
+                    include:[
+                      { model: Book,
+                        attributes:['title'],
+                      }]
+                   })
                   .then((borrowstat) => {
-                    res.status(200).send({ UserBorrowHistory: borrowstat });
+                    res.status(200).send({ 
+                      UserBorrowHistory: borrowstat
+                    });
                   })
                   .catch(error => res.status(400).send(error));
               }
@@ -201,7 +209,12 @@ export default {
                 res.status(201).send({ message: 'You have not borrowed any book' });
               } else {
                 BorrowStatus
-                  .findAll({ where: { user_id: req.params.userId, returned: false } })
+                  .findAll({ where: { user_id: req.params.userId, returned: false },
+                    include:[
+                      { model: Book,
+                        attributes:['title'],
+                      }]
+                  })
                   .then((borrowstat) => {
                     res.status(200).send({ UserBorrowHistory: borrowstat });
                   })

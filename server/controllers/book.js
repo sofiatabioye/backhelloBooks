@@ -18,7 +18,7 @@ export default {
         publisher: req.body.publisher,
         bookSize: req.body.size,
       })
-      .then(book => res.status(201).send({ book_: book, message: 'Book Created Successfully.' }))
+      .then(book => res.status(201).send({ book: book, message: 'Book Created Successfully.' }))
       .catch(error => res.status(400).send(error));
   },
 

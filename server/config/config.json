@@ -1,9 +1,10 @@
 {
    "development": {
-    "username": "nmmudqlt",
-    "password": "VI3NeWxWV3FV_-VAzZcb2iaNWYWSDrTi",
-    "database": "nmmudqlt",
-    "host": "stampy.db.elephantsql.com",
+    "username": "postgres",
+    "password": "hello",
+    "database": "postgres",
+    "host": "127.0.0.1",
+    "port": 5432,
     "dialect": "postgres"
   },
   "test": {
