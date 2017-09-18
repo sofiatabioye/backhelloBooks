@@ -1,10 +1,46 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
 import Header from './Header/header';
 import Footer from './Footer/footer';
-
+import { fetchBorrowHistory, returnBook } from '../actions/books';
+/* eslint-disable  */
 class History extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {books: []};
+        this.handleReturnBook = this.handleReturnBook.bind(this);
+    }
+    
 
+    componentDidMount() {
+         this.props.fetchBorrowHistory(this.props.auth.user.user);
+    }
+
+    handleReturnBook (id){
+        this.props.returnBook(this.props.auth.user.user, id);
+    }
     render() {
+
+        const returnStatus = (<td>  <button type="submit" onClick={()=>this.handleReturnBook(book.book_id)} className="btn btn-md btn-info btn-borrow">Return Book</button> </td> );
+        const booklist = this.props.books && this.props.books.length ?    
+        this.props.books.map((book) =>( 
+                    <tbody key={book.id}>
+                        <tr>
+                            <th scope="row">{book.id}</th>
+                            <td><Link to={`/book/${book.book_id}`}>{book.Book.title}</Link></td>
+                            <td>{book.borrowDate}</td>
+                            <td>{book.expectedReturnDate}</td>
+                            <td>{book.dateReturned}</td>    
+                            {isEmpty(book.dateReturned) ? <td>  <button type="submit" onClick={()=>this.handleReturnBook(book.book_id)} className="btn btn-md btn-info btn-borrow">Return Book</button> </td>
+                            : <td> Returned</td>      }            
+                        </tr>
+                       
+                    </tbody>
+               
+         )) : <h4>You have not borrowed any books</h4>;
         return (
             <div>
                 <Header />
@@ -13,45 +49,44 @@ class History extends Component {
                         <div className="container">
                             <div className="col-md-3">
                                 <div className="profile-sidebar">
-                                    {/* SIDEBAR USERPIC */}
+                                   
                                     <div className="profile-userpic">
-                                        <img src="images/profile.jpg" alt className="profile-img" />
+                                        <img src="images/profile.jpg" role="presentation" className="profile-img" />
                                     </div>
-                                    {/* END SIDEBAR USERPIC */}
-                                    {/* SIDEBAR USER TITLE */}
+                                   
                                     <div className="profile-usertitle">
                                         <div className="profile-usertitle-name">
-                     Abioye Sofiat
+                                        Abioye Sofiat
                                         </div>
                                         <div className="profile-usertitle-job">
-                                            <span className="fa fa-tag" /> Silver
+                                            <span className="fa fa-tag" />
+                                             Silver
                                         </div>
                                     </div>
-                                    {/* END SIDEBAR USER TITLE */}
-                                    {/* SIDEBAR MENU */}
+                                  
                                     <div className="profile-usermenu">
                                         <ul className="nav">
-                                            <li className="active">
-                                                <a href="profile.html">
-                                                    <i className="fa fa-book" />
-                         Borrowed Books
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="history.html">
-                                                    <i className="fa fa-history" />
-                         Borrow History
-                                                </a>
-                                            </li>
+                                        <li className="active">
+                                        <Link to="/profile">
+                                            <i className="fa fa-book" />
+                                            Borrowed Books
+                                        </Link>
+                                    </li>
+                                    <li>
+                                    <Link to="/history">
+                                            <i className="fa fa-history" />
+                                          Borrow History
+                                        </Link>
+                                    </li>
                                             <li>
                                                 <a href="password.html">
                                                     <i className="fa fa-key" />
-                         Change Password
+                                             Change Password
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
-                                    {/* END MENU */}
+                                  
                                 </div>
                             </div>
                             <div className="col-md-9">
@@ -68,32 +103,7 @@ class History extends Component {
                                                 <th>Return</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td><a href="singlebook.html">My Nigerian Cookbook</a></td>
-                                                <td>24th of July, 2017</td>
-                                                <td>31th of July, 2017</td>
-                                                <td />
-                                                <td><input type="submit" className="btn btn-md btn-info btn-borrow" defaultValue="Return Book" /></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td><a href="singlebook.html">The dreamers</a></td>
-                                                <td>12th of July, 2017</td>
-                                                <td>26th of July, 2017</td>
-                                                <td />
-                                                <td><input type="submit" className="btn btn-md btn-info btn-borrow" defaultValue="Return Book" /></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td><a href="singlebook.html">The Alchemist</a></td>
-                                                <td>12th of July, 2017</td>
-                                                <td>26th of July, 2017</td>
-                                                <td>31st of July, 2017</td>
-                                                <td />
-                                            </tr>
-                                        </tbody>
+                                       {booklist}
                                     </table>
                                 </div>
                             </div>
@@ -105,5 +115,22 @@ class History extends Component {
         );
     }
 }
+History.proptypes = {
+    books: PropTypes.object.isRequired,
+    fetchBorrowHistory: PropTypes.func.isRequired,
+    returnBook: PropTypes.func.isRequired,
 
-export default History;
+};
+
+
+History.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    books: state.books.books.UserBorrowHistory,
+    auth: state.auth,
+
+});
+
+export default connect(mapStateToProps, { fetchBorrowHistory, returnBook})( History);

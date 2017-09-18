@@ -24,9 +24,12 @@ export function login(userData) {
             const token = response.data.token;
             localStorage.setItem('x-access-token', token);
             setAuthorizationToken(token);
+            console.log(token);
             dispatch(setCurrentUser(jwt.decode(token)));
         },
-        (errors) => errors
+        (errors) => { 
+            dispatch({ type: 'USER_LOGIN_FAILURE', errors: errors.response.data });
+        }
         );
 }
 
@@ -38,4 +41,5 @@ export function signup(userData) {
         (errors) => console.log(errors)
         );
 }
+
 export default {};

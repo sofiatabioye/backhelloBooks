@@ -70,8 +70,8 @@ class SignUp extends React.Component {
         }
     }
     render() {
-        const { errors, username, email, password, confirm_password, isLoading } = this.state;
-
+        const { errors, isLoading } = this.state;
+        // username, email, password, confirm_password,
         return (
             <div>
                 <Header />
@@ -79,7 +79,7 @@ class SignUp extends React.Component {
                 <div className="login-box">
                     <FlashMessagesList />
                     { errors.form && <div className="alert alert-danger">{errors.form}</div> }
-                    <form onSubmit= {this.onSubmit} className="login-form form-responsive">
+                    <form onSubmit={this.onSubmit} className="login-form form-responsive">
                         <label className="signin"><h3>Sign In</h3></label>
                         <div className="form-group">
                             <label htmlFor="usr">Username</label>

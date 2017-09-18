@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from './Header/header';
 import Footer from './Footer/footer';
 
-import { connect } from 'react-redux';
+
 import { saveBooks } from '../actions/books';
 
 import validateBook from './utils/validateBook';
@@ -67,7 +69,8 @@ class AddBook extends Component {
     }
 
     render() {
-        const { errors, title, description, category, author, isbn, edition, publisher, size, quantity, image, isLoading } = this.state;
+        const { errors, isLoading } = this.state;
+        // title, description, category, author, isbn, edition, publisher, size, quantity, image,
         return (
             <div>
                 <Header />
@@ -76,7 +79,7 @@ class AddBook extends Component {
                     <FlashMessagesList />
 
                     { errors.form && <div className="alert alert-danger">{errors.form}</div> }
-                    <form onSubmit= {this.onSubmit} className="form-me form-responsive">
+                    <form onSubmit={this.onSubmit} className="form-me form-responsive">
 
                         <div className="form-group">
                             <h6>Title</h6>
@@ -129,10 +132,10 @@ class AddBook extends Component {
 
 
 AddBook.protoTypes = {
-    saveBooks: React.PropTypes.func.isRequired
+    saveBooks: PropTypes.func.isRequired
 };
 AddBook.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
 export default connect(null, { saveBooks, FlashMessagesList, addFlashMessage })(AddBook);

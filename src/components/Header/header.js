@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
-import { getCategories, setCategory } from '../../actions/category';
+import { getCategories } from '../../actions/category';
 import { addFlashMessage } from '../../actions/flashmessages';
 
 
@@ -32,59 +32,54 @@ class Header extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { categories: [] };
+        this.props.getCategories().then(() => {
+            this.setState({ categories: this.props.categories });
+        });
     }
 
-    // componentDidMount() {
-    //     this.props.getCategories(this.state).then(
-    //         (data) => {
-    //             this.props.setCategory(data.data);
-    //             console.log(this.props.categories);
-    //         },
-    //         (errors) => {
-    //             this.props.addFlashMessage({
-    //                 type: 'error',
-    //                 text: errors.response.data
-    //             });
-    //         }
-    //     );
-    // }
     logout(e) {
         e.preventDefault();
         this.props.logout();
     }
 
-    render() {
-        const { isAuthenticated } = this.props.auth;
-        const userLinks = (
-            <ul className="nav navbar-nav navbar-right">
-                <li><Link to="/books/:{value}" value="children">Children</Link></li>
-                <li><Link to="#">IT</Link></li>
-                <li><Link to="#">Education</Link></li>
-                <li><Link to="#">Business</Link></li>
-                <li><Link to="#">Cooking</Link></li>
-                <li><Link to="#">Religion</Link></li>
-                <li><Link to="#">Career</Link></li>
+    categoriesList(props) {
+        const catlength = this.props.categories.categories.length;
+        console.log(catlength);
+        if (catlength > 6) {
+            return (
                 <li className="dropdown">
                     <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Categories<span className="caret" /></Link>
                     <ul className="dropdown-menu">
-                        <li><Link to="#">Women</Link></li>
-                        <li><Link to="#">Love</Link></li>
-                        <li><Link to="#">Fiction</Link></li>
-                        <li><Link to="#">Autobiographies</Link></li>
-                        <li><Link to="#">Adventure</Link></li>
+                        <li><Link to="#">Tada</Link></li>
                     </ul>
                 </li>
-                <li className="dropdown">
-                    <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img className="usr-img" /><span className="caret" /></Link>
-                    <ul className="dropdown-menu">
-                        <li><Link to="/profile">My Profile</Link></li>
-                        <li><Link to="/history">Rent History</Link></li>
-                        <li><a href="#" onClick={this.logout.bind(this)} >Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
+            );
+        }
+        return "";
+    }
+
+
+    render() {
+        const { isAuthenticated } = this.props.auth;
+        const profileList = (
+            <li className="dropdown">
+                <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img className="usr-img" src="#" role="presentation"/><span className="caret" /></Link>
+                <ul className="dropdown-menu">
+                    <li><Link to="/profile">My Profile</Link></li>
+                    <li><Link to="/history">Rent History</Link></li>
+                    <li><a href="#" onClick={this.logout.bind(this)} >Logout</a></li>
+                </ul>
+            </li>
         );
+
+        const cat = this.props.categories.categories;
+
+        const userLinks = cat && cat.length ?
+            cat.map((category) => (
+                <li key={category.id}><Link to={`/books/${category.title}/${category.id}`} >{category.title}</Link></li>
+            )) : <h6>No categories</h6>;
+
 
         const guestLinks = (
             <ul className="nav navbar-nav navbar-right">
@@ -113,7 +108,10 @@ class Header extends React.Component {
                                     <input type="text" className="form-control" placeholder="Search" />
                                 </div>
                             </form>
-                            { isAuthenticated ? userLinks : guestLinks }
+                            <ul className="nav navbar-nav navbar-right" >
+                                { isAuthenticated ? userLinks : guestLinks }
+                                {profileList}
+                            </ul>
                         </div>
                     </div>
                 </nav>
@@ -131,12 +129,13 @@ Header.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        auth: state.auth
+        auth: state.auth,
+        categories: state.categories.categories
     };
 }
 
 
-export default connect(mapStateToProps, { logout, getCategories, setCategory, addFlashMessage })(Header);
+export default connect(mapStateToProps, { logout, getCategories, addFlashMessage })(Header);
 
 
 //  export default Header;

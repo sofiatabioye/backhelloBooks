@@ -15,12 +15,11 @@ import { setCurrentUser } from './actions/auth';
 if (localStorage['x-access-token']) {
     setAuthorizationToken(localStorage['x-access-token']);
     store.dispatch(setCurrentUser(jwt.decode(localStorage['x-access-token'])));
-    console.log(localStorage['x-access-token']);
 }
 
 
 ReactDOM.render(
-    <Provider store = {store}>
+    <Provider store={store}>
         <App />
     </Provider>, document.getElementById('root'));
 registerServiceWorker();

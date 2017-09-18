@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import Notifications, { notify } from 'react-notify-toast';
 import Header from './Header/header';
 import Footer from './Footer/footer';
 import { login } from '../actions/auth';
@@ -46,35 +47,39 @@ class Login extends React.Component {
         if (this.isValid()) {
             this.props.login(this.state).then(
                 (res) => {
-                    console.log(res);
+                    this.props.addFlashMessage({
+                        type: 'error',
+                        text: this.props.errors.message
+                    });
+                    notify.show(this.props.errors.message);
                     this.context.router.history.push('/books');
                 },
                 (err) => {
                     this.setState({
                         isLoading: false
                     });
-                    if (err.data) {
-                        this.props.addFlashMessage({
-                            type: 'error',
-                            text: err.data.errors
-                        });
-                    }
+                    this.props.addFlashMessage({
+                        type: 'error',
+                        text: this.props.errors.message
+                    });
+                    console.log("its an error");
+                   notify.show(this.props.errors.message);
                 }
             );
         }
     }
     render() {
-        const { errors, identifier, password, isLoading } = this.state;
-
+        const { errors, isLoading } = this.state;
+        // identifier, password, 
         return (
             <div>
                 <Header />
 
                 <div className="login-box">
                     <FlashMessagesList />
-
+                  <Notifications />
                     { errors.form && <div className="alert alert-danger">{errors.form}</div> }
-                    <form onSubmit= {this.onSubmit} className="login-form form-responsive">
+                    <form onSubmit={this.onSubmit} className="login-form form-responsive">
                         <label className="signin"><h3>Sign In</h3></label>
                         <div className="form-group">
                             <label htmlFor="usr">Email/Username</label>
@@ -98,10 +103,16 @@ class Login extends React.Component {
 }
 
 Login.protoTypes = {
-    login: React.PropTypes.func.isRequired
+    login: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
 };
 Login.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
-export default connect(null, { login, FlashMessagesList, addFlashMessage })(Login);
+const mapStateToProps = state => ({
+    errors : state.auth.errors
+
+});
+
+export default connect(mapStateToProps, { login, FlashMessagesList, addFlashMessage })(Login);

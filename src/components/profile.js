@@ -1,12 +1,42 @@
 
 /* eslint-disable  */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from './Header/header';
 import Footer from './Footer/footer';
-
+import { fetchBorrowedBooks, returnBook } from '../actions/books';
 
 class Profile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {books: []};
+        this.handleReturnBook = this.handleReturnBook.bind(this);
+    }
+
+    componentDidMount() {
+         this.props.fetchBorrowedBooks(this.props.auth.user.user);
+    }
+    handleReturnBook (id){
+        this.props.returnBook(this.props.auth.user.user, id);
+    }
     render() {
+        const booklist = this.props.books && this.props.books.length ?
+        this.props.books.map((book) =>( 
+                  
+                    <tbody key={book.id}>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><Link to={`/book/${book.book_id}`}>{book.Book.title}</Link></td>
+                            <td>{book.borrowDate}</td>
+                            <td>{book.expectedReturnDate}</td>
+                            <td><button type="submit" onClick={()=>this.handleReturnBook(book.book_id)} className="btn btn-md btn-info btn-borrow">Return Book</button></td>
+                        </tr>
+                       
+                    </tbody>
+               
+         )) : <h4>You have not borrowed any books</h4>;
         return (
             <div>
                 <Header />
@@ -15,12 +45,11 @@ class Profile extends Component {
                         <div className="container">
                             <div className="col-md-3">
                                 <div className="profile-sidebar">
-                                    {/* SIDEBAR USERPIC */}
+                                
                                     <div className="profile-userpic">
                                         <img src="images/profile.jpg" alt className="profile-img" />
                                     </div>
-                                    {/* END SIDEBAR USERPIC */}
-                                    {/* SIDEBAR USER TITLE */}
+                                
                                     <div className="profile-usertitle">
                                         <div className="profile-usertitle-name">
                                       Abioye Sofiat
@@ -29,65 +58,48 @@ class Profile extends Component {
                                             <span className="fa fa-tag" /> Silver
                                         </div>
                                     </div>
-                                    {/* END SIDEBAR USER TITLE */}
-                                    {/* SIDEBAR MENU */}
+                        
                                     <div className="profile-usermenu">
                                         <ul className="nav">
                                             <li className="active">
-                                                <a href="profile.html">
+                                                <Link to="/profile">
                                                     <i className="fa fa-book" />
                                                     Borrowed Books
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="history.html">
+                                            <Link to="/history">
                                                     <i className="fa fa-history" />
-                      Borrow History
-                                                </a>
+                                                  Borrow History
+                                                </Link>
                                             </li>
                                             <li>
                                                 <a href="password.html">
                                                     <i className="fa fa-key" />
-                      Change Password
+                                              Change Password
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
-                                    {/* END MENU */}
                                 </div>
                             </div>
                             <div className="col-md-9">
-                                <div className="profile-content">
-                                    <h3>Borrowed Books</h3>
-                                    <table className="table table-bordered table-responsive table-hello">
-                                        <thead className="blue-grey lighten-4">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Title</th>
-                                                <th>Borrow Date</th>
-                                                <th>Return Due Date</th>
-                                                <th>Return</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td><a href="singlebook.html">My Nigerian Cookbook</a></td>
-                                                <td>24th of July, 2017</td>
-                                                <td>31th of July, 2017</td>
-                                                <td><input type="submit" className="btn btn-md btn-info btn-borrow" defaultValue="Return Book" /></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td><a href="singlebook.html">The dreamers</a></td>
-                                                <td>12th of July, 2017</td>
-                                                <td>26th of July, 2017</td>
-                                                <td><input type="submit" className="btn btn-md btn-info btn-borrow" defaultValue="Return Book" /></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+            <div className="profile-content">
+                <h3>Borrowed Books</h3>
+                <table className="table table-bordered table-responsive table-hello">
+                    <thead className="blue-grey lighten-4">
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Borrow Date</th>
+                            <th>Return Due Date</th>
+                            <th>Return</th>
+                        </tr>
+                    </thead>
+                      {booklist}
+                      </table>
+            </div>
+        </div>
                         </div>
                     </div>
                 </div>
@@ -97,4 +109,22 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+Profile.proptypes = {
+    books: PropTypes.object.isRequired,
+    fetchBorrowedBooks: PropTypes.func.isRequired,
+    returnBook: PropTypes.func.isRequired,
+};
+
+
+Profile.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    books: state.books.books.UserBorrowHistory,
+    auth: state.auth,
+
+});
+
+export default connect(mapStateToProps, { fetchBorrowedBooks, returnBook })(Profile);
+

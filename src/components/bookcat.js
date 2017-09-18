@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import Header from './Header/header';
 import Footer from './Footer/footer';
 import { connect } from 'react-redux';
-import { getBooks } from '../actions/books';
+import { getBooksByCat } from '../actions/books';
 
 /* eslint-disable require-jsdoc */
-class Books extends Component {
+class BookCat extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     componentDidMount() {
-        this.props.getBooks();
+        this.props.getBooksByCat(this.props.match.params.title);
     }
 
     render() {
-        const bookList = this.props.books && this.props.books[0] && this.props.books[0].length ?
-            this.props.books[0].map((book) => (
+        const books = this.props.books;
+        const title = this.props.match.params.title;
+        const bookList = books && books.length ?
+            books.map((book) => (
                 <div className="col-md-3" key={book.id}>
                     <a href={`/book/${book.id}`}>
                         <div className="bookbox">
@@ -30,13 +32,13 @@ class Books extends Component {
                     </a>
                 </div>
 
-            )) : <h4>There are no books in the library</h4>;
+            )) : <h4>There are no books in this category</h4>;
 
         return (
             <div>
                 <Header />
                 <div className="container">
-                    <div><h3>Our Collection</h3></div>
+                    <div><h3>{title}</h3></div>
                     <div className="row">
                         {bookList}
                     </div>
@@ -47,19 +49,19 @@ class Books extends Component {
     }
 }
 
-Books.proptypes = {
-    books: PropTypes.array.isRequired,
-    getBooks: PropTypes.func.isRequired
+BookCat.proptypes = {
+    bookcat: PropTypes.array.isRequired,
+    //getBooks: PropTypes.func.isRequired
 };
 
-Books.contextTypes = {
+BookCat.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    books: state.books,
+    books: state.books.books.books,
 });
 
 
-export default connect(mapStateToProps, { getBooks, })(Books);
+export default connect(mapStateToProps, { getBooksByCat, })(BookCat);
 

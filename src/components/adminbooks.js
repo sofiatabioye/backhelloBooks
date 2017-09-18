@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header/header';
 import { Link } from 'react-router-dom';
 import Footer from './Footer/footer';
@@ -12,20 +13,22 @@ class LibraryBooks extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.onSubmit = this.onDelete.bind(this);
+        // this.handleDelete = this.handleDelete.bind(this);
+        //this.onSubmit = this.onDelete.bind(this);
     }
 
     componentDidMount() {
         this.props.getBooks()
             .then(() => this.setState(() => ({ books: this.props.books })));
     }
-    onDelete(e) {
-        if (window.confirm("Are you sure you want to delete this book?") == true) {
-            alert("You pressed OK!");
-        } else {
-            alert("You pressed Cancel!");
-        }
-    }
+
+    // handleDelete(e) {
+    //     if (window.confirm("Are you sure you want to delete this book?") == true) {
+    //         this.props.deleteBook();
+    //     } else {
+    //         alert("You pressed Cancel!");
+    //     }
+    // }
 
     render() {
         const emptyMessage = (
@@ -37,7 +40,10 @@ class LibraryBooks extends Component {
                 <div className="container">
                     <div><h3>All Books</h3></div>
                     <div className="row">
-                        <div className="pull-right"><a href="/addbook" className="btn btn-info">Create New Book </a></div>
+
+                        <div className="pull-right"><a href="/addbook" className="btn btn-info">Create New Book </a>
+                            <a className="btn btn-success" href="/books/categories">View All Categories</a>
+                        </div>
 
                         <table className="table  sortable table-bordered table-responsive">
                             <thead>
@@ -62,7 +68,7 @@ class LibraryBooks extends Component {
                                             <td>{book.author}</td>
                                             <td>{book.quantity}</td>
                                             <td><Link to={`/editbook/${book.id}`} >Edit</Link></td>
-                                            <td><button onClick={this.onSubmit}><span className="fa fa-trash" /> </button></td>
+                                            <td><button><span className="fa fa-trash" /> </button></td>
                                         </tr>
 
                                     </tbody>
@@ -81,12 +87,12 @@ class LibraryBooks extends Component {
 }
 
 LibraryBooks.proptypes = {
-    books: React.PropTypes.array.isRequired,
-    getBooks: React.PropTypes.func.isRequired
+    books: PropTypes.array.isRequired,
+    getBooks: PropTypes.func.isRequired
 };
 
 LibraryBooks.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

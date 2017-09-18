@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header/header';
 import Footer from './Footer/footer';
 import { getBook, fetchBook } from '../actions/books';
@@ -37,7 +38,6 @@ class EditBook extends Component {
     }
 
   componentWillReceiveProps(nextProps) {
-    console.log("i am inside recieve props", nextProps.book.books);
     this.setState({
       title: nextProps.book.books.title,
       description: nextProps.book.books.description,
@@ -154,10 +154,10 @@ class EditBook extends Component {
 
 
 EditBook.proptypes = {
-    book: React.PropTypes.object.isRequired,
-    fetchBook: React.PropTypes.func.isRequired,
-    getBook: React.PropTypes.func.isRequired,
-    updateBook: React.PropTypes.func.isRequired
+    book: PropTypes.object.isRequired,
+    fetchBook: PropTypes.func.isRequired,
+    getBook: PropTypes.func.isRequired,
+    updateBook: PropTypes.func.isRequired
 
 };
 
