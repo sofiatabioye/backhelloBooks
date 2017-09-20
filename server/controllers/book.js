@@ -30,6 +30,15 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  // lists books by category
+  getBooksByCat (req, res) {
+      const cat_title = req.params.title;
+      return Book
+      .findAll({ where: { category: cat_title} })
+      .then(books => res.status(200).send({ books: books, message: cat_title+' Books' }))
+      .catch(error => res.status(400).send(error));
+  },
+
   // View book information by Id
   retrieve(req, res) {
     return Book

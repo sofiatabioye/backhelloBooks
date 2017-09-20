@@ -47,7 +47,7 @@ export default {
   login(req, res) {
     return User
       .findOne({
-        where: { username: req.body.username, }
+        where: { username: req.body.identifier, }
       })
       .then((user) => {
         if (!user) {
@@ -97,7 +97,7 @@ export default {
                 } })
                 .then((borrowstatus) => {
                   if (borrowstatus) {
-                    res.status(400).send({ message: 'You have already borrowed this book' });
+                    res.status(400).send({ message: 'You have already borrowed this book', book:book});
                   } else {
                     // updates quantity of book borrowed and create borrow history
                     book.update({ quantity: book.quantity - 1 });
@@ -109,7 +109,7 @@ export default {
                       expectedReturnDate: DueDate
                     })
                       .then(() => {
-                        res.status(201).send({ message: 'Book Borrowed Successfully.' });
+                        res.status(201).send({ message: 'Book Borrowed Successfully.', books: book });
                       })
                       .catch(error => res.status(400).send(error));
                   }
@@ -137,10 +137,10 @@ export default {
               res.status(404).send({ message: 'Book Not found' });
             }
             BorrowStatus
-              .findOne({ where: { user_id: req.params.userId, book_id: req.params.bookId } })
+              .findOne({ where: { user_id: req.params.userId, book_id: req.params.bookId, returned: false } })
               .then((borrowstatus) => {
                 if (!borrowstatus) {
-                  res.status(412).send({ message: 'You did not borrow this book' });
+                  res.status(412).send({ message: 'You did not borrow this book'});
                 }
                 book.update({ quantity: book.quantity + 1 });
                 return borrowstatus
@@ -148,9 +148,9 @@ export default {
                     returned: true || borrowstatus.returned,
                     dateReturned: today
                   })
-
+                 
                   .then(() => {
-                    res.status(200).send({ message: 'Book returned successfully.' });
+                    res.status(200).send({ message: 'Book returned successfully.'});
                   })
                   .catch(error => res.status(400).send(error));
               })

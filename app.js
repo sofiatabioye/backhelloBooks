@@ -1,6 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import path from 'path';
 import routes from './server/routes';
 import authorize from './server/helper/auth';
 import checkadmin from './server/helper/checkadmin';
@@ -20,7 +21,9 @@ app.use(bodyParser.json({ type: 'application/*+json' }));
 
 
 routes(app, authorize, checkadmin);
-
+// app.get('/*', (req, res) => res.sendFile(
+//   path.join(path.dirname(__dirname), '/client/public/index.html'))
+// );
 app.get('*', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of nothingness.',
 }));

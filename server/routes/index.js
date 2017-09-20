@@ -11,22 +11,23 @@ const routes = (app, authorize, checkadmin) => {
 
   // User Login Routes
   app.post('/api/v1/users/signup', usersController.create);
-  app.post('/api/v1/users/login', usersController.login);
+  app.post('/api/v1/users/signin', usersController.login);
 
   // This contains the routes that allow a logged in admin user to modify and create books
 
-  app.post('/api/v1/books/create', authorize.authorize, checkadmin.checkAdmin, booksController.create);
+  app.post('/api/v1/books/create', authorize.authorize, booksController.create);
   app.get('/api/v1/books', authorize.authorize, booksController.list);
+  app.get('/api/v1/books/categories/:title', authorize.authorize, booksController.getBooksByCat);
   app.get('/api/v1/books/:bookId', authorize.authorize, booksController.retrieve);
-  app.put('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.update);
+  app.put('/api/v1/books/:bookId', authorize.authorize, booksController.update);
   app.delete('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.destroy);
 
   // This contains the routes that  allow a logged in admin to modify and create categories
-  app.post('/api/v1/categories/create', authorize.authorize, checkadmin.checkAdmin, categoriesController.create);
-  app.get('/api/v1/categories', authorize.authorize, checkadmin.checkAdmin, categoriesController.list);
+  app.post('/api/v1/categories/create', authorize.authorize, categoriesController.create);
+  app.get('/api/v1/categories', authorize.authorize, categoriesController.list);
   app.get('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.retrieve);
   app.put('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.update);
-  app.delete('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.destroy);
+  app.delete('/api/v1/categories/:catId', authorize.authorize, categoriesController.destroy);
 
 
   // This contains routes that allow a logged in user to borrow and return books and borrow history
