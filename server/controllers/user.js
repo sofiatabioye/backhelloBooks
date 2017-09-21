@@ -148,7 +148,7 @@ export default {
                     returned: true || borrowstatus.returned,
                     dateReturned: today
                   })
-                 
+
                   .then(() => {
                     res.status(200).send({ message: 'Book returned successfully.'});
                   })
@@ -174,7 +174,7 @@ export default {
                 res.status(201).send({ message: 'You have not borrowed any book' });
               } else {
                 BorrowStatus
-                  .findAll({ 
+                  .findAll({
                     where: { user_id: req.params.userId },
                     include:[
                       { model: Book,
@@ -182,7 +182,7 @@ export default {
                       }]
                    })
                   .then((borrowstat) => {
-                    res.status(200).send({ 
+                    res.status(200).send({
                       UserBorrowHistory: borrowstat
                     });
                   })
@@ -225,7 +225,12 @@ export default {
         }
       })
       .catch(error => res.status(400).send(error));
-  }
+  },
 
 
+changepass (req, res) {
+     
+}
 };
+
+
