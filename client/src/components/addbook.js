@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Image, CloudinaryContext, Transformation } from 'cloudinary-react';
 import Header from './Header/header';
 import Footer from './Footer/footer';
 
@@ -26,14 +27,30 @@ class AddBook extends Component {
             publisher: '',
             size: '',
             image: '',
+            imageName: '',
+            public_id: null,
+            imageVersion: null,
             errors: {},
-            isLoading: false
+            isLoading: false,
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.uploadWidget = this.uploadWidget.bind(this);
     }
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+    uploadWidget() {
+        console.log(this.state.public_id);
+        cloudinary.openUploadWidget({ cloud_name: 'ddvm5tzhm', upload_preset: 'sxzf4j4p', tags: ['books'], public_id: this.state.public_id, version: this.state.imageVersion },
+            (error, result) => {
+                this.setState({
+                    image: result[0].url,
+                    imageName: result[0].original_filename,
+                    public_id: result[0].public_id,
+                    imageVersion: result[0].version,
+                });
+            });
     }
     isValid() {
         const { errors, isValid } = validateBook(this.state);
@@ -47,14 +64,12 @@ class AddBook extends Component {
     onSubmit(e) {
         e.preventDefault();
         if (this.isValid()) {
-            console.log(this.state);
             this.props.saveBooks(this.state).then(
                 (res) => {
                     console.log(res);
                     this.context.router.history.push('/librarybooks');
                 },
                 (err) => {
-                    
                     this.setState({
                         isLoading: false
                     });
@@ -71,6 +86,7 @@ class AddBook extends Component {
 
     render() {
         const { errors, isLoading } = this.state;
+        console.log(this.state);
         // title, description, category, author, isbn, edition, publisher, size, quantity, image,
         return (
             <div>
@@ -118,7 +134,18 @@ class AddBook extends Component {
                             <input type="number" name="quantity" value={this.state.quantity} onChange={this.onChange} className="form-control" min={1} required />
                             {errors.quantity && <span className="help-text">{errors.quantity}</span> }
                             <h6>Image (Book Cover)</h6>
-                            <input type="file" name="image" value={this.state.image} onChange={this.onChange} className="form-control"/>
+                            <div>
+                                {this.state.imageName}
+                            </div>
+                            <div className="upload" id="filename">
+                                <button onClick={this.uploadWidget.bind(this)} className="btn btn-primary btn-sm upload-button">
+
+                                    {this.state.image === '' && <span>Add BookCover</span>}
+
+                                    {this.state.image !== '' && <span>Change Book</span>}
+                                </button>
+                            </div>
+
                             {errors.image && <span className="help-text">{errors.image}</span> }
                         </div>
                         <button type="submit" className="btn btn-info btn-lg" disabled={isLoading} >Create Book</button>

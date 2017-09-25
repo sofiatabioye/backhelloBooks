@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 import { getCategories } from '../../actions/category';
@@ -33,14 +34,13 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         //this.state = { categories: [] };
-        
     }
 
     logout(e) {
         e.preventDefault();
         this.props.logout();
     }
-    componentWillMount () {
+    componentWillMount() {
         this.props.getCategories().then(() => {
             this.setState({ categories: this.props.categories });
         });
@@ -64,7 +64,6 @@ class Header extends React.Component {
 
 
     render() {
-        console.log(this.state);
         const { isAuthenticated } = this.props.auth;
         const profileList = (
             <li className="dropdown">
@@ -81,7 +80,7 @@ class Header extends React.Component {
 
         const userLinks = cat && cat.length ?
             cat.map((category) => (
-                <li ><NavLink to={`/books/${category.title}/${category.id}`}  key={category.id} >{category.title}</NavLink></li>
+                <li key={category.id}><NavLink to={`/books/${category.title}/${category.id}`} >{category.title}</NavLink></li>
             )) : <h6>No categories</h6>;
 
 
@@ -125,10 +124,10 @@ class Header extends React.Component {
     }
 }
 
-Header.propTypes = {
-    auth: React.PropTypes.object.isRequired,
-    logout: React.PropTypes.func.isRequired,
-    getCategories: React.PropTypes.func.isRequired
+Header.proptypes = {
+    auth: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
+    getCategories: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

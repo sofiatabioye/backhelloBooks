@@ -25,6 +25,9 @@ class EditBook extends Component {
         publisher: '',
         size: '',
         image: '',
+        imageName: '',
+        public_id: null,
+        imageVersion: null,
         errors: {},
         isLoading: false
     };
@@ -48,11 +51,14 @@ class EditBook extends Component {
       author: nextProps.book.books.author,
       edition: nextProps.book.books.bookEdition,
       publisher: nextProps.book.books.publisher,
-      image: "none for now"
+      image: nextProps.book.books.image,
+      imageName:  nextProps.book.books.imageName,
+      public_id:  nextProps.book.books.public_id,
+      imageVersion:  nextProps.book.books.imageVersion,
     })
   }
 
-    onChange(e) {
+  onChange(e) {
       this.setState({ [e.target.name]: e.target.value });
   }
   isValid() {
@@ -62,6 +68,19 @@ class EditBook extends Component {
         return;
     }
     return isValid;
+   }
+
+   uploadWidget() {
+       CONSOLE.LOG(this.state);
+    cloudinary.openUploadWidget({ cloud_name: 'ddvm5tzhm', upload_preset: 'sxzf4j4p', tags: ['books'], public_id: this.state.public_id, version: this.state.imageVersion, max_files: 1, },
+        (error, result) => {
+            this.setState({
+                image: result[0].secure_url,
+                imageName: result[0].original_filename,
+                public_id: result[0].public_id,
+                imageVersion: result[0].version
+            });
+        });
 }
 
   onSubmit(e) {
@@ -135,10 +154,16 @@ class EditBook extends Component {
                     <h6>Quantity</h6>
                     <input type="number" name="quantity" value={this.state.quantity} onChange={this.onChange} className="form-control" min={1} required />
                     {errors.quantity && <span className="help-text">{errors.quantity}</span> }
-                     
-                        <h6>Image (Book Cover)</h6>
-                        
-                        <input type="textbox" name="image" value={this.state.image} onChange={this.onChange} className="form-control"/>
+                     <h6>Image</h6>
+                    <div className="upload" id="filename">
+                    <div> {this.state.imageName}</div>
+                    <button onClick={this.uploadWidget.bind(this)} className="btn btn-primary btn-sm upload-button">
+
+                        {this.state.image === '' && <span>Add BookCover</span>}
+
+                        {this.state.image !== '' && <span>Change Book</span>}
+                    </button>
+                </div>
                         {errors.image && <span className="help-text">{errors.image}</span> }
                     </div>
                     <button type="submit" className="btn btn-info btn-lg" disabled={isLoading} >SAVE</button>

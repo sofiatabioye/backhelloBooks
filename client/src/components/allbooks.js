@@ -22,11 +22,11 @@ class Books extends Component {
                 <div className="col-md-3" key={book.id}>
                     <a href={`/book/${book.id}`}>
                         <div className="bookbox">
-                            <img src="../assets/images/home.png" className="bookcover" role="presentation" />
+                            <img src={book.image} className="bookcover" role="presentation" />
                             <div className="booktitle">{book.title}</div>
                             <div className="bookcat"><span className="glyphicon glyphicon-tag" /> {book.category}</div>
                             <div className="description">{book.description}...</div>
-                            
+
                         </div>
                     </a>
                 </div>
@@ -63,4 +63,3 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps, { getBooks, })(Books);
-

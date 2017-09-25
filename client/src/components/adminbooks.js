@@ -4,7 +4,7 @@ import Header from './Header/header';
 import { Link } from 'react-router-dom';
 import Footer from './Footer/footer';
 import { connect } from 'react-redux';
-import { getBooks, setBooks } from '../actions/books';
+import { getBooks, setBooks, deleteBook } from '../actions/books';
 import { addFlashMessage } from '../actions/flashmessages';
 
 
@@ -13,8 +13,7 @@ class LibraryBooks extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        // this.handleDelete = this.handleDelete.bind(this);
-        //this.onSubmit = this.onDelete.bind(this);
+        this.handleDeleteBook = this.handleDeleteBook.bind(this);
     }
 
     componentDidMount() {
@@ -22,18 +21,31 @@ class LibraryBooks extends Component {
             .then(() => this.setState(() => ({ books: this.props.books })));
     }
 
-    // handleDelete(e) {
-    //     if (window.confirm("Are you sure you want to delete this book?") == true) {
-    //         this.props.deleteBook();
-    //     } else {
-    //         alert("You pressed Cancel!");
-    //     }
-    // }
+    handleDeleteBook(id) {
+        if (window.confirm("Are you sure you want to delete this book?") == true) {
+            this.props.deleteBook(id);
+        } else {
+            alert("You pressed Cancel!");
+        }
+    }
 
     render() {
         const emptyMessage = (
-            <div><h4>There are no books in the library yet</h4></div>
+            <h4>There are no books in the library yet</h4>
         );
+        const bookList = this.props.books && this.props.books[0] && this.props.books[0].length ?
+            this.props.books[0].map((book, index) => (
+                <tr key={book.id}>
+                    <th scope="row">{index + 1}</th>
+                    <td><a href={`/book/${book.id}`}> {book.title} </a> </td>
+                    <td>{book.category}</td>
+                    <td>{book.author}</td>
+                    <td>{book.quantity}</td>
+                    <td><Link to={`/editbook/${book.id}`} >Edit</Link></td>
+                    <td><button><span className="fa fa-trash" onClick={() => this.handleDeleteBook(book.id)} /> </button></td>
+                </tr>
+
+            )) : <tr><td>There are no books in the library yet</td></tr>;
         return (
             <div>
                 <Header />
@@ -57,23 +69,9 @@ class LibraryBooks extends Component {
                                     <th>Delete</th>
                                 </tr>
                             </thead>
-                            { this.props.books && this.props.books[0] && this.props.books[0].length ?
-                                this.props.books[0].map((book, id) => (
-                                    <tbody key={book.id}>
-
-                                        <tr>
-                                            <th scope="row">{ book.id}</th>
-                                            <td><Link to={`/book/${book.id}`}> {book.title} </Link> </td>
-                                            <td>{book.category}</td>
-                                            <td>{book.author}</td>
-                                            <td>{book.quantity}</td>
-                                            <td><Link to={`/editbook/${book.id}`} >Edit</Link></td>
-                                            <td><button><span className="fa fa-trash" /> </button></td>
-                                        </tr>
-
-                                    </tbody>
-                                )) : emptyMessage
-                            }
+                            <tbody >
+                                {bookList}
+                            </tbody>
                         </table>
 
 
@@ -88,7 +86,8 @@ class LibraryBooks extends Component {
 
 LibraryBooks.proptypes = {
     books: PropTypes.array.isRequired,
-    getBooks: PropTypes.func.isRequired
+    getBooks: PropTypes.func.isRequired,
+    deleteBook: PropTypes.func.isRequired
 };
 
 LibraryBooks.contextTypes = {
@@ -98,5 +97,5 @@ LibraryBooks.contextTypes = {
 const mapStateToProps = state => ({
     books: state.books
 });
-export default connect(mapStateToProps, { getBooks, addFlashMessage, setBooks })(LibraryBooks);
+export default connect(mapStateToProps, { getBooks, addFlashMessage, setBooks, deleteBook })(LibraryBooks);
 

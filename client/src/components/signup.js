@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
 import Header from './Header/header';
 import Footer from './Footer/footer';
 import { signup } from '../actions/auth';
@@ -114,11 +114,11 @@ class SignUp extends React.Component {
     }
 }
 
-SignUp.protoTypes = {
-    signup: React.PropTypes.func.isRequired
+SignUp.prototypes = {
+    signup: PropTypes.func.isRequired
 };
 SignUp.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
 export default connect(null, { signup, FlashMessagesList, addFlashMessage })(SignUp);

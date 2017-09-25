@@ -16,7 +16,7 @@ class BookCat extends Component {
 
     componentDidMount() {
         this.props.getBooksByCat(this.props.match.params.title);
-    } 
+    }
     componentWillReceiveProps(nextProps) {
         if (this.props.match.params.title !== nextProps.match.params.title) {
             nextProps.getBooksByCat(nextProps.match.params.title);
@@ -24,7 +24,7 @@ class BookCat extends Component {
     }
 
     render() {
-        const {book} = this.state;
+        const { book } = this.state;
         console.log(this.props);
         const books = this.props.books;
         const title = this.props.match.params.title;
@@ -33,7 +33,7 @@ class BookCat extends Component {
                 <div className="col-md-3" key={book.id}>
                     <a href={`/book/${book.id}`}>
                         <div className="bookbox">
-                            <img src="../assets/images/home.png" className="bookcover" role="presentation" />
+                            <img src={book.image} className="bookcover" role="presentation" />
                             <div className="booktitle">{book.title}</div>
                             <div className="bookcat"><span className="glyphicon glyphicon-tag" /> {book.category}</div>
                             <div className="description">{book.description}...</div>
@@ -61,7 +61,6 @@ class BookCat extends Component {
 
 BookCat.proptypes = {
     bookcat: PropTypes.array.isRequired,
-    //getBooks: PropTypes.func.isRequired
 };
 
 BookCat.contextTypes = {

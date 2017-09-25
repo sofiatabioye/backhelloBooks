@@ -14,12 +14,19 @@ class Categories extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            categories: [],
             title: '',
             isLoading: false,
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.categories !== this.props.categories) {
+            this.setState({ categories: nextProps.categories });
+        }
     }
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
@@ -43,6 +50,7 @@ class Categories extends Component {
                 });
             }
         );
+        //window.location.reload();
     }
 
     render() {

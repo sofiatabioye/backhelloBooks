@@ -84,17 +84,15 @@ export function borrowBook(userId, bookId, history) { // eslint-disable-line req
     };
 }
 export function returnBook(userId, bookId) { // eslint-disable-line require-jsdoc
-    return (dispatch) => 
-    {
-        return axios.put(`/api/v1/users/${userId}/books/${bookId}/return`)
-        .then((response) => {
-            dispatch({ type: 'RETURN_BOOK_SUCCESS', id: bookId });
-            return response.data;
-        }, (err) => {
-            dispatch({ type: 'RETURN_BOOK_FAILURE', errors: err.response.data.message});
-            return err;
-        });
-    }
+    return (dispatch) =>
+        axios.put(`/api/v1/users/${userId}/books/${bookId}/return`)
+            .then((response) => {
+                dispatch({ type: 'RETURN_BOOK_SUCCESS', id: bookId });
+                return response.data;
+            }, (err) => {
+                dispatch({ type: 'RETURN_BOOK_FAILURE', errors: err.response.data.message });
+                return err;
+            });
 }
 export function fetchBorrowedBooks(userId) { // eslint-disable-line require-jsdoc
     return (dispatch) => {
@@ -124,7 +122,7 @@ export function fetchBorrowHistory(userId) { // eslint-disable-line require-jsdo
     };
 }
 
-export function deleteBooks(id) { // eslint-disable-line require-jsdoc
+export function deleteBook(id) { // eslint-disable-line require-jsdoc
     return dispatch => axios.delete(`/api/v1/books/${id}`);
 }
 

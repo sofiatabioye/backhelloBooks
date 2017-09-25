@@ -29,19 +29,18 @@ class SingleBook extends Component {
         const userId = this.props.auth.user.user;
         const bookId = this.props.books.books.id;
         this.props.borrowBook(userId, bookId, this.props.history).then(() => {
-         notify.toast("sucesss")
+            notify.toast("sucesss");
         },
-        (err) => {notify.toast("failure")});
-        
+        (err) => { notify.toast("failure"); });
     }
-   
+
 
     render() {
         const error = this.props.books.errors;
         const success = this.props.books.message;
-        const errorMessage = error ? error : "";
-        const book = this.props.books.books;   
-        const bookstat= book ? book : '';
+        const errorMessage = error || "";
+        const book = this.props.books.books;
+        const bookstat = book || '';
         const { isLoading, canBorrow, errors } = this.state;
         const BorrowButton = (
             <div className="col-ava">
@@ -56,16 +55,16 @@ class SingleBook extends Component {
         return (
             <div>
                 <Header />
-                 
+
                 <div className="container container-me">
                     <Notifications />
-                    <FlashMessagesList /> 
-                    
+                    <FlashMessagesList />
+
                     <div><h3>{book.title} </h3></div>
-                    
+
                     <div className="row">
                         <div className="col-md-3">
-                            <img src="images/cook.jpeg" className="book_image" role="presentation"/>
+                            <img src={book.image} className="book_image" role="presentation"/>
                         </div>
                         <div className="col-md-9 singlebook_details">
                             <div> <b>Category:</b> { book.category }</div>
@@ -106,5 +105,5 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps, { fetchBook, borrowBook, FlashMessagesList, Notifications})(SingleBook);
+export default connect(mapStateToProps, { fetchBook, borrowBook, FlashMessagesList, Notifications })(SingleBook);
 
