@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 import store from './store/store';
 import './assets/css/main.css';
 import App from './App';
-import './App.css';
 import registerServiceWorker from './registerServiceWorker';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/auth';

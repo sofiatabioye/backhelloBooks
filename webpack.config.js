@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-webpack = require('webpack');
+const webpack = require('webpack');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     template: './client/public/index.html',
@@ -22,13 +22,13 @@ module.exports = {
         host: 'localhost', // Defaults to `localhost`
         port: 8080, // Defaults to 8080
         proxy: {
-          '/api/v1/*': {
-            target: 'http://localhost:8000/',
-            secure: false,
-            changeOrigin: true,
-          },
+            '/api/v1/*': {
+                target: 'http://localhost:8000/',
+                secure: false,
+                changeOrigin: true,
+            },
         },
-      },
+    },
     module: {
         rules: [
             {

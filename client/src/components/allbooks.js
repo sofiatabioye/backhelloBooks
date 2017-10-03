@@ -1,24 +1,67 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from './Header/header';
-import Footer from './Footer/footer';
 import { connect } from 'react-redux';
+import { Pagination } from 'react-bootstrap';
+
+import Header from './Header/header';
+import BooksFooter from './Footer/footer';
 import { getBooks } from '../actions/books';
 
-/* eslint-disable require-jsdoc */
+
+/**
+ * 
+ * 
+ * @class Books
+ * @extends {Component}
+ */
 class Books extends Component {
+    /**
+     * Creates an instance of Books.
+     * @param {any} props 
+     * @memberof Books
+     */
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            books: [],
+            currentPageNumber: 0,
+            totalItems: 0,
+            itemsPerPage: 0
+        };
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
+
+    /**
+     * 
+     * @returns {Books} This fetches all books from the api
+     * @memberof Books
+     */
     componentDidMount() {
         this.props.getBooks();
     }
 
+
+    /**
+     * 
+     * @returns {CurrentPageNumber} This returns the current number of the page
+     * @param {any} number 
+     * @memberof Books
+     */
+    handleSelect(number) {
+        this.setState({ currentPageNumber: number });
+    }
+
+    /**
+     * 
+     * 
+     * @returns {Books} This displays all books for authenticated users to see
+     * @memberof Books
+     */
     render() {
-        const bookList = this.props.books && this.props.books[0] && this.props.books[0].length ?
-            this.props.books[0].map((book) => (
+        const pager = this.props.pager;
+        const bookList = this.props.books && this.props.books && this.props.books.length ?
+            this.props.books.map((book) => (
                 <div className="col-md-3" key={book.id}>
                     <a href={`/book/${book.id}`}>
                         <div className="bookbox">
@@ -41,8 +84,13 @@ class Books extends Component {
                     <div className="row">
                         {bookList}
                     </div>
+                    <Pagination
+                        bsSize="medium"
+                        items={8}
+                        activePage={2}
+                        onSelect={this.handleSelect}/>
                 </div>
-                <Footer />
+                <BooksFooter />
             </div>
         );
     }
@@ -58,7 +106,8 @@ Books.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-    books: state.books,
+    books: state.books.books,
+    pager: state.books.pagination
 });
 
 

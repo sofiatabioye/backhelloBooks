@@ -1,7 +1,8 @@
+import Sequelize from 'sequelize';
 import models from '../models/index';
 
 const Category = models.Category;
-
+const Book = models.Book;
 export default {
 
     // Admin create category
@@ -14,7 +15,7 @@ export default {
             .create({
                 title: Title
             })
-            .then(category => res.status(201).send({ category, message: 'Category Created Successfully' }))
+            .then(categories => res.status(201).send({ categories, message: 'Category Created Successfully' }))
             .catch(error => res.status(400).send(error));
     },
 

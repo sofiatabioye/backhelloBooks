@@ -30,17 +30,29 @@ export function login(userData, history) {
         (err) => {
             dispatch({ type: 'USER_LOGIN_FAILURE', errors: err.response.data });
         }
-        
+
         );
 }
 
 export function signup(userData) {
     return (dispatch) => axios.post('/api/v1/users/signup', userData)
         .then((response) => {
-            console.log(response);
+            dispatch({ type: 'USER_SIGNUP_SUCCESS', message: response.data.message });
         },
-        (errors) => console.log(errors)
+        (err) => {
+            dispatch({ type: 'USER_SIGNUP_FAILURE', errors: err.response.data });
+        }
         );
+}
+
+export function changepassword(data, userId) {
+    return (dispatch) => axios.post(`/api/v1/user/${userId}/changepassword`, data)
+        .then((response) => {
+            dispatch({ type: 'CHANGE_PASSWORD_SUCCESS', message: response.data.message });
+        })
+        .catch((err) => {
+            dispatch({ type: 'CHANGE_PASSWORD_FAILURE', errors: err.response.data });
+        });
 }
 
 export default {};

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Notifications, { notify } from 'react-notify-toast';
+
 import Header from './Header/header';
 import Footer from './Footer/footer';
 import { login } from '../actions/auth';
@@ -14,8 +15,12 @@ import FlashMessagesList from './flash/FlashMessagesList';
  * @class Login
  * @extends {React.Component}
  */
-/* eslint-disable require-jsdoc */
 class Login extends React.Component {
+    /**
+     * Creates an instance of Login.
+     * @param {any} props 
+     * @memberof Login
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -27,10 +32,25 @@ class Login extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+
+
+    /**
+     * 
+     * @returns {void}
+     * @param {any} e 
+     * @memberof Login
+     */
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+
+    /**
+     * 
+     * 
+     * @returns {validatedInput} Validates form input
+     * @memberof Login
+     */
     isValid() {
         const { errors, isValid } = validateInput(this.state);
         if (!isValid) {
@@ -40,14 +60,27 @@ class Login extends React.Component {
         return isValid;
     }
 
+    /**
+     * 
+     * @returns {User} submits user login details
+     * @param {any} e 
+     * @memberof Login
+     */
     onSubmit(e) {
         e.preventDefault();
         if (this.isValid()) {
             this.props.login(this.state, this.props.history);
         }
     }
+
+    /**
+     * 
+     * 
+     * @returns {Form} User login form
+     * @memberof Login
+     */
     render() {
-        const error =this.props.errors;
+        const error = this.props.errors;
         const errorMessage = error ? error.message : '';
         const { errors, isLoading } = this.state;
         return (
@@ -56,19 +89,19 @@ class Login extends React.Component {
 
                 <div className="login-box">
                     <FlashMessagesList />
-            
+
                     { errorMessage && <div className="alert alert-danger">{errorMessage}</div> }
                     <form onSubmit={this.onSubmit} className="login-form form-responsive">
                         <label className="signin"><h3>Sign In</h3></label>
                         <div className="form-group">
                             <label htmlFor="usr">Email/Username</label>
                             <input type="text" value={this.state.identifier} onChange={this.onChange} name="identifier"
-                                placeholder="Email/Username" className="form-control" />
+                                placeholder="Email/Username" className="form-control" required/>
                             {errors.identifier && <span className="help-text">{errors.identifier}</span> }
                         </div>
                         <div className="form-group">
                             <label htmlFor="pwd">Password</label>
-                            <input type="password" value={this.state.password} onChange={this.onChange} name="password" placeholder="Password" className="form-control" />
+                            <input type="password" value={this.state.password} onChange={this.onChange} name="password" placeholder="Password" className="form-control" required />
                             <span className="help-text">{errors.password}</span>
                         </div>
 
@@ -85,13 +118,13 @@ Login.protoTypes = {
     login: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
 };
+
 Login.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    errors : state.auth.errors
-
+    errors: state.auth.errors
 });
 
-export default connect(mapStateToProps, { login, FlashMessagesList})(Login);
+export default connect(mapStateToProps, { login, FlashMessagesList })(Login);

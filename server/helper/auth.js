@@ -16,6 +16,7 @@ export default {
                     res.status(403).send({ message: reply });
                 } else {
                     req.locals = decoded.role;
+                    req.level = decoded.level;
                     next();
                 }
             });

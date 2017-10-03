@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Image, CloudinaryContext, Transformation } from 'cloudinary-react';
+
 import Header from './Header/header';
 import Footer from './Footer/footer';
-
-
 import { saveBooks } from '../actions/books';
-
 import validateBook from './utils/validateBook';
 import { addFlashMessage } from '../actions/flashmessages';
 import FlashMessagesList from './flash/FlashMessagesList';
 
-/* eslint-disable require-jsdoc */
+
+/**
+ * 
+ * @class AddBook
+ * @extends {Component}
+ */
 class AddBook extends Component {
+    /**
+     * Creates an instance of AddBook.
+     * @param {any} props 
+     * @memberof AddBook
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -37,9 +44,22 @@ class AddBook extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.uploadWidget = this.uploadWidget.bind(this);
     }
+
+    /**
+     * 
+     * @returns {changedInput} This saves input as it is changed
+     * @param {any} e 
+     * @memberof AddBook
+     */
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
+
+    /**
+     * @returns {Image} This uploads the image to cloudinary
+     * 
+     * @memberof AddBook
+     */
     uploadWidget() {
         console.log(this.state.public_id);
         cloudinary.openUploadWidget({ cloud_name: 'ddvm5tzhm', upload_preset: 'sxzf4j4p', tags: ['books'], public_id: this.state.public_id, version: this.state.imageVersion },
@@ -52,6 +72,13 @@ class AddBook extends Component {
                 });
             });
     }
+
+    /**
+     * 
+     * 
+     * @returns  {validatedInput} This checks if form input is correct
+     * @memberof AddBook
+     */
     isValid() {
         const { errors, isValid } = validateBook(this.state);
         if (!isValid) {
@@ -61,6 +88,12 @@ class AddBook extends Component {
         return isValid;
     }
 
+    /**
+     * 
+     * @returns {void}
+     * @param {any} e 
+     * @memberof AddBook
+     */
     onSubmit(e) {
         e.preventDefault();
         if (this.isValid()) {
@@ -84,17 +117,20 @@ class AddBook extends Component {
         }
     }
 
+
+    /**
+     * 
+     * 
+     * @returns {form} This shows the form to add a new book 
+     * @memberof AddBook
+     */
     render() {
         const { errors, isLoading } = this.state;
-        console.log(this.state);
-        // title, description, category, author, isbn, edition, publisher, size, quantity, image,
         return (
             <div>
                 <Header />
                 <div className="container container-me">
                     <div><h3>Add New Book</h3></div>
-                    <FlashMessagesList />
-
                     { errors.form && <div className="alert alert-danger">{errors.form}</div> }
                     <form onSubmit={this.onSubmit} className="form-me form-responsive">
 
@@ -157,7 +193,6 @@ class AddBook extends Component {
         );
     }
 }
-
 
 AddBook.protoTypes = {
     saveBooks: PropTypes.func.isRequired

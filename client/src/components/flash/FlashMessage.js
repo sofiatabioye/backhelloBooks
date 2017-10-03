@@ -3,11 +3,27 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 
-/* eslint-disable require-jsdoc, class-methods-use-this */
+/**
+ * 
+ * 
+ * @class FlashMessage
+ * @extends {React.Component}
+ */
 class FlashMessage extends React.Component {
+    /**
+     * 
+     * @returns {FlashMessage} Deletes Flash Message
+     * @memberof FlashMessage
+     */
     componentWillUnmount() {
         this.props.deleteFlashMessage(this.props.message.id);
     }
+
+
+    /**
+     * @returns {FlashMessage} This displays the message format
+     * @memberof FlashMessage
+     */
     render() {
         const { type, text } = this.props.message;
         return (
@@ -16,16 +32,16 @@ class FlashMessage extends React.Component {
                 'alert-danger': type === 'error',
                 'alert-info': type === 'info'
             })}>
-                {(Object.prototype.hasOwnProperty.call(text, 'message')
-        && typeof text.message === 'object') &&
+                {(Object.prototype.hasOwnProperty.call(text, 'message') &&
+        typeof text.message === 'object') &&
             <ul>
                 { text.message.map((value, index) =>
                     <li key={index}>{value.message}</li>
                 ) }
             </ul>
                 }
-                {(Object.prototype.hasOwnProperty.call(text, 'message')
-            && typeof text.message === 'string') &&
+                {(Object.prototype.hasOwnProperty.call(text, 'message') &&
+            typeof text.message === 'string') &&
               text.message
                 }
 

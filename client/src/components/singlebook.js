@@ -1,52 +1,84 @@
-/* eslint-disable require-jsdoc */
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Notifications, { notify } from 'react-notify-toast';
 import React, { Component } from 'react';
+
 import Header from './Header/header';
-import Footer from './Footer/footer';
+import BookFooter from './Footer/footer';
 import { fetchBook, borrowBook } from '../actions/books';
 import FlashMessagesList from './flash/FlashMessagesList';
 
+/**
+ * 
+ * 
+ * @class SingleBook
+ * @extends {Component}
+ */
 class SingleBook extends Component {
+    /**
+     * Creates an instance of SingleBook.
+     * @param {any} props 
+     * @memberof SingleBook
+     */
     constructor(props) {
         super(props);
         this.state = {
             errors: "",
             message: " ",
             isLoading: false,
-            canBorrow: false,
+            disabled: false,
         };
+
         this.borrowbook = this.borrowbook.bind(this);
-        this.show = notify.createShowQueue();
+        this.goback = this.goback.bind(this);
     }
 
+    /**
+     * 
+     * @returns {Book} returns book by id
+     * @memberof SingleBook
+     */
     componentDidMount() {
         this.props.fetchBook(this.props.match.params.id);
     }
 
+    /**
+     * @returns {Book} borrowed by user
+     * 
+     * @memberof SingleBook
+     */
     borrowbook() {
         const userId = this.props.auth.user.user;
         const bookId = this.props.books.books.id;
-        this.props.borrowBook(userId, bookId, this.props.history).then(() => {
-            notify.toast("sucesss");
-        },
-        (err) => { notify.toast("failure"); });
+        this.props.borrowBook(userId, bookId, this.props.history);
+    }
+
+    /**
+     * @returns {Page} previous page
+     * 
+     * @param {any} e 
+     * @memberof SingleBook
+     */
+    goback(e) {
+        e.preventDefault();
+        window.history.go(-1);
     }
 
 
+    /**
+     * 
+     * 
+     * @returns {Book} information
+     * @memberof SingleBook
+     */
     render() {
-        const error = this.props.books.errors;
-        const success = this.props.books.message;
-        const errorMessage = error || "";
+        const error = this.props.errors;
+        const success = this.props.message;
         const book = this.props.books.books;
-        const bookstat = book || '';
-        const { isLoading, canBorrow, errors } = this.state;
         const BorrowButton = (
             <div className="col-ava">
                 {book.quantity >= 1 &&
                 <h3> Book Available
-                    <button className="btn btn-info btn-lg" onClick={this.borrowbook}>Borrow Book</button>
+                    <button className="btn btn-info btn-lg" onClick={this.borrowbook} disabled={this.state.canBorrow} >Borrow Book</button>
                 </h3>
                 }
                 {book.quantity < 1 && <h3>  Book not Available</h3> }
@@ -55,13 +87,11 @@ class SingleBook extends Component {
         return (
             <div>
                 <Header />
-
                 <div className="container container-me">
-                    <Notifications />
-                    <FlashMessagesList />
-
+                    <button className="btn btn-sm btn-success" onClick={this.goback}>Go back</button>
+                    { error !== null && <p className="red-text" >{error}</p> }
+                    { success !== null && <p className="text-success" >{success}</p> }
                     <div><h3>{book.title} </h3></div>
-
                     <div className="row">
                         <div className="col-md-3">
                             <img src={book.image} className="book_image" role="presentation"/>
@@ -78,11 +108,9 @@ class SingleBook extends Component {
                         {BorrowButton}
                     </div>
                 </div>
-
-                <Footer />
+                <BookFooter />
             </div>
         );
-        // }
     }
 }
 
@@ -90,7 +118,8 @@ SingleBook.proptypes = {
     books: PropTypes.array.isRequired,
     fetchBook: PropTypes.func.isRequired,
     borrowBook: PropTypes.func.isRequired,
-    error: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
+    message: PropTypes.object.isRequired,
 };
 
 
@@ -101,9 +130,9 @@ SingleBook.contextTypes = {
 const mapStateToProps = state => ({
     books: state.books,
     auth: state.auth,
-    errors: state.books.errors
-
+    errors: state.books.errors,
+    message: state.books.message,
 });
 
-export default connect(mapStateToProps, { fetchBook, borrowBook, FlashMessagesList, Notifications })(SingleBook);
+export default connect(mapStateToProps, { fetchBook, borrowBook, FlashMessagesList })(SingleBook);
 

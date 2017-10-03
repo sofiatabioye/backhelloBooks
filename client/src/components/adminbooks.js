@@ -1,40 +1,67 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from './Header/header';
 import { Link } from 'react-router-dom';
-import Footer from './Footer/footer';
 import { connect } from 'react-redux';
+
+import Header from './Header/header';
+import Footer from './Footer/footer';
 import { getBooks, setBooks, deleteBook } from '../actions/books';
 import { addFlashMessage } from '../actions/flashmessages';
 
 
-/* eslint-disable require-jsdoc */
+/**
+ * 
+ * 
+ * @class LibraryBooks
+ * @extends {Component}
+ */
 class LibraryBooks extends Component {
+    /**
+     * Creates an instance of LibraryBooks.
+     * @param {any} props 
+     * @memberof LibraryBooks
+     */
     constructor(props) {
         super(props);
         this.state = {};
         this.handleDeleteBook = this.handleDeleteBook.bind(this);
     }
 
+    /**
+     * 
+     * @returns {Books} This fetches books from the api
+     * @memberof LibraryBooks
+     */
     componentDidMount() {
         this.props.getBooks()
             .then(() => this.setState(() => ({ books: this.props.books })));
     }
 
+    /**
+     * 
+     * 
+     * @returns {void}
+     * @param {any} id 
+     * @memberof LibraryBooks
+     */
     handleDeleteBook(id) {
         if (window.confirm("Are you sure you want to delete this book?") == true) {
             this.props.deleteBook(id);
+            window.location.reload();
         } else {
             alert("You pressed Cancel!");
         }
     }
 
+    /**
+     * 
+     * 
+     * @returns {books} This displays all the books in the library
+     * @memberof LibraryBooks
+     */
     render() {
-        const emptyMessage = (
-            <h4>There are no books in the library yet</h4>
-        );
-        const bookList = this.props.books && this.props.books[0] && this.props.books[0].length ?
-            this.props.books[0].map((book, index) => (
+        const bookList = this.props.books && this.props.books && this.props.books.length ?
+            this.props.books.map((book, index) => (
                 <tr key={book.id}>
                     <th scope="row">{index + 1}</th>
                     <td><a href={`/book/${book.id}`}> {book.title} </a> </td>
@@ -73,8 +100,6 @@ class LibraryBooks extends Component {
                                 {bookList}
                             </tbody>
                         </table>
-
-
                     </div>
                 </div>
                 <Footer />
@@ -95,7 +120,7 @@ LibraryBooks.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-    books: state.books
+    books: state.books.books
 });
 export default connect(mapStateToProps, { getBooks, addFlashMessage, setBooks, deleteBook })(LibraryBooks);
 
