@@ -13,35 +13,39 @@ Here is a link to the heroku hosted version : https://hello--books.herokuapp.com
 
 This app was built using the express fraamework with Node Js, Postgres and Sequelize ORM. 
 
-
+## Features
+Login/Sign up to gain access to books in the library
+Books are in categories
+Ability to borrow books repeatedly
+View your reading/borrowing history
+Admin access to modify book details
 
 ## API ROUTES
 
   * User Login Routes
-  app.post('/api/v1/users/signup', usersController.create);
-  app.post('/api/v1/users/login', usersController.login);
+  POST /api/v1/users/signup
+  POST /api/v1/users/login
 
   * This contains the routes that allow a logged in admin user to modify and create books
-
-  app.post('/api/v1/books/create', authorize.authorize, checkadmin.checkAdmin, booksController.create);
-  app.get('/api/v1/books', authorize.authorize, booksController.list);
-  app.get('/api/v1/books/:bookId', authorize.authorize, booksController.retrieve);
-  app.put('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.update);
-  app.delete('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.destroy);
+ POST  /api/v1/books/create
+ PUT /api/v1/books/:bookId
+ DELETE /api/v1/books/:bookId
 
   * This contains the routes that  allow a logged in admin to modify and create categories
-  app.post('/api/v1/categories/create', authorize.authorize, checkadmin.checkAdmin, categoriesController.create);
-  app.get('/api/v1/categories', authorize.authorize, checkadmin.checkAdmin, categoriesController.list);
-  app.get('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.retrieve);
-  app.put('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.update);
-  app.delete('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.destroy);
+  POST /api/v1/categories/create'
 
+  GET /api/v1/categories/:catId
+  PUT /api/v1/categories/:catId
+  DELETE /api/v1/categories/:catId
 
   * This contains routes that allow a logged in user to borrow and return books and borrow history
-  app.post('/api/v1/users/:userId/books/:bookId/borrow', authorize.authorize, usersController.borrowBook);
-  app.put('/api/v1/users/:userId/books/:bookId/return', authorize.authorize, usersController.returnBook);
-  app.get('/api/v1/users/:userId/history', authorize.authorize, usersController.borrowHistory);
-  app.get('/api/v1/users/:userId/books', authorize.authorize, usersController.booksNotReturned);
+  POST /api/v1/users/:userId/books/:bookId/borrow
+  PUT /api/v1/users/:userId/books/:bookId/return
+  GET /api/v1/users/:userId/history
+  GET /api/v1/users/:userId/books
+  GET /api/v1/categories
+  GET /api/v1/books
+  GET /api/v1/books/:bookId
 
 
 ## The tests
@@ -57,9 +61,7 @@ This app was built using the express fraamework with Node Js, Postgres and Seque
 
 ## Acknowledgments
 
-* Andela Bootamp Facilitators
-* Fellow Bootcampers
-* Fam.
+* Andela 
 
 
  
