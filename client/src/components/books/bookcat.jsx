@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Header from './Header/header';
-import Footer from './Footer/footer';
-import { getBooksByCat } from '../actions/books';
+import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
+import { getBooksByCat } from '../../actions/books';
 
 
 /**
@@ -57,7 +57,6 @@ class BookCat extends Component {
      * @memberof BookCat
      */
     render() {
-        const { book } = this.state;
         const books = this.props.books;
         const title = this.props.match.params.title;
         const bookList = books && books.length ?
@@ -82,7 +81,6 @@ class BookCat extends Component {
                     <div><h3>{title}</h3></div>
                     <div className="row">
                         {bookList}
-                        {this.props.children}
                     </div>
                 </div>
                 <Footer />

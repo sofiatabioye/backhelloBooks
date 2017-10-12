@@ -1,26 +1,26 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
-import Login from './login';
-import SignUp from './signup';
-import Books from './allbooks';
-import LibraryBooks from './adminbooks';
-import SingleBook from './singlebook';
-import Profile from './profile';
-import UserHistory from './history';
-import Category from './categories';
-import AddBook from './addbook';
-import EditBook from './editbook';
-import BookCat from './bookcat';
-import Password from './password';
+import Login from '../auth/login.jsx';
+import SignUp from '../auth/signup.jsx';
+import Books from '../books/allbooks.jsx';
+import LibraryBooks from '../books/adminbooks.jsx';
+import SingleBook from '../books/singlebook.jsx';
+import Profile from './profile.jsx';
+import UserHistory from './history.jsx';
+import Category from '../categories/categories.jsx';
+import AddBook from '../books/addbook.jsx';
+import EditBook from '../books/editbook.jsx';
+import BookCat from '../books/bookcat.jsx';
+import Password from '../auth/password.jsx';
 
-import requireAuth from '../helper/authenticate';
-import requireAdmin from '../helper/adminAuth';
+import requireAuth from '../../helper/authenticate';
+import requireAdmin from '../../helper/adminAuth';
 
 const helloRoutes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={Login}/>
+            <Route exact path="/" component={requireAuth(Books)}/>
             <Route exact path="/books" component={requireAuth(Books)}/>
             <Route exact path="/books/categories" component={requireAuth(Category)}/>
             <Route exact path="/books/:title/:id" component={requireAuth(BookCat)}/>

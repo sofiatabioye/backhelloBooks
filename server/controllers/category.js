@@ -1,21 +1,27 @@
-import Sequelize from 'sequelize';
+
 import models from '../models/index';
 
 const Category = models.Category;
-const Book = models.Book;
 export default {
 
     // Admin create category
     create(req, res) {
-        const Title = req.body.title;
-        if (Title === null) {
+        const title = req.body.title;
+        if (title === null) {
             res.status(400).send({ message: 'Category title cannot be null' });
         }
-        return Category
-            .create({
-                title: Title
+        Category
+            .findOne({ where: { title } })
+            .then((categories) => {
+                if (!categories) {
+                    return Category
+                        .create({ title })
+                        .then(res.status(201).send({ categories, message: 'Category Created Successfully' }))
+                        .catch(error => res.status(400).send(error));
+                } else {
+                    res.status(200).send({ message: 'Category already exists' });
+                }
             })
-            .then(categories => res.status(201).send({ categories, message: 'Category Created Successfully' }))
             .catch(error => res.status(400).send(error));
     },
 

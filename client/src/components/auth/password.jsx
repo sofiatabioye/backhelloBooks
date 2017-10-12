@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import Header from './Header/header';
-import BookFooter from './Footer/footer';
-import HelloSidebar from './Sidebar/sidebar';
-import { changepassword } from '../actions/auth';
+import Header from '../header/header.jsx';
+import BookFooter from '../footer/footer.jsx';
+import Sidebar from '../sidebar/sidebar.jsx';
+import { changepassword } from '../../actions/auth';
 
-import validateInput from './utils/validatePassword';
-import { addFlashMessage } from '../actions/flashmessages';
-import FlashMessagesList from './flash/FlashMessagesList';
+import validateInput from '../utils/validatePassword.jsx';
+import { addFlashMessage } from '../../actions/flashmessages';
+import FlashMessagesList from '../flash/FlashMessagesList';
 
 /**
  * 
@@ -91,7 +91,7 @@ class Password extends React.Component {
                 <div className="container container-me">
                     <div className="row">
                         <div className="container">
-                            <HelloSidebar />
+                            <Sidebar user= {this.props.auth}/>
                             <div className="col-md-9">
                                 <div className="profile-content">
                                     <h3>Change Password</h3>

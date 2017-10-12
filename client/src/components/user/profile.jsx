@@ -4,10 +4,10 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Header from './Header/header';
-import Footer from './Footer/footer';
-import Sidebar from './Sidebar/sidebar';
-import { fetchBorrowedBooks, returnBook } from '../actions/books';
+import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
+import Sidebar from '../sidebar/sidebar.jsx';
+import { fetchBorrowedBooks, returnBook } from '../../actions/books';
 
 /**
  * 
@@ -85,7 +85,7 @@ class Profile extends Component {
                 <div className="container container-me">
                     <div className="row">
                         <div className="container">
-                            <Sidebar />
+                            <Sidebar user= {this.props.auth}/>
                             <div className="col-md-9">
                                 <div className="profile-content">
                                     <h3>Borrowed Books</h3>
@@ -127,6 +127,7 @@ const mapStateToProps = (state, ownProps) => ({
     books: state.books.books.UserBorrowHistory,
     auth: state.auth,
 });
+
 
 export default connect(mapStateToProps, { fetchBorrowedBooks, returnBook })(Profile);
 

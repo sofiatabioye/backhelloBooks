@@ -15,21 +15,22 @@ const app = express();
 
 // Log requests to the console.
 app.use(logger('dev'));
-const compiler = webpack(webpackConfig);
+// const compiler = webpack(webpackConfig);
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text({ type: 'text/html' }));
 app.use(bodyParser.json({ type: 'application/*+json' }));
-app.use(express.static(path.join(__dirname, './client')));
-// Setup a default catch-all route that sends back a welcome message in JSON format.
-app.use(webpackMiddleware(compiler));
+// app.use(express.static(path.join(__dirname, './client')));
 
-app.use(webpackHotMiddleware(compiler, {
-    hot: true,
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-}));
+// Setup a default catch-all route that sends back a welcome message in JSON format.
+// app.use(webpackMiddleware(compiler));
+
+// app.use(webpackHotMiddleware(compiler, {
+//     hot: true,
+//     noInfo: true,
+//     publicPath: webpackConfig.output.publicPath,
+// }));
 
 routes(app, authorize, checkadmin);
 

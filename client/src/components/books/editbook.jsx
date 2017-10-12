@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Header from './Header/header';
-import Footer from './Footer/footer';
-import { getBook, fetchBook } from '../actions/books';
-import { addFlashMessage } from '../actions/flashmessages';
-import validateBook from './utils/validateBook';
-import { updateBook } from '../actions/books';
-import FlashMessagesList from './flash/FlashMessagesList';
+import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
+import { addFlashMessage } from '../../actions/flashmessages';
+import validateBook from '../utils/validateBook.jsx';
+import { getBook, fetchBook, updateBook } from '../../actions/books';
+import FlashMessagesList from '../flash/FlashMessagesList';
 
 /**
  * 
@@ -51,7 +50,7 @@ class EditBook extends Component {
      * @returns {Book} The book to be edited
      * @memberof EditBook
      */
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchBook(this.props.match.params.id);
     }
 

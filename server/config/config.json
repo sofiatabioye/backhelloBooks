@@ -1,5 +1,5 @@
 {
-  "development": {
+  "production": {
     "username": "nmmudqlt",
     "password": "VI3NeWxWV3FV_-VAzZcb2iaNWYWSDrTi",
     "database": "nmmudqlt",
@@ -15,7 +15,7 @@
     "port": 5432,
     "dialect": "postgres"
   },
-  "production": {
+  "development": {
     "username": "postgres",
     "password": "hello",
     "database": "postgres",

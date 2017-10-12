@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
-import Header from './Header/header';
-import HelloFooter from './Footer/footer';
-import HelloSidebar from './Sidebar/sidebar';
-import { fetchBorrowHistory, returnBook } from '../actions/books';
+import Header from '../header/header.jsx';
+import HelloFooter from '../footer/footer.jsx';
+import Sidebar from '../sidebar/sidebar.jsx';
+import { fetchBorrowHistory, returnBook } from '../../actions/books';
 
 /**
  * 
@@ -63,7 +63,7 @@ class History extends Component {
                 <div className="container container-me">
                     <div className="row">
                         <div className="container">
-                            <HelloSidebar />
+                            <Sidebar user= {this.props.auth}/>
                             <div className="col-md-9">
                                 <div className="profile-content">
                                     <h3>Borrowed Books</h3>

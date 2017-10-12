@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -18,7 +18,7 @@ import { addFlashMessage } from '../../actions/flashmessages';
 class Header extends React.Component {
     /**
      * 
-     * @retruns {Categories} returns all categories
+     * @returns {void}
      * @memberof Header
      */
     componentWillMount() {
@@ -30,35 +30,12 @@ class Header extends React.Component {
     /**
      * 
      * @returns {void}
-     * @param {any} e 
+     * @param {any} event 
      * @memberof Header
      */
-    logout(e) {
-        e.preventDefault();
+    logout(event) {
+        event.preventDefault();
         this.props.logout();
-    }
-
-
-    /**
-     * 
-     * 
-     * @param {any} props 
-     * @returns {Categories} List of categories
-     * @memberof Header
-     */
-    categoriesList(props) {
-        const catlength = this.props.categories.categories.length;
-        if (catlength > 6) {
-            return (
-                <li className="dropdown">
-                    <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Categories<span className="caret" /></Link>
-                    <ul className="dropdown-menu">
-                        <li><Link to="#">Tada</Link></li>
-                    </ul>
-                </li>
-            );
-        }
-        return "";
     }
 
 
@@ -77,12 +54,12 @@ class Header extends React.Component {
         );
         const userLinks = cat && cat.length ?
             cat.slice(0, 9).map((category) => (
-                <li key={category.id}><NavLink to={`/books/${category.title}/${category.id}`} >{category.title}</NavLink></li>
+                <li key={category.id}><Link to={`/books/${category.title}/${category.id}`} >{category.title}</Link></li>
             )) : <h6>No categories</h6>;
 
         const categoryLinksDropdown = cat && cat.length ?
             cat.slice(10, 50).map((category) => (
-                <li key={category.id}><NavLink to={`/books/${category.title}/${category.id}`} >{category.title}</NavLink></li>
+                <li key={category.id}><Link to={`/books/${category.title}/${category.id}`} >{category.title}</Link></li>
             )) : <h6>No categories</h6>;
 
         const profileList = (
@@ -91,10 +68,10 @@ class Header extends React.Component {
                     <img src="../client/src/assets/images/tales.jpg" role="presentation" className="usr-img"/>
                     <span className="caret" /></Link>
                 <ul className="dropdown-menu">
-                    <li><a href="/profile">My Profile</a></li>
-                    <li><a href="/history">Rent History</a></li>
+                    <li><Link to="/profile">My Profile</Link></li>
+                    <li><Link to="/history">Rent History</Link></li>
                     {userType == "admin" && <li><a href="/librarybooks">Manage Library Stock</a></li> }
-                    <li><a href="#" onClick={this.logout.bind(this)} >Logout</a></li>
+                    <li><Link to="#" onClick={this.logout.bind(this)} >Logout</Link></li>
                 </ul>
             </li>
         );

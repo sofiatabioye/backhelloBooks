@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { notify, Notifications } from 'react-notify-toast';
 
-import Header from './Header/header';
-import Footer from './Footer/footer';
-import { saveCategory, deleteCategory } from '../actions/category';
+import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
+import { saveCategory, deleteCategory } from '../../actions/category';
 
 
 /**
@@ -78,17 +77,7 @@ class Categories extends Component {
      */
     onSubmit(e) {
         e.preventDefault();
-        console.log(this.state);
-        this.props.saveCategory(this.state).then(
-            (res) => {
-                notify.show("New category created successfully");
-            },
-            (err) => {
-                this.setState({
-                    isLoading: false
-                });
-            }
-        );
+        this.props.saveCategory(this.state);
     }
 
 
@@ -99,7 +88,6 @@ class Categories extends Component {
      * @memberof Categories
      */
     render() {
-        const { isLoading } = this.state;
         const category = this.props.categories.categories;
         const categories = category && category.length ? category.map((cat, index) => (
             <tr key={cat.id}>
@@ -114,13 +102,12 @@ class Categories extends Component {
                 <Header />
                 <div className="container">
                     <div><h3>All Categories</h3></div>
-                    <Notifications />
                     <div className="row">
 
                         <div className="pull-right">
                             <form onSubmit={this.onSubmit}>
                                 <input type="textbox" name="title" placeholder="Title" value={this.state.title} onChange={this.onChange} required/>
-                                <button type="submit" className="btn btn-info btn-sm" disabled={isLoading}>Add New </button>
+                                <button type="submit" className="btn btn-info btn-sm">Add New </button>
                             </form>
                         </div>
 
@@ -155,7 +142,6 @@ Categories.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-    books: state.books,
     categories: state.categories.categories
 });
 export default connect(mapStateToProps, { saveCategory, deleteCategory })(Categories);

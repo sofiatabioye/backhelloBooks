@@ -69,8 +69,8 @@ export function updatedBook(id) {
  * @export
  * @returns 
  */
-export function getBooks() {
-    return (dispatch) => axios.get(`/api/v1/books`)
+export function getBooks(offset, limit) {
+    return (dispatch) => axios.get(`/api/v1/books?offset=${offset}&limit=${limit}`)
         .then((response) => {
             const data = response.data;
             dispatch(setBooks(data));
@@ -105,10 +105,12 @@ export function getBooksByCat(title) {
  * @returns 
  */
 export function fetchBook(id) {
+    console.log(id);
     return (dispatch) => {
         dispatch({ type: 'FETCH_BOOKS_BEGINS' });
         return axios.get(`/api/v1/books/${id}`)
             .then((response) => {
+                console.log(response.data, "=====");
                 dispatch({ type: 'FETCH_BOOKS_SUCCESS', books: response.data });
             });
     };
@@ -230,9 +232,17 @@ export function fetchBorrowHistory(userId) {
  * 
  * @export
  * @param {any} id 
- * @returns 
+ * @returns {void}
  */
-export function deleteBook(id) {
-    return dispatch => axios.delete(`/api/v1/books/${id}`);
+export function deleteBook(bookId) {
+    return (dispatch) => {
+        dispatch({ type: 'DELETE_BOOK_BEGINS' });
+        return axios.delete(`/api/v1/books/${bookId}`)
+            .then((response) => {
+                dispatch({ type: 'DELETE_BOOK_SUCCESS', id: bookId });
+            }, (err) => {
+                dispatch({ type: 'DELETE_BOOK_FAILURE', errors: err.response.data });
+            });
+    };
 }
 

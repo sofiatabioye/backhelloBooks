@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Routes from './components/myroutes';
+import Routes from './components/user/myroutes.jsx';
 
 /**
  * 

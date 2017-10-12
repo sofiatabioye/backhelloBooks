@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import Header from './Header/header';
-import BookFooter from './Footer/footer';
-import { fetchBook, borrowBook } from '../actions/books';
-import FlashMessagesList from './flash/FlashMessagesList';
+import Header from '../header/header.jsx';
+import BookFooter from '../footer/footer.jsx';
+import { fetchBook, borrowBook } from '../../actions/books';
+import FlashMessagesList from '../flash/FlashMessagesList';
 
 /**
  * 
@@ -23,7 +23,7 @@ class SingleBook extends Component {
         super(props);
         this.state = {
             errors: "",
-            message: " ",
+            message: "",
             isLoading: false,
             disabled: false,
         };
@@ -53,13 +53,13 @@ class SingleBook extends Component {
     }
 
     /**
-     * @returns {Page} previous page
+     * @returns {void} previous page
      * 
-     * @param {any} e 
+     * @param {any} event
      * @memberof SingleBook
      */
-    goback(e) {
-        e.preventDefault();
+    goback(event) {
+        event.preventDefault();
         window.history.go(-1);
     }
 

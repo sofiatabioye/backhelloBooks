@@ -1,4 +1,4 @@
-export default (state = { categories: [], categories2: [], loading: false, errors: [] }, action = {}) => {
+export default (state = { categories: [], loading: false, errors: [] }, action = {}) => {
     switch (action.type) {
         case 'FETCH_CAT_BEGINS':
             return Object.assign({}, state, { loading: true });
@@ -10,8 +10,14 @@ export default (state = { categories: [], categories2: [], loading: false, error
                 });
         case 'FETCH_CAT_FAILURE':
             return Object.assign({}, state, { loading: false, errors: action.errors });
+
         case 'ADD_CATEGORY_SUCCESS':
-            return Object.assign({}, state, { loading: false, categories: action.categories });
+            return [...state,
+                {
+                    loading: false,
+                    categories: state.categories,
+                }
+            ];
         case 'ADD_CATEGORY_FAILURE':
             return Object.assign({}, state, { loading: false, errors: action.errors });
 
