@@ -11,11 +11,5 @@ export const smtpTransport = nodemailer.createTransport({
     }
 });
 
-// setup e-mail data with unicode symbols
-export const mailOptions = {
-    from: '"abisoph16@gmail.com', // sender address
-    to: 'abisoph16@yahoo.com', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world ?', // plaintext body
-    html: '<b>Hello world ?</b>' // html body
-};
+
+export default smtpTransport;

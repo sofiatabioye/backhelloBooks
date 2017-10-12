@@ -34,6 +34,7 @@
     "classnames": "^2.2.5",
     "cloudinary-react": "^1.0.4",
     "coveralls": "^2.13.1",
+    "crypto": "^1.0.1",
     "css-loader": "^0.28.5",
     "dns": "file:./client/src/mock/dns",
     "dotenv": "^4.0.0",

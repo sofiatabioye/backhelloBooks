@@ -12,7 +12,9 @@ const routes = (app, authorize, checkadmin) => {
     // User Login Routes
     app.post('/api/v1/users/signup', usersController.create);
     app.post('/api/v1/users/signin', usersController.login);
-    app.post('/api/v1/user/:userId/changepassword', usersController.changepassword);
+    app.post('/api/v1/user/:userId/changepassword', usersController.changePassword);
+    app.post('/api/v1/forgotpassword', usersController.forgotPassword);
+    app.post('/api/v1/reset/:token', usersController.resetPassword);
 
     // This contains the routes that allow a logged in admin user to modify and create books
     app.post('/api/v1/books/create', authorize.authorize, checkadmin.checkAdmin, booksController.create);

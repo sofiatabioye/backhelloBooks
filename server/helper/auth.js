@@ -15,10 +15,10 @@ export default {
                     const reply = 'You are not signed in';
                     res.status(403).send({ message: reply });
                 } else {
-                    console.log(decoded);
                     req.userId = decoded.user;
                     req.locals = decoded.role;
                     req.level = decoded.level;
+                    req.email = decoded.email;
                     next();
                 }
             });

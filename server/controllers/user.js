@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-// import sendmail from 'sendmail';
+import crypto from 'crypto';
 
 import models from '../models/index';
-import { smtpTransport, mailOptions } from '../helper/mailer';
+import { smtpTransport } from '../helper/mailer';
 
 const Book = models.Book;
 const User = models.User;
@@ -13,23 +13,29 @@ dotenv.config();
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.TOKEN_SECRET;
 
-const checkReturnDate = (expectedReturnDate, returnDate, req, res) => {
+const checkReturnDate = (expectedReturnDate, returnDate, email) => {
     const borrowTime = Math.round((expectedReturnDate - returnDate) / 864000);
     if (borrowTime > 1400) {
-        console.log("you did not return this book in time");
-    } else {
-        smtpTransport.sendMail(mailOptions, (error, response) => {
+        const lateReturn = {
+            from: 'HelloBooks@noreply.com',
+            to: email,
+            subject: 'Book Surchage from HelloBooks',
+            text: `${'You are receiving this because you did not return this book in time.\n\n' +
+          'You were expected to return this book on '}${expectedReturnDate}` +
+          ` as expected. \n Therefore, you have to pay a sum of $50 as fine before you are able to borrow or read books on hellobooks.\n`
+        };
+        smtpTransport.sendMail(lateReturn, (error, response) => {
             if (error) {
-                res.status(400).send({ message: error });
+                return error;
             } else {
-                console.log(`Message sent: ${response.message}`);
+                return `An e-mail has been sent to ${email} with further instructions.`;
             }
 
             smtpTransport.close();
         });
-        console.log("You returned it in time");
     }
 };
+
 
 export default {
     // user signup on hellobooks. This creates a new user
@@ -75,9 +81,13 @@ export default {
                 } else {
                     bcrypt.compare(req.body.password, user.password, (err, result) => {
                         if (result) {
-                            const myToken = jwt.sign({ user: user.id, role: user.role, level: user.level, name: user.username },
-                                secret,
-                                { expiresIn: 72 * 60 * 60 });
+                            const myToken = jwt.sign({ user: user.id,
+                                role: user.role,
+                                level: user.level,
+                                name: user.username,
+                                email: user.email },
+                            secret,
+                            { expiresIn: 72 * 60 * 60 });
                             res.send(200, { token: myToken,
                                 userId: user.id,
                                 userName: user.username,
@@ -92,7 +102,87 @@ export default {
             .catch(error => res.status(400).send({ message: "Oops! Sorry, an internal server error just occured" }));
     },
 
-    changepassword(req, res) {
+
+    forgotPassword(req, res) {
+        const userEmail = req.body.email;
+        const today = new Date();
+        const tokenExpires = new Date(today.getTime() + (24 * 60 * 60));
+        const token = crypto.randomBytes(16).toString('hex');
+        User
+            .findOne({
+                where: { email: userEmail }
+            })
+            .then((user) => {
+                if (!user) {
+                    res.status(404).send({ message: 'No account with that email address' });
+                } else {
+                    return user
+                        .update({
+                            resetPasswordToken: "" || token,
+                            resetPasswordExpires: null || tokenExpires
+                        })
+                        .then(() => {
+                            const resetPassword = {
+                                from: 'HelloBooks@noreply.com',
+                                to: user.email,
+                                subject: 'HelloBooks Password Reset',
+                                text: `${'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://'}${req.headers.host}/api/v1/reset/${token}\n\n` +
+          `If you did not request this, please ignore this email and your password will remain unchanged.\n`
+                            };
+                            smtpTransport.sendMail(resetPassword, (error, response) => {
+                                if (error) {
+                                    res.status(400).send({ message: error });
+                                } else {
+                                    res.status(200).send(`An e-mail has been sent to ${user.email} with further instructions.`);
+                                }
+
+                                smtpTransport.close();
+                            });
+                        })
+                        .catch(error => res.status(400).send(error));
+                }
+            })
+            .catch(error => res.status(400).send(error));
+    },
+
+    resetPassword(req, res) {
+        const password = req.body.password;
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        User
+            .findOne({
+                where: { resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }
+            })
+            .then((user) => {
+                if (!user) {
+                    res.status(404).send({ error: 'Password reset token is invalid or has expired.' });
+                }
+                user.password = hashedPassword;
+                user.resetPasswordToken = null;
+                user.resetPasswordExpires = null;
+                user.save();
+                const passwordChanged = {
+                    to: user.email,
+                    from: 'passwordreset@demo.com',
+                    subject: 'Your password has been changed',
+                    text: `${'Hello,\n\n' +
+          'This is a confirmation that the password for your account '}${user.email} has just been changed.\n`
+                };
+                smtpTransport.sendMail(passwordChanged, (error, response) => {
+                    if (error) {
+                        res.status(400).send({ message: error });
+                    } else {
+                        res.status(200).send({ message: `Success! Your password has been changed..` });
+                    }
+
+                    smtpTransport.close();
+                });
+            })
+            .catch(error => res.status(400).send(error));
+    },
+
+    changePassword(req, res) {
         const password = req.body.password;
         const newPassword = req.body.newPassword;
         let hashedPassword = bcrypt.hashSync(newPassword, 10);
@@ -169,6 +259,8 @@ export default {
 
     // Logged in user returns borrowed book
     returnBook(req, res) {
+        console.log(req.email, "=====");
+        const email = req.email;
         const today = new Date();
         Book
             .findById(req.params.bookId)
@@ -189,8 +281,8 @@ export default {
                                 dateReturned: today
                             })
                             .then(() => {
-                                checkReturnDate(borrowstatus.expectedReturnDate, borrowstatus.dateReturned);
-                                return res.status(200).send({ message: 'Book returned successfully.' });
+                                checkReturnDate(borrowstatus.expectedReturnDate, borrowstatus.dateReturned, email);
+                                res.status(200).send({ message: 'Book returned successfully.' });
                             })
                             .catch(error => res.status(400).send(error));
                     })
@@ -267,8 +359,5 @@ export default {
     },
 
 
-    changepass(req, res) {
-
-    }
 };
 
