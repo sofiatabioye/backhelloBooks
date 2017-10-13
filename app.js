@@ -41,8 +41,5 @@ app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname, './client/public', 'index.html'));
 });
 
-// app.post('*', (req, res) => {
-//     res.status(404).send({ message: 'Ooops, Couldnt find the url' });
-// });
 
 module.exports = app;
