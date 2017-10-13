@@ -6,7 +6,7 @@
   "scripts": {
     "start:wp": "webpack-dev-server --open",
     "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
-    "start": "babel-node ./server/bin/www --config",
+    "start": "babel-node ./server/bin/www --config webpack.production.config.js",
     "lint": "./node_modules/.bin/eslint.",
     "test": "nyc mocha ./server/test/* --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
