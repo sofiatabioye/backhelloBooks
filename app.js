@@ -31,15 +31,13 @@ app.use(webpackHotMiddleware(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath,
 }));
+app.get('*', (req, res) => {
+    res.status(404).sendFile(path.join(__dirname, './client/public', 'index.html'));
+});
 
 routes(app, authorize, checkadmin);
 // app.get('*', (req, res) => res.status(200).send({
 //     message: 'Welcome to the beginning of nothingness.',
 // }));
-
-app.get('*', (req, res) => {
-    res.status(404).sendFile(path.join(__dirname, './client/public', 'index.html'));
-});
-
 
 module.exports = app;
