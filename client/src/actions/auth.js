@@ -55,4 +55,14 @@ export function changepassword(data, userId) {
         });
 }
 
+export function forgotPassword(email) {
+    return (dispatch) => axios.post(`/api/v1/forgotpassword`, email)
+        .then((response) => {
+            dispatch({ type: 'FORGOT_PASSWORD_SUCCESS', message: response.data.message });
+        })
+        .catch((err) => {
+            dispatch({ type: 'FORGOT_PASSWORD_FAILURE', errors: err.response });
+        });
+}
+
 export default {};

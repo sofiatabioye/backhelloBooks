@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import Login from '../auth/login.jsx';
+import ForgotPassword from '../auth/forgotPassword.jsx';
 import SignUp from '../auth/signup.jsx';
 import Books from '../books/allbooks.jsx';
 import LibraryBooks from '../books/adminbooks.jsx';
@@ -27,6 +28,7 @@ const helloRoutes = () => (
             <Route exact path="/librarybooks" component={requireAdmin(LibraryBooks)}/>
             <Route exact path="/signin" component={Login}/>
             <Route exact path="/signup" component={SignUp}/>
+            <Route exact path="/forgotpassword" component={ForgotPassword}/>
             <Route exact path="/changepassword" component={Password}/>
             <Route exact path="/addbook" component={requireAdmin(AddBook)}/>
             <Route exact path="/editbook" component={requireAdmin(EditBook)}/>

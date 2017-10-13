@@ -13,6 +13,14 @@ export default (state = { user: [], loading: false, errors: [], success: [] }, a
                 isAuthenticated: !isEmpty(action.user),
                 user: action.user
             };
+        case "FORGOT_PASSWORD_SUCCESS":
+            return {
+                message: action.message
+            };
+        case "FORGOT_PASSWORD_FAILURE":
+            return {
+                errors: action.errors
+            };
         case 'USER_LOGIN_FAILURE':
             return Object.assign({}, state, { loading: false, errors: action.errors });
         case 'USER_SIGNUP_SUCCESS':

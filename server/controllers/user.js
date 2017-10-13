@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 
 import models from '../models/index';
-import { smtpTransport } from '../helper/mailer';
+import { smtpTransport, forgotPassword, resetPassword, lateReturn } from '../helper/mailer';
 
 const Book = models.Book;
 const User = models.User;
@@ -13,24 +13,16 @@ dotenv.config();
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.TOKEN_SECRET;
 
+// checks if user returned book late and sends user a mail with surcharge
 const checkReturnDate = (expectedReturnDate, returnDate, email) => {
     const borrowTime = Math.round((expectedReturnDate - returnDate) / 864000);
     if (borrowTime > 1400) {
-        const lateReturn = {
-            from: 'HelloBooks@noreply.com',
-            to: email,
-            subject: 'Book Surchage from HelloBooks',
-            text: `${'You are receiving this because you did not return this book in time.\n\n' +
-          'You were expected to return this book on '}${expectedReturnDate}` +
-          ` as expected. \n Therefore, you have to pay a sum of $50 as fine before you are able to borrow or read books on hellobooks.\n`
-        };
-        smtpTransport.sendMail(lateReturn, (error, response) => {
+        smtpTransport.sendMail(lateReturn(email, expectedReturnDate), (error, response) => {
             if (error) {
-                return error;
+                return `An error occured`;
             } else {
                 return `An e-mail has been sent to ${email} with further instructions.`;
             }
-
             smtpTransport.close();
         });
     }
@@ -122,16 +114,7 @@ export default {
                             resetPasswordExpires: null || tokenExpires
                         })
                         .then(() => {
-                            const resetPassword = {
-                                from: 'HelloBooks@noreply.com',
-                                to: user.email,
-                                subject: 'HelloBooks Password Reset',
-                                text: `${'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://'}${req.headers.host}/api/v1/reset/${token}\n\n` +
-          `If you did not request this, please ignore this email and your password will remain unchanged.\n`
-                            };
-                            smtpTransport.sendMail(resetPassword, (error, response) => {
+                            smtpTransport.sendMail(forgotPassword(user.email, req.headers.host, token), (error, response) => {
                                 if (error) {
                                     res.status(400).send({ message: error });
                                 } else {
@@ -162,14 +145,7 @@ export default {
                 user.resetPasswordToken = null;
                 user.resetPasswordExpires = null;
                 user.save();
-                const passwordChanged = {
-                    to: user.email,
-                    from: 'passwordreset@demo.com',
-                    subject: 'Your password has been changed',
-                    text: `${'Hello,\n\n' +
-          'This is a confirmation that the password for your account '}${user.email} has just been changed.\n`
-                };
-                smtpTransport.sendMail(passwordChanged, (error, response) => {
+                smtpTransport.sendMail(resetPassword(user.email), (error, response) => {
                     if (error) {
                         res.status(400).send({ message: error });
                     } else {
