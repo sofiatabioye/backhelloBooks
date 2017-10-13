@@ -32,7 +32,7 @@ app.use(webpackHotMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
 }));
 
-// routes(app, authorize, checkadmin);
+routes(app, authorize, checkadmin);
 // app.get('*', (req, res) => res.status(200).send({
 //     message: 'Welcome to the beginning of nothingness.',
 // }));
