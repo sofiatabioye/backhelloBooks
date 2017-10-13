@@ -9,8 +9,8 @@ export default {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, './client/dist'),
-        publicPath: '/',
-        filename: 'bundle.js'
+        publicPath: '/'
+        
     },
     plugins: [
         new HtmlWebpackPlugin({
