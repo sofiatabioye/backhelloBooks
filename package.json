@@ -4,13 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+
     "start:wp": "webpack-dev-server --open",
     "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
-    "start": "babel-node ./server/bin/www --config webpack.production.config.js",
+    "start:babel": "babel-node ./server/bin/www",
+    "start": "node dist/server/bin/www",
     "lint": "./node_modules/.bin/eslint.",
     "test": "nyc mocha ./server/test/* --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "start:client": "webpack-dev-server --hot"
+    "start:client": "webpack-dev-server --hot",
+    "build": "rm -rf dist && babel server -d dist/server && webpack --config webpack.production.config.js --progress --colors",
+    "build:dev":  "rm -rf dist && babel server -d dist/server && webpack --config webpack.config.js --progress --colors",
+    "heroku-postbuild": "npm run build",
+    "watch":"webpack --watch"
   },
   "keywords": [],
   "author": "",

@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 import store from './store/store';
 import './assets/css/main.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/auth';
 
@@ -20,5 +19,6 @@ if (localStorage['x-access-token']) {
 ReactDOM.render(
     <Provider store={store}>
         <App />
-    </Provider>, document.getElementById('root'));
-registerServiceWorker();
+    </Provider>,
+    document.getElementById('root')
+);

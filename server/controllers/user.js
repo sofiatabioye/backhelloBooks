@@ -63,12 +63,21 @@ export default {
 
     // User logs in to hellobooks. Generates token on login
     login(req, res) {
+        console.log("nada");
         return User
             .findOne({
-                where: { username: req.body.identifier, }
+                where: { username: req.body.identifier,
+                    $or: [
+                        {
+                            email:
+                         { $eq: req.body.identifier }
+                        }
+                    ]
+                }
             })
             .then((user) => {
                 if (!user) {
+                    console.log("ypdat");
                     res.status(404).send({ message: 'Invalid login credentials' });
                 } else {
                     bcrypt.compare(req.body.password, user.password, (err, result) => {
@@ -91,7 +100,7 @@ export default {
                     });
                 }
             })
-            .catch(error => res.status(400).send({ message: "Oops! Sorry, an internal server error just occured" }));
+            .catch(error => res.status(400).send({ message: error }));
     },
 
 

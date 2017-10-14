@@ -1,20 +1,18 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-export default {
-    devtool: 'inline-source.map',
-    entry: [require.resolve('webpack-hot-middleware/client'),
-        path.resolve(__dirname, './client/src/index.js')],
+module.exports = {
+    devtool: 'source-map',
+    entry: './client/src/index.js',
     target: 'web',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, './client/dist'),
+        path: path.resolve(__dirname, 'dist/client'),
         publicPath: '/'
-        
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './client/index.html',
+            template: './client/public/index.html',
             inject: true,
             minify: {
                 removeComments: true,
@@ -31,14 +29,45 @@ export default {
         })
     ],
     module: {
-        loaders: [
-            { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader'] },
-            { test: /\.css$/, loader: 'style-loader!css-loader' },
-            { test: /\.jsx$/, exclude: /node_modules/, loader: 'babel-loader' }
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: ['node_modules', 'server', 'test', 'dist'],
+                loader: 'babel-loader',
+                query: {
+                    presets: ['react', 'es2015'],
+                },
+            },
+            {
+                test: /\.scss$/,
+                exclude: ['node_modules', 'dist'],
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: { sourceMap: true }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: { sourceMap: true },
+                    }
+                ],
+            },
+            {
+                test: /\.css$/,
+                exclude: /node-modules/,
+                loader: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(woff|png|jpg|gif)$/,
+                loader: 'url-loader?limit=250000'
+            }
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     },
     node: {
         net: 'empty',
