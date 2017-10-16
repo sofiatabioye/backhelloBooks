@@ -34,11 +34,13 @@ app.use(express.static(path.join(__dirname, './client')));
 
 routes(app, authorize, checkadmin);
 
+
 app.get('/bundle.js', (req, res) => {
-    res.status(202).sendFile(path.join(__dirname, '../client', 'bundle.js'));
+    res.status(200).sendFile(path.join(__dirname, '../client', 'bundle.js'));
 });
+
 app.get('*', (req, res) => {
-    res.status(202).sendFile(path.join(__dirname, '../client', 'index.html'));
+    res.status(200).sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
 

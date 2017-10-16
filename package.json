@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-
     "start:wp": "webpack-dev-server --open",
     "start:dev": "nodemon ./server/bin/www --exec babel-node ./server/bin/www --presets env",
     "start:babel": "babel-node ./server/bin/www",
@@ -13,10 +12,9 @@
     "test": "nyc mocha ./server/test/* --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start:client": "webpack-dev-server --hot",
-    "build": "rm -rf dist && babel server -d dist/server && webpack --config webpack.production.config.js --progress --colors",
-    "build:dev":  "rm -rf dist && babel server -d dist/server && webpack --config webpack.config.js --progress --colors",
-    "heroku-postbuild": "npm run build",
-    "watch":"webpack --watch"
+    "build": "rm -rf dist && babel server -d dist/server && webpack --config webpack.production.config.js --progress --colors --watch",
+    "build:dev": "rm -rf dist && babel server -d dist/server && webpack --config webpack.config.js --env.NODE_ENV=development --env.development --progress --colors --watch",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -59,7 +57,7 @@
     "nodemon": "^1.11.0",
     "nyc": "^11.1.0",
     "path": "^0.12.7",
-    "pg": "^7.1.0",
+    "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",

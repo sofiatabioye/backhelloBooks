@@ -63,25 +63,28 @@ export default {
 
     // User logs in to hellobooks. Generates token on login
     login(req, res) {
-        console.log("nada");
+        console.log("....", req);
         return User
             .findOne({
                 where: { username: req.body.identifier,
-                    $or: [
-                        {
-                            email:
-                         { $eq: req.body.identifier }
-                        }
-                    ]
+                    // $or: [
+                    //     {
+                    //         email:
+                    //      { $eq: req.body.identifier }
+                    //     }
+                    // ]
                 }
             })
             .then((user) => {
+                console.log("error", user);
                 if (!user) {
                     console.log("ypdat");
                     res.status(404).send({ message: 'Invalid login credentials' });
                 } else {
                     bcrypt.compare(req.body.password, user.password, (err, result) => {
+                        console.log(err, "======error");
                         if (result) {
+                            console.log("result", result);
                             const myToken = jwt.sign({ user: user.id,
                                 role: user.role,
                                 level: user.level,
@@ -100,7 +103,7 @@ export default {
                     });
                 }
             })
-            .catch(error => res.status(400).send({ message: error }));
+            .catch(error => res.status(400).send({ message: "An internal error" }));
     },
 
 

@@ -18,7 +18,7 @@ const routes = (app, authorize, checkadmin) => {
 
     // This contains the routes that allow a logged in admin user to modify and create books
     app.post('/api/v1/books/create', authorize.authorize, checkadmin.checkAdmin, booksController.create);
-    app.get('/api/v1/books', authorize.authorize, booksController.list);
+    app.get('/api/v1/books', booksController.list);
     app.get('/api/v1/books/categories/:title', authorize.authorize, booksController.getBooksByCat);
     app.get('/api/v1/books/:bookId', authorize.authorize, booksController.retrieve);
     app.put('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.update);

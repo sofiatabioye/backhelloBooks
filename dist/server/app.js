@@ -60,10 +60,11 @@ app.use(_express2.default.static(_path2.default.join(__dirname, './client')));
 (0, _routes2.default)(app, _auth2.default, _checkadmin2.default);
 
 app.get('/bundle.js', function (req, res) {
-    res.status(202).sendFile(_path2.default.join(__dirname, '../client', 'bundle.js'));
+    res.status(200).sendFile(_path2.default.join(__dirname, '../client', 'bundle.js'));
 });
+
 app.get('*', function (req, res) {
-    res.status(202).sendFile(_path2.default.join(__dirname, '../client', 'index.html'));
+    res.status(200).sendFile(_path2.default.join(__dirname, '../client', 'index.html'));
 });
 
 // app.get('*', (req, res) => res.status(200).send({

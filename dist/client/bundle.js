@@ -11144,6 +11144,348 @@ elliptic.eddsa = __webpack_require__(720);
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(55);
+
+var _propTypes = __webpack_require__(3);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRedux = __webpack_require__(24);
+
+var _auth = __webpack_require__(77);
+
+var _category = __webpack_require__(203);
+
+var _flashmessages = __webpack_require__(52);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * 
+ * 
+ * @class Header
+ * @extends {React.Component}
+ */
+
+var Header = function (_React$Component) {
+    _inherits(Header, _React$Component);
+
+    function Header() {
+        _classCallCheck(this, Header);
+
+        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+    }
+
+    _createClass(Header, [{
+        key: 'componentWillMount',
+
+        /**
+         * 
+         * @returns {void}
+         * @memberof Header
+         */
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            this.props.getCategories().then(function () {
+                _this2.setState({ categories: _this2.props.categories });
+            });
+        }
+
+        /**
+         * 
+         * @returns {void}
+         * @param {any} event 
+         * @memberof Header
+         */
+
+    }, {
+        key: 'logout',
+        value: function logout(event) {
+            event.preventDefault();
+            this.props.logout();
+        }
+
+        /**
+         * 
+         * 
+         * @returns {Links} Contains user profile links
+         * @memberof Header
+         */
+
+    }, {
+        key: 'render',
+        value: function render() {
+            var cat = this.props.categories.categories;
+            var isAuthenticated = this.props.auth.isAuthenticated;
+
+            var userType = this.props.user;
+            var adminLinks = _react2.default.createElement(
+                'li',
+                null,
+                'Manage Library Stock'
+            );
+            var userLinks = cat && cat.length ? cat.slice(0, 9).map(function (category) {
+                return _react2.default.createElement(
+                    'li',
+                    { key: category.id },
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/books/' + category.title + '/' + category.id },
+                        category.title
+                    )
+                );
+            }) : _react2.default.createElement(
+                'h6',
+                null,
+                'No categories'
+            );
+
+            var categoryLinksDropdown = cat && cat.length ? cat.slice(10, 50).map(function (category) {
+                return _react2.default.createElement(
+                    'li',
+                    { key: category.id },
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/books/' + category.title + '/' + category.id },
+                        category.title
+                    )
+                );
+            }) : _react2.default.createElement(
+                'h6',
+                null,
+                'No categories'
+            );
+
+            var profileList = _react2.default.createElement(
+                'li',
+                { className: 'dropdown' },
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                    _react2.default.createElement('img', { src: '../client/src/assets/images/tales.jpg', role: 'presentation', className: 'usr-img' }),
+                    _react2.default.createElement('span', { className: 'caret' })
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    { className: 'dropdown-menu' },
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            _reactRouterDom.Link,
+                            { to: '/profile' },
+                            'My Profile'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            _reactRouterDom.Link,
+                            { to: '/history' },
+                            'Rent History'
+                        )
+                    ),
+                    userType == "admin" && _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '/librarybooks' },
+                            'Manage Library Stock'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            _reactRouterDom.Link,
+                            { to: '#', onClick: this.logout.bind(this) },
+                            'Logout'
+                        )
+                    )
+                )
+            );
+
+            var guestLinks = _react2.default.createElement(
+                'ul',
+                { className: 'nav navbar-nav navbar-right' },
+                _react2.default.createElement(
+                    'li',
+                    null,
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/signup' },
+                        'Sign Up'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    null,
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/signin' },
+                        'Login'
+                    )
+                )
+            );
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'nav',
+                    { className: 'navbar navbar-inverse' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'container-fluid' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'navbar-header' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'sr-only' },
+                                    'Toggle navigation'
+                                ),
+                                _react2.default.createElement('span', { className: 'icon-bar' }),
+                                _react2.default.createElement('span', { className: 'icon-bar' }),
+                                _react2.default.createElement('span', { className: 'icon-bar' })
+                            ),
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { className: 'navbar-brand', to: '/books' },
+                                'HelloBooks'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+                            _react2.default.createElement(
+                                'form',
+                                { className: 'navbar-form navbar-left navbar-search' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Search' })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'ul',
+                                { className: 'nav navbar-nav navbar-right' },
+                                isAuthenticated ? userLinks : guestLinks,
+                                isAuthenticated ? _react2.default.createElement(
+                                    'li',
+                                    { className: 'dropdown' },
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                                        'More Categories',
+                                        _react2.default.createElement('span', { className: 'caret' })
+                                    ),
+                                    _react2.default.createElement(
+                                        'ul',
+                                        { className: 'dropdown-menu' },
+                                        isAuthenticated ? categoryLinksDropdown : ""
+                                    )
+                                ) : _react2.default.createElement('span', null),
+                                isAuthenticated ? profileList : _react2.default.createElement('span', null)
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Header;
+}(_react2.default.Component);
+
+Header.proptypes = {
+    auth: _propTypes2.default.object.isRequired,
+    user: _propTypes2.default.element.isRequired,
+    logout: _propTypes2.default.func.isRequired,
+    getCategories: _propTypes2.default.func.isRequired,
+    isAuthenticated: _propTypes2.default.func.isRequired
+};
+
+/**
+ * 
+ * 
+ * @param {any} state 
+ * @returns {state} maps props to state
+ */
+function mapStateToProps(state) {
+    return {
+        auth: state.auth,
+        user: state.auth.user.role,
+        categories: state.categories.categories
+    };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { logout: _auth.logout, getCategories: _category.getCategories, addFlashMessage: _flashmessages.addFlashMessage })(Header);
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Footer = function Footer(props) {
+    return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(
+            "nav",
+            { className: "navbar navbar-inverse navbar-fixed-bottom" },
+            _react2.default.createElement(
+                "div",
+                { className: "container" },
+                "\xA9 HelloBooks. All Rights Reserved. Privacy Policy \u2022 Terms of Use"
+            )
+        )
+    );
+};
+
+exports.default = Footer;
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
@@ -11336,7 +11678,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11722,355 +12064,13 @@ module.exports = ReactComponentTreeHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(540);
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(55);
-
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reactRedux = __webpack_require__(24);
-
-var _auth = __webpack_require__(77);
-
-var _category = __webpack_require__(203);
-
-var _flashmessages = __webpack_require__(52);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * 
- * 
- * @class Header
- * @extends {React.Component}
- */
-
-var Header = function (_React$Component) {
-    _inherits(Header, _React$Component);
-
-    function Header() {
-        _classCallCheck(this, Header);
-
-        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
-    }
-
-    _createClass(Header, [{
-        key: 'componentWillMount',
-
-        /**
-         * 
-         * @returns {void}
-         * @memberof Header
-         */
-        value: function componentWillMount() {
-            var _this2 = this;
-
-            this.props.getCategories().then(function () {
-                _this2.setState({ categories: _this2.props.categories });
-            });
-        }
-
-        /**
-         * 
-         * @returns {void}
-         * @param {any} event 
-         * @memberof Header
-         */
-
-    }, {
-        key: 'logout',
-        value: function logout(event) {
-            event.preventDefault();
-            this.props.logout();
-        }
-
-        /**
-         * 
-         * 
-         * @returns {Links} Contains user profile links
-         * @memberof Header
-         */
-
-    }, {
-        key: 'render',
-        value: function render() {
-            var cat = this.props.categories.categories;
-            var isAuthenticated = this.props.auth.isAuthenticated;
-
-            var userType = this.props.user;
-            var adminLinks = _react2.default.createElement(
-                'li',
-                null,
-                'Manage Library Stock'
-            );
-            var userLinks = cat && cat.length ? cat.slice(0, 9).map(function (category) {
-                return _react2.default.createElement(
-                    'li',
-                    { key: category.id },
-                    _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        { to: '/books/' + category.title + '/' + category.id },
-                        category.title
-                    )
-                );
-            }) : _react2.default.createElement(
-                'h6',
-                null,
-                'No categories'
-            );
-
-            var categoryLinksDropdown = cat && cat.length ? cat.slice(10, 50).map(function (category) {
-                return _react2.default.createElement(
-                    'li',
-                    { key: category.id },
-                    _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        { to: '/books/' + category.title + '/' + category.id },
-                        category.title
-                    )
-                );
-            }) : _react2.default.createElement(
-                'h6',
-                null,
-                'No categories'
-            );
-
-            var profileList = _react2.default.createElement(
-                'li',
-                { className: 'dropdown' },
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-                    _react2.default.createElement('img', { src: '../client/src/assets/images/tales.jpg', role: 'presentation', className: 'usr-img' }),
-                    _react2.default.createElement('span', { className: 'caret' })
-                ),
-                _react2.default.createElement(
-                    'ul',
-                    { className: 'dropdown-menu' },
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/profile' },
-                            'My Profile'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/history' },
-                            'Rent History'
-                        )
-                    ),
-                    userType == "admin" && _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            'a',
-                            { href: '/librarybooks' },
-                            'Manage Library Stock'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '#', onClick: this.logout.bind(this) },
-                            'Logout'
-                        )
-                    )
-                )
-            );
-
-            var guestLinks = _react2.default.createElement(
-                'ul',
-                { className: 'nav navbar-nav navbar-right' },
-                _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        { to: '/signup' },
-                        'Sign Up'
-                    )
-                ),
-                _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        { to: '/signin' },
-                        'Login'
-                    )
-                )
-            );
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'nav',
-                    { className: 'navbar navbar-inverse' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'container-fluid' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'navbar-header' },
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
-                                _react2.default.createElement(
-                                    'span',
-                                    { className: 'sr-only' },
-                                    'Toggle navigation'
-                                ),
-                                _react2.default.createElement('span', { className: 'icon-bar' }),
-                                _react2.default.createElement('span', { className: 'icon-bar' }),
-                                _react2.default.createElement('span', { className: 'icon-bar' })
-                            ),
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { className: 'navbar-brand', to: '/books' },
-                                'HelloBooks'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-                            _react2.default.createElement(
-                                'form',
-                                { className: 'navbar-form navbar-left navbar-search' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'form-group' },
-                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Search' })
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'ul',
-                                { className: 'nav navbar-nav navbar-right' },
-                                isAuthenticated ? userLinks : guestLinks,
-                                isAuthenticated ? _react2.default.createElement(
-                                    'li',
-                                    { className: 'dropdown' },
-                                    _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { to: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-                                        'More Categories',
-                                        _react2.default.createElement('span', { className: 'caret' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'ul',
-                                        { className: 'dropdown-menu' },
-                                        isAuthenticated ? categoryLinksDropdown : ""
-                                    )
-                                ) : _react2.default.createElement('span', null),
-                                isAuthenticated ? profileList : _react2.default.createElement('span', null)
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Header;
-}(_react2.default.Component);
-
-Header.proptypes = {
-    auth: _propTypes2.default.object.isRequired,
-    user: _propTypes2.default.element.isRequired,
-    logout: _propTypes2.default.func.isRequired,
-    getCategories: _propTypes2.default.func.isRequired,
-    isAuthenticated: _propTypes2.default.func.isRequired
-};
-
-/**
- * 
- * 
- * @param {any} state 
- * @returns {state} maps props to state
- */
-function mapStateToProps(state) {
-    return {
-        auth: state.auth,
-        user: state.auth.user.role,
-        categories: state.categories.categories
-    };
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { logout: _auth.logout, getCategories: _category.getCategories, addFlashMessage: _flashmessages.addFlashMessage })(Header);
-
-/***/ }),
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Footer = function Footer(props) {
-    return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(
-            "nav",
-            { className: "navbar navbar-inverse navbar-fixed-bottom" },
-            _react2.default.createElement(
-                "div",
-                { className: "container" },
-                "\xA9 HelloBooks. All Rights Reserved. Privacy Policy \u2022 Terms of Use"
-            )
-        )
-    );
-};
-
-exports.default = Footer;
+module.exports = __webpack_require__(540);
 
 /***/ }),
 /* 34 */
@@ -20286,7 +20286,7 @@ exports.default = function (componentOrElement) {
   return (0, _ownerDocument2.default)(_reactDom2.default.findDOMNode(componentOrElement));
 };
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -23133,7 +23133,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -23177,7 +23177,7 @@ var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
 var _PropTypes = __webpack_require__(1046);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -30313,7 +30313,7 @@ module.exports = exports['default'];
 exports.__esModule = true;
 exports.default = getContainer;
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -31151,7 +31151,7 @@ module.exports = getIteratorFn;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var ReactCurrentOwner = __webpack_require__(40);
-var ReactComponentTreeHook = __webpack_require__(30);
+var ReactComponentTreeHook = __webpack_require__(32);
 var ReactElement = __webpack_require__(60);
 
 var checkReactTypeSpec = __webpack_require__(531);
@@ -55326,7 +55326,7 @@ var _createChainedFunction = __webpack_require__(23);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -55611,7 +55611,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -55944,7 +55944,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -56322,7 +56322,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -56937,7 +56937,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -57583,7 +57583,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -57601,7 +57601,7 @@ var _createChainedFunction = __webpack_require__(23);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -59169,7 +59169,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -59979,7 +59979,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(30);
+  ReactComponentTreeHook = __webpack_require__(32);
 }
 
 var loggedTypeFailures = {};
@@ -60021,7 +60021,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(30);
+            ReactComponentTreeHook = __webpack_require__(32);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -62413,7 +62413,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var ReactInvalidSetStateWarningHook = __webpack_require__(551);
 var ReactHostOperationHistoryHook = __webpack_require__(552);
-var ReactComponentTreeHook = __webpack_require__(30);
+var ReactComponentTreeHook = __webpack_require__(32);
 var ExecutionEnvironment = __webpack_require__(25);
 
 var performanceNow = __webpack_require__(553);
@@ -66531,7 +66531,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(30);
+  ReactComponentTreeHook = __webpack_require__(32);
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -66539,7 +66539,7 @@ function instantiateChild(childInstances, child, name, selfDebugID) {
   var keyUnique = childInstances[name] === undefined;
   if (process.env.NODE_ENV !== 'production') {
     if (!ReactComponentTreeHook) {
-      ReactComponentTreeHook = __webpack_require__(30);
+      ReactComponentTreeHook = __webpack_require__(32);
     }
     if (!keyUnique) {
       process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -67600,7 +67600,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(30);
+  ReactComponentTreeHook = __webpack_require__(32);
 }
 
 var loggedTypeFailures = {};
@@ -67642,7 +67642,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(30);
+            ReactComponentTreeHook = __webpack_require__(32);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -67820,7 +67820,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(30);
+  ReactComponentTreeHook = __webpack_require__(32);
 }
 
 /**
@@ -67836,7 +67836,7 @@ function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID
     var keyUnique = result[name] === undefined;
     if (process.env.NODE_ENV !== 'production') {
       if (!ReactComponentTreeHook) {
-        ReactComponentTreeHook = __webpack_require__(30);
+        ReactComponentTreeHook = __webpack_require__(32);
       }
       if (!keyUnique) {
         process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -70940,7 +70940,7 @@ module.exports = ReactMount.renderSubtreeIntoContainer;
 
 var DOMProperty = __webpack_require__(53);
 var EventPluginRegistry = __webpack_require__(113);
-var ReactComponentTreeHook = __webpack_require__(30);
+var ReactComponentTreeHook = __webpack_require__(32);
 
 var warning = __webpack_require__(15);
 
@@ -71056,7 +71056,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 
 
-var ReactComponentTreeHook = __webpack_require__(30);
+var ReactComponentTreeHook = __webpack_require__(32);
 
 var warning = __webpack_require__(15);
 
@@ -71106,7 +71106,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 
 var DOMProperty = __webpack_require__(53);
-var ReactComponentTreeHook = __webpack_require__(30);
+var ReactComponentTreeHook = __webpack_require__(32);
 
 var warning = __webpack_require__(15);
 
@@ -90238,11 +90238,15 @@ var _password = __webpack_require__(1125);
 
 var _password2 = _interopRequireDefault(_password);
 
-var _authenticate = __webpack_require__(1128);
+var _notfound = __webpack_require__(1128);
+
+var _notfound2 = _interopRequireDefault(_notfound);
+
+var _authenticate = __webpack_require__(1129);
 
 var _authenticate2 = _interopRequireDefault(_authenticate);
 
-var _adminAuth = __webpack_require__(1129);
+var _adminAuth = __webpack_require__(1130);
 
 var _adminAuth2 = _interopRequireDefault(_adminAuth);
 
@@ -90269,7 +90273,8 @@ var helloRoutes = function helloRoutes() {
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/history', component: (0, _authenticate2.default)(_history2.default) }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile', component: (0, _authenticate2.default)(_profile2.default) }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/editbook/:id', component: (0, _adminAuth2.default)(_editbook2.default) }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/book/:id', component: (0, _authenticate2.default)(_singlebook2.default) })
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/book/:id', component: (0, _authenticate2.default)(_singlebook2.default) }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/*', component: _notfound2.default })
         )
     );
 };
@@ -97081,11 +97086,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -97318,11 +97323,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -97666,11 +97671,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -99877,11 +99882,11 @@ var _reactBootstrap = __webpack_require__(479);
 
 var _reactRouterDom = __webpack_require__(55);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -101366,7 +101371,7 @@ var _SafeAnchor2 = _interopRequireDefault(_SafeAnchor);
 
 var _bootstrapUtils = __webpack_require__(10);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -103204,7 +103209,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -103218,7 +103223,7 @@ var _createChainedFunction = __webpack_require__(23);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -103577,7 +103582,7 @@ var _createChainableTypeChecker = __webpack_require__(140);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -104260,7 +104265,7 @@ var _bootstrapUtils = __webpack_require__(10);
 
 var _StyleConfig = __webpack_require__(27);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -104997,7 +105002,7 @@ var _ListGroupItem2 = _interopRequireDefault(_ListGroupItem);
 
 var _bootstrapUtils = __webpack_require__(10);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -105845,7 +105850,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -108067,7 +108072,7 @@ var _splitComponentProps2 = __webpack_require__(146);
 
 var _splitComponentProps3 = _interopRequireDefault(_splitComponentProps2);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -108431,7 +108436,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -108950,7 +108955,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(31);
+var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -109506,7 +109511,7 @@ var _createChainedFunction = __webpack_require__(23);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -110228,7 +110233,7 @@ var _bootstrapUtils = __webpack_require__(10);
 
 var _StyleConfig = __webpack_require__(27);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -111166,7 +111171,7 @@ var _TabContent2 = _interopRequireDefault(_TabContent);
 
 var _bootstrapUtils = __webpack_require__(10);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -111465,7 +111470,7 @@ var _createChainedFunction = __webpack_require__(23);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _ValidComponentChildren = __webpack_require__(29);
+var _ValidComponentChildren = __webpack_require__(31);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -111839,7 +111844,7 @@ var _createChainedFunction2 = __webpack_require__(23);
 
 var _createChainedFunction3 = _interopRequireDefault(_createChainedFunction2);
 
-var _ValidComponentChildren2 = __webpack_require__(29);
+var _ValidComponentChildren2 = __webpack_require__(31);
 
 var _ValidComponentChildren3 = _interopRequireDefault(_ValidComponentChildren2);
 
@@ -112047,11 +112052,11 @@ var _reactBootstrap = __webpack_require__(479);
 
 var _reactRouterDom = __webpack_require__(55);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -112306,11 +112311,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -112598,11 +112603,11 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -112872,11 +112877,11 @@ var _isEmpty = __webpack_require__(75);
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -113119,11 +113124,11 @@ var _reactRedux = __webpack_require__(24);
 
 var _reactRouterDom = __webpack_require__(55);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -113616,11 +113621,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -113853,11 +113858,11 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(24);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -114317,11 +114322,11 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(24);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -114680,11 +114685,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _header = __webpack_require__(32);
+var _header = __webpack_require__(29);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(33);
+var _footer = __webpack_require__(30);
 
 var _footer2 = _interopRequireDefault(_footer);
 
@@ -114863,6 +114868,51 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _header = __webpack_require__(29);
+
+var _header2 = _interopRequireDefault(_header);
+
+var _footer = __webpack_require__(30);
+
+var _footer2 = _interopRequireDefault(_footer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotFound = function NotFound(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_header2.default, null),
+        _react2.default.createElement(
+            'div',
+            { className: 'container' },
+            _react2.default.createElement(
+                'h4',
+                null,
+                'Oops, the page you\'re looking for doesn\'t exist '
+            )
+        ),
+        _react2.default.createElement(_footer2.default, null)
+    );
+};
+
+exports.default = NotFound;
+
+/***/ }),
+/* 1129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 exports.default = Authenticate;
@@ -114985,7 +115035,7 @@ function Authenticate(ComposedComponent) {
 }
 
 /***/ }),
-/* 1129 */
+/* 1130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
