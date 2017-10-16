@@ -6,8 +6,9 @@ import Footer from '../footer/footer.jsx';
 const Index = (props) => (
     <div>
         <Header />
-        <div className="container">
-            <h4>Oops, the page you're looking for doesn't exist </h4>
+
+        <div className="col-sm-8 col-sm-offset-2">
+            <h1>Welcome to HelloBooks</h1>
         </div>
         <Footer />
     </div>

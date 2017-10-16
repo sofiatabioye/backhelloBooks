@@ -33,6 +33,7 @@ class Profile extends Component {
      * @memberof Profile
      */
     componentDidMount() {
+        console.log(this.props.auth);
         this.props.fetchBorrowedBooks(this.props.auth.user.user);
     }
 
@@ -124,7 +125,7 @@ Profile.contextTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    books: state.books.books.UserBorrowHistory,
+    books: state.books.UserBorrowHistory,
     auth: state.auth,
 });
 

@@ -10,7 +10,7 @@ import { addFlashMessage } from '../../actions/flashmessages';
 
 /**
  * 
- * 
+ *
  * @class Header
  * @extends {React.Component}
  */
@@ -18,7 +18,7 @@ import { addFlashMessage } from '../../actions/flashmessages';
 class Header extends React.Component {
     /**
      * 
-     * @returns {void}
+     * @returns {void} 
      * @memberof Header
      */
     componentWillMount() {
@@ -78,14 +78,15 @@ class Header extends React.Component {
 
         const guestLinks = (
             <ul className="nav navbar-nav navbar-right">
+                <li><Link to="/signin">Sign In</Link></li>
                 <li><Link to="/signup">Sign Up</Link></li>
-                <li><Link to="/signin">Login</Link></li>
+                <li><Link to="/books">Library</Link></li>
             </ul>
         );
 
         return (
             <div>
-                <nav className="navbar navbar-inverse">
+                <nav className="navbar navbar-inverse ">
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -98,11 +99,7 @@ class Header extends React.Component {
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <form className="navbar-form navbar-left navbar-search">
-                                <div className="form-group">
-                                    <input type="text" className="form-control" placeholder="Search" />
-                                </div>
-                            </form>
+
                             <ul className="nav navbar-nav navbar-right" >
                                 { isAuthenticated ? userLinks : guestLinks }
                                 { isAuthenticated ?

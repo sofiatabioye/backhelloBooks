@@ -103,7 +103,7 @@ History.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-    books: state.books.books.UserBorrowHistory,
+    books: state.books.UserBorrowHistory,
     auth: state.auth,
 });
 

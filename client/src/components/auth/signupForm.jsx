@@ -9,7 +9,7 @@ const SignupForm = (props) => {
     return (
         <div>
             <Header />
-            <div className="login-box">
+            <div className="col-sm-6 col-sm-offset-3 login-box">
                 <FlashMessagesList />
                 { errors.form && <div className="alert alert-danger">{errors.form}</div> }
                 <form onSubmit={props.onSubmit} className="login-form form-responsive">
@@ -33,7 +33,7 @@ const SignupForm = (props) => {
                         {errors.email && <span className="help-text">{errors.confirm_password}</span> }
                     </div>
 
-                    <button type="submit" className="btn btn-lg btn-me" >Sign Up</button>
+                    <button type="submit" className="btn btn-md btn-primary" >Sign Up</button>
                 </form>
                 <div className="g-signin2" onSuccess={props.onSuccess} />
             </div>

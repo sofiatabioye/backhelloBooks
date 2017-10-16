@@ -59,7 +59,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: /node-modules/,
-                loader: ['style-loader', 'css-loader']
+                loader: ['style-loader', 'css-loader', 'resolve-url-loader']
             },
             {
                 test: /\.(woff|png|jpg|gif)$/,

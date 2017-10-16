@@ -23,7 +23,7 @@ export default {
                     next();
                 }
             })
-            .catch(error => res.send(400).catch(error));
+            .catch(error => res.status(400).send(error, "inside helper"));
     }
 
 

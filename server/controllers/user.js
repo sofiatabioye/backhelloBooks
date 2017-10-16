@@ -235,13 +235,13 @@ export default {
                                     .then(() => {
                                         res.status(201).send({ message: 'Book Borrowed Successfully.', books: book });
                                     })
-                                    .catch(error => res.status(400).send(error));
+                                    .catch(error => res.status(400).send(error, "======"));
                             }
                         })
-                        .catch(error => res.status(400).send(error));
+                        .catch(error => res.status(400).send(error, "+++++"));
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(400).send(error, "------"));
     },
 
 

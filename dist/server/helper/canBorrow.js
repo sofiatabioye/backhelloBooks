@@ -31,7 +31,7 @@ exports.default = {
                 next();
             }
         }).catch(function (error) {
-            return res.send(400).catch(error);
+            return res.status(400).send(error, "inside helper");
         });
     }
 };

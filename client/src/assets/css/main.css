@@ -4,12 +4,12 @@ body {
 
 
 .login-box {
+  display: flex;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	width: 600px;
 	padding: 30px;
-	margin: 50px 0px 0px 350px;
 	font-size: 14px;
+	margin-top: 50px;
 }
 
 .navbar-inverse {
@@ -217,6 +217,10 @@ a:hover .bookbox {
 	margin-bottom: 50px;
 }
 
+.login-form {
+	margin-bottom: 50px;
+}
+
 .profile-usertitle {
 	text-align: center;
 	padding: 10px 0px 10px 0px;
@@ -251,5 +255,17 @@ a:hover .bookbox {
 .profile-content a {
     color: blue;
     text-decoration: none;
+}
+.col-home-a {
+	margin: 0;
+	background-image: url("../images/bg.jpg");
+	background-repeat:no-repeat;
+	display: compact;
+	background-size: 100%;
+	height: 100%; 
+	/* background-position: cen */
+}
+.home-sidea {
+	background-image: url("../images/bg.jpg");
 }
 

@@ -13,26 +13,57 @@ export default (state = { user: [], loading: false, errors: [], success: [] }, a
                 isAuthenticated: !isEmpty(action.user),
                 user: action.user
             };
+
         case "FORGOT_PASSWORD_SUCCESS":
             return {
                 message: action.message
             };
+
         case "FORGOT_PASSWORD_FAILURE":
             return {
                 errors: action.errors
             };
+
         case 'USER_LOGIN_FAILURE':
-            return Object.assign({}, state, { loading: false, errors: action.errors });
+            return [...state,
+                {
+                    loading: false,
+                    errors: action.errors
+                }];
+
         case 'USER_SIGNUP_SUCCESS':
-            return Object.assign({}, state, { loading: false, message: action.message });
+            return [...state,
+                {
+                    loading: false,
+                    message: action.message
+                }];
+
         case 'USER_SIGNUP_FAILURE':
-            return Object.assign({}, state, { loading: false, errors: action.errors });
+            return [...state,
+                {
+                    loading: false,
+                    errors: action.errors
+                }];
         case 'CHANGE_PASSWORD_SUCCESS':
-            return Object.assign({}, state, { loading: false, success: action.message });
+            return [...state,
+                {
+                    loading: false,
+                    success: action.message
+                }];
+
         case 'CHANGE_PASSWORD_FAILURE':
-            return Object.assign({}, state, { loading: false, errors: action.errors });
+            return [...state,
+                {
+                    loading: false,
+                    errors: action.errors
+                }];
+
         case SIGN_UP:
-            return Object.assign({}, state, { loading: false, user: action.user });
+            return [...state,
+                {
+                    loading: false,
+                    user: action.user
+                }];
 
         default: return state;
     }

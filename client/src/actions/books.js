@@ -110,7 +110,6 @@ export function fetchBook(id) {
         dispatch({ type: 'FETCH_BOOKS_BEGINS' });
         return axios.get(`/api/v1/books/${id}`)
             .then((response) => {
-                console.log(response.data, "=====");
                 dispatch({ type: 'FETCH_BOOKS_SUCCESS', books: response.data });
             });
     };
@@ -158,8 +157,7 @@ export function borrowBook(userId, bookId, history) {
             .then((response) => {
                 dispatch({ type: 'BORROW_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
             }, (err) => {
-                dispatch({ type: 'BORROW_BOOK_FAILURE', errors: err.response.data.message, books: err.response.data.book });
-                return err;
+                dispatch({ type: 'BORROW_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
             });
     };
 }

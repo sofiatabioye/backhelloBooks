@@ -15,15 +15,15 @@ import EditBook from '../books/editbook.jsx';
 import BookCat from '../books/bookcat.jsx';
 import Password from '../auth/password.jsx';
 import NotFound from './notfound.jsx';
-
+import Index from './index.jsx';
 import requireAuth from '../../helper/authenticate';
 import requireAdmin from '../../helper/adminAuth';
 
 const helloRoutes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={requireAuth(Books)}/>
-            <Route exact path="/books" component={requireAuth(Books)}/>
+            <Route exact path="/" component={Index}/>
+            <Route exact path="/books" component={Books}/>
             <Route exact path="/books/categories" component={requireAuth(Category)}/>
             <Route exact path="/books/:title/:id" component={requireAuth(BookCat)}/>
             <Route exact path="/librarybooks" component={requireAdmin(LibraryBooks)}/>

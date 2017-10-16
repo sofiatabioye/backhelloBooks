@@ -23,6 +23,7 @@ class SingleBook extends Component {
         super(props);
         this.state = {
             errors: "",
+            book: [],
             message: "",
             isLoading: false,
             disabled: false,
@@ -41,6 +42,17 @@ class SingleBook extends Component {
         this.props.fetchBook(this.props.match.params.id);
     }
 
+
+    /**
+     * 
+     * @returns {nextProps} update state
+     * @param {any} nextProps 
+     * @memberof SingleBook
+     */
+    componentWillReceiveProps(nextProps) {
+        this.setState({ book: nextProps.books.books });
+    }
+
     /**
      * @returns {Book} borrowed by user
      * 
@@ -48,7 +60,7 @@ class SingleBook extends Component {
      */
     borrowbook() {
         const userId = this.props.auth.user.user;
-        const bookId = this.props.books.books.id;
+        const bookId = this.state.book.id;
         this.props.borrowBook(userId, bookId, this.props.history);
     }
 
@@ -73,7 +85,7 @@ class SingleBook extends Component {
     render() {
         const error = this.props.errors;
         const success = this.props.message;
-        const book = this.props.books.books;
+        const book = this.state.book;
         const BorrowButton = (
             <div className="col-ava">
                 {book.quantity >= 1 &&
@@ -93,10 +105,10 @@ class SingleBook extends Component {
                     { success !== null && <p className="text-success" >{success}</p> }
                     <div><h3>{book.title} </h3></div>
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-3 col-sm-3 col-lg-3">
                             <img src={book.image} className="book_image" role="presentation"/>
                         </div>
-                        <div className="col-md-9 singlebook_details">
+                        <div className="col-md-9 col-sm-9 col-lg-3 singlebook_details">
                             <div> <b>Category:</b> { book.category }</div>
                             <div> <b>Written By:</b>  {book.author}</div>
                             <div><b>Edition:</b> {book.bookEdition }</div>
