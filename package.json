@@ -12,7 +12,7 @@
     "test": "nyc mocha ./server/test/* --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start:client": "webpack-dev-server --hot",
-    "build": "rm -rf dist && babel server --watch -d dist/server  & webpack --config webpack.production.config.js --progress --colors --watch",
+    "build": "rm -rf dist && babel server -d dist/server && webpack --config webpack.production.config.js --progress --colors --watch",
     "build:dev": "rm -rf dist && babel server -d dist/server &&  webpack --config webpack.config.js --env.NODE_ENV=development --env.development --progress --colors --watch",
     "heroku-postbuild": "npm run build"
   },
