@@ -9,7 +9,7 @@ const SignupForm = (props) => {
     return (
         <div>
             <Header />
-            <div className="col-sm-6 col-sm-offset-3 login-box">
+            <div className="col-sm-6 col-sm-offset-3">
                 <FlashMessagesList />
                 { errors.form && <div className="alert alert-danger">{errors.form}</div> }
                 <form onSubmit={props.onSubmit} className="login-form form-responsive">

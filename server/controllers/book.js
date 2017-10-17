@@ -19,7 +19,7 @@ export default {
                 bookSize: req.body.size,
             })
             .then(book => res.status(201).send({ book: book, message: 'Book Created Successfully.' }))
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // lists all books in the library
@@ -40,7 +40,7 @@ export default {
                     }
                 });
             })
-            .catch(error => res.status(400).send(error, "err"));
+            .catch(error => res.status(500).send(error, "err"));
     },
 
     // lists books by category
@@ -49,7 +49,7 @@ export default {
         return Book
             .findAll({ where: { category: catTitle } })
             .then(books => res.status(200).send({ books: books, message: `${catTitle} Books` }))
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // View book information by Id
@@ -64,7 +64,7 @@ export default {
                 }
                 return res.status(200).send(book);
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin update book information
@@ -93,7 +93,7 @@ export default {
                     .then(() => res.status(200).send(book)) // Send back the updated book.
                     .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin delete book
@@ -111,7 +111,7 @@ export default {
                     .then(() => res.status(204).send({ message: 'Book deleted successfully.' }))
                     .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
 

@@ -58,12 +58,11 @@ export default {
                 }
             })
 
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // User logs in to hellobooks. Generates token on login
     login(req, res) {
-        console.log("....", req);
         return User
             .findOne({
                 where: { username: req.body.identifier,
@@ -76,15 +75,11 @@ export default {
                 }
             })
             .then((user) => {
-                console.log("error", user);
                 if (!user) {
-                    console.log("ypdat");
                     res.status(404).send({ message: 'Invalid login credentials' });
                 } else {
                     bcrypt.compare(req.body.password, user.password, (err, result) => {
-                        console.log(err, "======error");
                         if (result) {
-                            console.log("result", result);
                             const myToken = jwt.sign({ user: user.id,
                                 role: user.role,
                                 level: user.level,
@@ -103,7 +98,7 @@ export default {
                     });
                 }
             })
-            .catch(error => res.status(400).send({ message: "An internal error" }));
+            .catch(error => res.status(500).send({ message: error }));
     },
 
 
@@ -139,7 +134,7 @@ export default {
                         .catch(error => res.status(400).send(error));
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     resetPassword(req, res) {
@@ -167,7 +162,7 @@ export default {
                     smtpTransport.close();
                 });
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     changePassword(req, res) {
@@ -198,7 +193,7 @@ export default {
                     });
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Logged in user borrows book
@@ -241,7 +236,7 @@ export default {
                         .catch(error => res.status(400).send(error, "+++++"));
                 }
             })
-            .catch(error => res.status(400).send(error, "------"));
+            .catch(error => res.status(500).send(error, "------"));
     },
 
 
@@ -276,7 +271,7 @@ export default {
                     })
                     .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Logged in user views his/her borrow history
@@ -311,7 +306,7 @@ export default {
                         .catch(error => res.status(400).send(error));
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // gets books which user has borrowed but not returned
@@ -340,10 +335,10 @@ export default {
                                     .catch(error => res.status(400).send(error));
                             }
                         })
-                        .catch(error => res.status(400).send(error));
+                        .catch(error => res.status(500).send(error));
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
 

@@ -59,8 +59,6 @@ exports.default = function (sequelize, DataTypes) {
             associate: function associate(models) {}
         }
     });
-    Book.associate = function (models) {
-        Book.belongsTo(models.Category, { foreignKey: 'cat_id', targetKey: 'id' });
-    };
+
     return Book;
 };

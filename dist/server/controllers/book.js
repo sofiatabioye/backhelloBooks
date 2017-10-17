@@ -29,7 +29,7 @@ exports.default = {
         }).then(function (book) {
             return res.status(201).send({ book: book, message: 'Book Created Successfully.' });
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     },
 
@@ -50,7 +50,7 @@ exports.default = {
                 }
             });
         }).catch(function (error) {
-            return res.status(400).send(error, "err");
+            return res.status(500).send(error, "err");
         });
     },
 
@@ -61,7 +61,7 @@ exports.default = {
         return Book.findAll({ where: { category: catTitle } }).then(function (books) {
             return res.status(200).send({ books: books, message: catTitle + ' Books' });
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     },
 
@@ -76,7 +76,7 @@ exports.default = {
             }
             return res.status(200).send(book);
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     },
 
@@ -107,7 +107,7 @@ exports.default = {
                 return res.status(400).send(error);
             });
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     },
 
@@ -126,7 +126,7 @@ exports.default = {
                 return res.status(400).send(error);
             });
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     }
 };

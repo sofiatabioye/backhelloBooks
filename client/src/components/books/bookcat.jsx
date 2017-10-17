@@ -59,8 +59,8 @@ class BookCat extends Component {
     render() {
         const books = this.props.books;
         const title = this.props.match.params.title;
-        const bookList = books && books.length ?
-            books.map((book) => (
+        const bookList = books && books.books ?
+            books.books.map((book) => (
                 <div className="col-md-3" key={book.id}>
                     <a href={`/book/${book.id}`}>
                         <div className="bookbox">
@@ -98,7 +98,7 @@ BookCat.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-    books: state.books.books.books,
+    books: state.books.books,
 });
 
 

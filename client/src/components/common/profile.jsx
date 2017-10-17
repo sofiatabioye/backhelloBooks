@@ -33,7 +33,6 @@ class Profile extends Component {
      * @memberof Profile
      */
     componentDidMount() {
-        console.log(this.props.auth);
         this.props.fetchBorrowedBooks(this.props.auth.user.user);
     }
 
@@ -68,8 +67,8 @@ class Profile extends Component {
      */
     render() {
         const { books } = this.state;
-        const booklist = books && books.length ?
-            books.map((book, index) => (
+        const booklist = books && books.UserBorrowHistory ?
+            books.UserBorrowHistory.map((book, index) => (
                 <tbody key={book.id}>
                     <tr>
                         <th scope="row">{index + 1 }</th>
@@ -125,7 +124,7 @@ Profile.contextTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    books: state.books.UserBorrowHistory,
+    books: state.books.books,
     auth: state.auth,
 });
 

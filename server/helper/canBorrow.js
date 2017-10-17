@@ -14,16 +14,16 @@ export default {
             })
             .then((userBorrowed) => {
                 if (userLevel === "gold" && userBorrowed.count >= goldCanBorrow) {
-                    res.status(403).send({ message: "Oops! You need to return some books first" });
+                    res.status(401).send({ message: "Oops! You need to return some books first" });
                 } else if (userLevel === "bronze" && userBorrowed.count >= bronzeCanBorrow) {
-                    res.status(403).send({ message: "Oops! You need to return some books first" });
+                    res.status(401).send({ message: "Oops! You need to return some books first" });
                 } else if ((userLevel === "silver") && userBorrowed.count >= silverCanBorrow) {
-                    res.status(403).send({ message: "Oops! You need to return some books first" });
+                    res.status(401).send({ message: "Oops! You need to return some books first" });
                 } else {
                     next();
                 }
             })
-            .catch(error => res.status(400).send(error, "inside helper"));
+            .catch(error => res.status(500).send(error));
     }
 
 

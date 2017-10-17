@@ -16264,7 +16264,6 @@ function getBooksByCat(title) {
  * @returns 
  */
 function fetchBook(id) {
-    console.log(id);
     return function (dispatch) {
         dispatch({ type: 'FETCH_BOOKS_BEGINS' });
         return _axios2.default.get('/api/v1/books/' + id).then(function (response) {
@@ -16313,8 +16312,10 @@ function borrowBook(userId, bookId, history) {
     return function (dispatch) {
         dispatch({ type: 'BORROW_BOOK_BEGINS' });
         return _axios2.default.post('/api/v1/users/' + userId + '/books/' + bookId + '/borrow').then(function (response) {
+            console.log(response);
             dispatch({ type: 'BORROW_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
         }, function (err) {
+            console.log(err);
             dispatch({ type: 'BORROW_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
         });
     };
@@ -89476,10 +89477,10 @@ exports.default = function () {
             }]);
 
         case 'BOOKS_CATEGORY_SUCCESS':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 books: action.books
-            }]);
+            };
 
         case 'RETURN_BOOK_SUCCESS':
             var borrowedBooks = state.books.UserBorrowHistory.filter(function (book) {
@@ -89499,11 +89500,11 @@ exports.default = function () {
             }]);
 
         case 'BORROW_HISTORY_SUCCESS':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 books: action.books,
                 errors: action.errors
-            }]);
+            };
 
         case 'BORROW_HISTORY_FAILURE':
             return [].concat(_toConsumableArray(state), [{
@@ -89520,11 +89521,11 @@ exports.default = function () {
             };
 
         case "FETCH_BORROWED_BOOKS_SUCCESS":
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 books: action.books,
                 pagination: action.books.pagination
-            }]);
+            };
 
         case "FETCH_BORROWED_BOOKS_FAILURE":
             return [].concat(_toConsumableArray(state), [{
@@ -89534,20 +89535,16 @@ exports.default = function () {
             }]);
 
         case "DELETE_BOOK_SUCCESS":
-            console.log(action.id);
             var allbooks = state.books.filter(function (book) {
                 if (book.id !== action.id) {
-                    console.log(book.book_id, action.id);
+                    return book;
                 }
-                return book;
             });
-            return [].concat(_toConsumableArray(state), [{
+            return [].concat(_toConsumableArray(state.books), [{
                 loading: false,
                 books: allbooks,
                 pagination: state.books.pagination
             }]);
-        // case SET_BOOKS:
-        //     return Object.assign({}, state, { loading: false, books: action.books.books, pagination: action.books.pagination });
 
         case _types.ADD_BOOK:
             return [].concat(_toConsumableArray(state), [{
@@ -89665,7 +89662,7 @@ exports = module.exports = __webpack_require__(862)(undefined);
 
 
 // module
-exports.push([module.i, "body {\r\n\tpadding-bottom: 60px;\r\n}\r\n\r\n\r\n.login-box {\r\n  display: flex;\r\n\tborder: 1px solid #ccc;\r\n\tborder-radius: 5px;\r\n\tpadding: 30px;\r\n\tfont-size: 14px;\r\n\tmargin-top: 50px;\r\n}\r\n\r\n.navbar-inverse {\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tpadding-top: 10px;\r\n}\r\n.navbar-inverse .navbar-brand {\r\n\tcolor: #ffffff !important;\r\n\tfont-size: 32px;\r\n\tfont-family: xiomara;\r\n\t\r\n}\r\n.navbar-inverse .navbar-nav > li > a {\r\n\tcolor: #fff;\r\n}\r\n\r\nul > li > a {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.navbar-inverse .navbar-nav > li > a:hover, a:visited {\r\n\ttext-decoration: none;\r\n\tcolor: #ccc;\r\n\t\r\n}\r\n\r\n.dropdown-menu > li > a {\r\n\tfont-size: 14px;\r\n}\r\na:hover; a:visited; a:link; a:active {\r\n\ttext-decoration: none;\r\n\tcolor: #000;\r\n}\r\n\r\n.navbar-search input {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.container-me {\r\n\tmin-height: 520px;\r\n\ttext-align: center;\r\n}\r\n.container-me input {\r\n\tfont-size: 12px;\r\n\tpadding-left: 5px;\r\n}\r\n\r\nlabel .signin h3 {\r\n\ttext-align: center;\r\n\tfont-size: 32px;\r\n}\r\n.usr-img {\r\n\theight:30px;\r\n\twidth: 30px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 15px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.profile-img {\r\n\theight:100px;\r\n\twidth: 100px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 50px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.big-usr-img {\r\n\theight: 100px;\r\n\twidth: 100px;\r\n\tbackground-color: #ccc;\r\n\tborder-radius: 50px;\r\n}\r\n\r\n.btn-me {\r\n\tbackground-color: #000;\r\n\tcolor: #fff;\r\n\twidth: 200px;\r\n\tmargin-left: 170px;\r\n\tposition: relative;\r\n\r\n}\r\n\r\n.bookbox {\r\n\twidth: 100%;\r\n\theight: 300px;\r\n\tborder: 1px solid #ccc;\r\n\tmargin-bottom: 30px;\r\n}\r\n\r\n.booktitle-admin a {\r\n\tmargin-left: 30px;\r\n\tmargin-top: 20px;\r\n\tcolor: #fff;\r\n}\r\n\r\n.glyphicon-add {\r\n\tmargin-left: 30px;\r\n\tfont-size: 200px;\r\n}\r\n\r\n.bookcover {\r\n\theight: 180px;\r\n\twidth: 100%;\r\n}\r\n\r\n.bookcover-admin {\r\n\theight: 130px;\r\n\twidth: 100%;\r\n}\r\n\r\n.booktitle {\r\n\tfont-size: 20px;\r\n\tfont-weight: bold;\r\n\tcolor: #000;\r\n\tpadding: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\n.editbook {\r\n\theight: 30px;\r\n\tbackground-color: black;\r\n\ttext-align: center;\r\n\tpadding-top: 2px;\r\n}\r\n\r\n.bookcat {\r\n\tpadding-left:10px;\r\n}\r\n\r\n.description {\r\n\tfont-size: 14px;\r\n\tcolor: #000;\r\n\tpadding-left: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\na:hover .bookbox {\r\n\tborder-color: blue;\r\n\ttext-decoration: none;\r\n}\r\n\r\n.mydetails {\r\n\tpadding: 20px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.borrow_details {\r\n\tpadding: 80px;\r\n\tfont-size: 16px;\r\n}\r\n\r\n.btn-borrow {\r\n\tmargin-top: 0px; \r\n}\r\n\r\n.singlebook_details {\r\n\tpadding: 40px;\r\n    font-size: 16px;\r\n    text-align: left;\r\n}\r\n\r\n.singlebook_details .fa {\r\n\tcolor: #ccc;\r\n\tpadding-right: 5px;\r\n} \r\n\r\n.col-ava {\r\n\tpadding: 50px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.password-box {\r\n    text-align: center;\r\n    padding: 0px 100px 0px 100px;\r\n}\r\n\r\n.password-box input {\r\n\tfont-size: 18px;\r\n}\r\n\r\n.book_image {\r\n\theight: 300px;\r\n\twidth: 300px;\r\n}\r\n\r\n.container-me h3 {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.borrow-history {\r\n\tfont-size: 16px;\r\n}\r\n\r\n.row-history {\r\n\tmargin-bottom:20px;\r\n}\r\n\r\n.form-me {\r\n\twidth: 600px;\r\n\tborder: 1px solid #ccc;\r\n\tpadding: 20px;\r\n\tmargin:  0 auto;\r\n\tmargin-bottom: 50px;\r\n}\r\n\r\n.login-form {\r\n\tmargin-bottom: 50px;\r\n}\r\n\r\n.profile-usertitle {\r\n\ttext-align: center;\r\n\tpadding: 10px 0px 10px 0px;\r\n}\r\n\r\n.profile-userpic {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-sidebar {\r\n\tborder-right: 1px solid #ccc;\r\n\tpadding-top: 30px;\r\n\tpadding-bottom: 30px;\r\n}\r\n\r\n.profile-usermenu {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-usertitle-job {\r\n\tcolor: #ccc;\r\n}\r\n\r\n.profile-content td {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content th {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content a {\r\n    color: blue;\r\n    text-decoration: none;\r\n}\r\n.col-home-a {\r\n\tmargin: 0;\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n\tbackground-repeat:no-repeat;\r\n\tdisplay: compact;\r\n\tbackground-size: 100%;\r\n\theight: 100%; \r\n\t/* background-position: cen */\r\n}\r\n.home-sidea {\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n}\r\n\r\n", ""]);
+exports.push([module.i, "body {\r\n\tpadding-bottom: 60px;\r\n}\r\n\r\n\r\n.login-box {\r\n  display: flex;\r\n\tborder: 1px solid #ccc;\r\n\tborder-radius: 5px;\r\n\tpadding: 30px;\r\n\tfont-size: 14px;\r\n\tmargin-top: 50px;\r\n}\r\n\r\n.navbar-inverse {\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tpadding-top: 10px;\r\n}\r\n.navbar-inverse .navbar-brand {\r\n\tcolor: #ffffff !important;\r\n\tfont-size: 32px;\r\n\tfont-family: xiomara;\r\n\t\r\n}\r\n.navbar-inverse .navbar-nav > li > a {\r\n\tcolor: #fff;\r\n}\r\n\r\nul > li > a {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.navbar-inverse .navbar-nav > li > a:hover, a:visited {\r\n\ttext-decoration: none;\r\n\tcolor: #ccc;\r\n\t\r\n}\r\n\r\n.dropdown-menu > li > a {\r\n\tfont-size: 14px;\r\n}\r\na:hover; a:visited; a:link; a:active {\r\n\ttext-decoration: none;\r\n\tcolor: #000;\r\n}\r\n\r\n.navbar-search input {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.container-me {\r\n\tmin-height: 520px;\r\n\ttext-align: center;\r\n}\r\n.container-me input {\r\n\tfont-size: 12px;\r\n\tpadding-left: 5px;\r\n}\r\n\r\nlabel .signin h3 {\r\n\ttext-align: center;\r\n\tfont-size: 32px;\r\n}\r\n.usr-img {\r\n\theight:30px;\r\n\twidth: 30px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 15px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.profile-img {\r\n\theight:100px;\r\n\twidth: 100px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 50px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.big-usr-img {\r\n\theight: 100px;\r\n\twidth: 100px;\r\n\tbackground-color: #ccc;\r\n\tborder-radius: 50px;\r\n}\r\n\r\n.btn-me {\r\n\tbackground-color: #000;\r\n\tcolor: #fff;\r\n\twidth: 200px;\r\n\tmargin-left: 170px;\r\n\tposition: relative;\r\n\r\n}\r\n\r\n.bookbox {\r\n\twidth: 100%;\r\n\theight: 300px;\r\n\tborder: 1px solid #ccc;\r\n\tmargin-bottom: 30px;\r\n}\r\n\r\n.booktitle-admin a {\r\n\tmargin-left: 30px;\r\n\tmargin-top: 20px;\r\n\tcolor: #fff;\r\n}\r\n\r\n.glyphicon-add {\r\n\tmargin-left: 30px;\r\n\tfont-size: 200px;\r\n}\r\n\r\n.bookcover {\r\n\theight: 180px;\r\n\twidth: 100%;\r\n}\r\n\r\n.bookcover-admin {\r\n\theight: 130px;\r\n\twidth: 100%;\r\n}\r\n\r\n.booktitle {\r\n\tfont-size: 20px;\r\n\tfont-weight: bold;\r\n\tcolor: #000;\r\n\tpadding: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\n.editbook {\r\n\theight: 30px;\r\n\tbackground-color: black;\r\n\ttext-align: center;\r\n\tpadding-top: 2px;\r\n}\r\n\r\n.bookcat {\r\n\tpadding-left:10px;\r\n}\r\n\r\n.description {\r\n\tfont-size: 14px;\r\n\tcolor: #000;\r\n\tpadding-left: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\na:hover .bookbox {\r\n\tborder-color: blue;\r\n\ttext-decoration: none;\r\n}\r\n\r\n.mydetails {\r\n\tpadding: 20px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.borrow_details {\r\n\tpadding: 80px;\r\n\tfont-size: 16px;\r\n}\r\n\r\n.btn-borrow {\r\n\tmargin-top: 0px; \r\n}\r\n\r\n.singlebook_details {\r\n\tpadding: 40px;\r\n    font-size: 16px;\r\n    text-align: left;\r\n}\r\n\r\n.singlebook_details .fa {\r\n\tcolor: #ccc;\r\n\tpadding-right: 5px;\r\n} \r\n\r\n.col-ava {\r\n\tpadding: 50px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.password-box {\r\n    text-align: center;\r\n    padding: 0px 100px 0px 100px;\r\n}\r\n\r\n.password-box input {\r\n\tfont-size: 18px;\r\n}\r\n\r\n.book_image {\r\n\theight: 300px;\r\n\twidth: 300px;\r\n}\r\n\r\n.container-me h3 {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.borrow-history {\r\n\tfont-size: 16px;\r\n}\r\n\r\n.row-history {\r\n\tmargin-bottom:20px;\r\n}\r\n\r\n.form-me {\r\n\twidth: 600px;\r\n\tborder: 1px solid #ccc;\r\n\tpadding: 20px;\r\n\tmargin:  0 auto;\r\n\tmargin-bottom: 50px;\r\n}\r\n\r\n.login-form {\r\n\tmargin-bottom: 50px;\r\n\twidth: 500px;\r\n\tpadding-top: 50px; \r\n}\r\n\r\n.profile-usertitle {\r\n\ttext-align: center;\r\n\tpadding: 10px 0px 10px 0px;\r\n}\r\n\r\n.profile-userpic {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-sidebar {\r\n\tborder-right: 1px solid #ccc;\r\n\tpadding-top: 30px;\r\n\tpadding-bottom: 30px;\r\n}\r\n\r\n.profile-usermenu {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-usertitle-job {\r\n\tcolor: #ccc;\r\n}\r\n\r\n.profile-content td {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content th {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content a {\r\n    color: blue;\r\n    text-decoration: none;\r\n}\r\n.col-home-a {\r\n\tmargin: 0;\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n\tbackground-repeat:no-repeat;\r\n\tdisplay: compact;\r\n\tbackground-size: 100%;\r\n\theight: 100%; \r\n\t/* background-position: cen */\r\n}\r\n.home-sidea {\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -97219,7 +97216,7 @@ var LoginForm = function LoginForm(props) {
             { className: 'row' },
             _react2.default.createElement(
                 'div',
-                { className: 'col-sm-6 col-sm-offset-3 login-box' },
+                { className: 'col-sm-6 col-sm-offset-3' },
                 _react2.default.createElement(_FlashMessagesList2.default, null),
                 errors && _react2.default.createElement(
                     'div',
@@ -97805,7 +97802,7 @@ var SignupForm = function SignupForm(props) {
         _react2.default.createElement(_header2.default, null),
         _react2.default.createElement(
             'div',
-            { className: 'col-sm-6 col-sm-offset-3 login-box' },
+            { className: 'col-sm-6 col-sm-offset-3' },
             _react2.default.createElement(_FlashMessagesList2.default, null),
             errors.form && _react2.default.createElement(
                 'div',
@@ -112550,7 +112547,12 @@ var SingleBook = function (_Component) {
                 book.quantity >= 1 && _react2.default.createElement(
                     'h3',
                     null,
-                    ' Book Available',
+                    ' ',
+                    _react2.default.createElement(
+                        'span',
+                        null,
+                        ' Book Available '
+                    ),
                     _react2.default.createElement(
                         'button',
                         { className: 'btn btn-info btn-lg', onClick: this.borrowbook, disabled: this.state.canBorrow },
@@ -112666,7 +112668,13 @@ var SingleBook = function (_Component) {
                             _react2.default.createElement('br', null),
                             book.description
                         ),
-                        BorrowButton
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            '  ',
+                            BorrowButton,
+                            '  '
+                        )
                     )
                 ),
                 _react2.default.createElement(_footer2.default, null)
@@ -112785,7 +112793,6 @@ var Profile = function (_Component) {
     _createClass(Profile, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log(this.props.auth);
             this.props.fetchBorrowedBooks(this.props.auth.user.user);
         }
 
@@ -112831,7 +112838,7 @@ var Profile = function (_Component) {
 
             var books = this.state.books;
 
-            var booklist = books && books.length ? books.map(function (book, index) {
+            var booklist = books && books.UserBorrowHistory ? books.UserBorrowHistory.map(function (book, index) {
                 return _react2.default.createElement(
                     'tbody',
                     { key: book.id },
@@ -112968,7 +112975,7 @@ Profile.contextTypes = {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
     return {
-        books: state.books.UserBorrowHistory,
+        books: state.books.books,
         auth: state.auth
     };
 };
@@ -113073,7 +113080,7 @@ var History = function (_Component) {
         key: 'render',
         value: function render() {
             var book = this.props.books;
-            var booklist = book && book.length ? book.map(function (book, index) {
+            var booklist = book && book.UserBorrowHistory ? book.UserBorrowHistory.map(function (book, index) {
                 return _react2.default.createElement(
                     'tr',
                     { key: book.id },
@@ -113145,7 +113152,7 @@ var History = function (_Component) {
                                     _react2.default.createElement(
                                         'h3',
                                         null,
-                                        'Borrowed Books'
+                                        'Borrow History'
                                     ),
                                     _react2.default.createElement(
                                         'table',
@@ -113219,7 +113226,7 @@ History.contextTypes = {
 
 var mapStateToProps = function mapStateToProps(state) {
     return {
-        books: state.books.UserBorrowHistory,
+        books: state.books.books,
         auth: state.auth
     };
 };
@@ -114532,7 +114539,7 @@ var BookCat = function (_Component) {
         value: function render() {
             var books = this.props.books;
             var title = this.props.match.params.title;
-            var bookList = books && books.length ? books.map(function (book) {
+            var bookList = books && books.books ? books.books.map(function (book) {
                 return _react2.default.createElement(
                     'div',
                     { className: 'col-md-3', key: book.id },
@@ -114610,7 +114617,7 @@ BookCat.contextTypes = {
 
 var mapStateToProps = function mapStateToProps(state) {
     return {
-        books: state.books.books.books
+        books: state.books.books
     };
 };
 

@@ -50,6 +50,6 @@ Object.keys(db).forEach(function (modelName) {
 db.sequelize = sequelize;
 db.Sequelize = _sequelize2.default;
 
-// sequelize.sync({ force: true });
+sequelize.sync({ force: true });
 
 exports.default = db;

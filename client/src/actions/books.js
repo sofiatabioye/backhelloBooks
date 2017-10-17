@@ -105,7 +105,6 @@ export function getBooksByCat(title) {
  * @returns 
  */
 export function fetchBook(id) {
-    console.log(id);
     return (dispatch) => {
         dispatch({ type: 'FETCH_BOOKS_BEGINS' });
         return axios.get(`/api/v1/books/${id}`)
@@ -155,8 +154,10 @@ export function borrowBook(userId, bookId, history) {
         dispatch({ type: 'BORROW_BOOK_BEGINS' });
         return axios.post(`/api/v1/users/${userId}/books/${bookId}/borrow`)
             .then((response) => {
+                console.log(response);
                 dispatch({ type: 'BORROW_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
             }, (err) => {
+                console.log(err);
                 dispatch({ type: 'BORROW_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
             });
     };

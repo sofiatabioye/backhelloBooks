@@ -28,7 +28,7 @@ exports.default = {
                 res.status(200).send({ message: 'Category already exists' });
             }
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     },
 
@@ -38,7 +38,7 @@ exports.default = {
         return Category.all().then(function (category) {
             return res.status(200).send({ categories: category, message: 'All categories' });
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     },
 
@@ -53,7 +53,7 @@ exports.default = {
             }
             return res.status(200).send(category);
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     },
 
@@ -76,10 +76,10 @@ exports.default = {
                 return res.status(200).send(category);
             }) // Send back the updated todo.
             .catch(function (error) {
-                return res.status(400).send(error.toString());
+                return res.status(400).send(error);
             });
         }).catch(function (error) {
-            return res.status(400).send(error.toString());
+            return res.status(500).send(error);
         });
     },
 
@@ -98,7 +98,7 @@ exports.default = {
                 return res.status(400).send(error);
             });
         }).catch(function (error) {
-            return res.status(400).send(error);
+            return res.status(500).send(error);
         });
     }
 };

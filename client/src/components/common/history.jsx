@@ -43,8 +43,8 @@ class History extends Component {
      */
     render() {
         const book = this.props.books;
-        const booklist = book && book.length ?
-            book.map((book, index) => (
+        const booklist = book && book.UserBorrowHistory ?
+            book.UserBorrowHistory.map((book, index) => (
 
                 <tr key={book.id}>
                     <th scope="row">{index + 1}</th>
@@ -66,7 +66,7 @@ class History extends Component {
                             <Sidebar user= {this.props.auth}/>
                             <div className="col-md-9">
                                 <div className="profile-content">
-                                    <h3>Borrowed Books</h3>
+                                    <h3>Borrow History</h3>
                                     <table className="table table-bordered table-responsive table-hello">
                                         <thead className="blue-grey lighten-4">
                                             <tr>
@@ -103,7 +103,7 @@ History.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-    books: state.books.UserBorrowHistory,
+    books: state.books.books,
     auth: state.auth,
 });
 

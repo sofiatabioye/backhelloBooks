@@ -10,7 +10,7 @@ const LoginForm = (props) => {
         <div>
             <Header />
             <div className="row">
-                <div className="col-sm-6 col-sm-offset-3 login-box">
+                <div className="col-sm-6 col-sm-offset-3">
                     <FlashMessagesList />
 
                     { errors && <div className="alert alert-danger">{errors}</div> }

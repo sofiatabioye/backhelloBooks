@@ -89,7 +89,7 @@ class SingleBook extends Component {
         const BorrowButton = (
             <div className="col-ava">
                 {book.quantity >= 1 &&
-                <h3> Book Available
+                <h3> <span> Book Available </span>
                     <button className="btn btn-info btn-lg" onClick={this.borrowbook} disabled={this.state.canBorrow} >Borrow Book</button>
                 </h3>
                 }
@@ -117,7 +117,7 @@ class SingleBook extends Component {
                             <br/>
                             {book.description }
                         </div>
-                        {BorrowButton}
+                        <p>  {BorrowButton}  </p>
                     </div>
                 </div>
                 <BookFooter />

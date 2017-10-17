@@ -13,8 +13,8 @@ module.exports = {
             role: "user",
             level: 'Gold',
             image: "httpajjd",
-            resetPasswordToken: null,
-            resetPasswordExpires: null,
+            // resetPasswordToken: null,
+            // resetPasswordExpires: null,
             createdAt: new Date(),
             updatedAt: new Date()
         }, {
@@ -24,8 +24,8 @@ module.exports = {
             role: "user",
             level: 'Silver',
             image: "httkl//djjd",
-            resetPasswordToken: null,
-            resetPasswordExpires: null,
+            // resetPasswordToken: null,
+            // resetPasswordExpires: null,
             createdAt: new Date(),
             updatedAt: new Date()
         }, {
@@ -35,8 +35,8 @@ module.exports = {
             role: "admin",
             level: 'Gold',
             image: "http//ppdjjd",
-            resetPasswordToken: null,
-            resetPasswordExpires: null,
+
+            // resetPasswordExpires: null,
             createdAt: new Date(),
             updatedAt: new Date()
         }, {
@@ -46,8 +46,8 @@ module.exports = {
             role: "user",
             level: 'Bronze',
             image: "httpljjd",
-            resetPasswordToken: null,
-            resetPasswordExpires: null,
+            // resetPasswordToken: null,
+            // resetPasswordExpires: null,
             createdAt: new Date(),
             updatedAt: new Date()
         }], {}).then(function () {
