@@ -3,49 +3,68 @@
 [![Coverage Status](https://coveralls.io/repos/github/kidah/backhelloBooks/badge.svg)](https://coveralls.io/github/kidah/backhelloBooks)
 [![Code Climate](https://codeclimate.com/github/kidah/backhelloBooks/badges/gpa.svg)](https://codeclimate.com/github/kidah/backhelloBooks?branch=master)
 # Hello Books
-
-This is an online library management system where you can browse, borrow and/or return books from the library. 
+Hello books is an application that provides users with access to books from wherever they are.
+Beeing a virtual library, users can borrow and read their favorite books using any device.
+HelloBooks exposes RESTful API endpoints such that anyone customize the method of consuming
+the resources
 
 ## Getting Started
 Here is a link to the template files hosted on github pages :  https://kidah.github.io/hellobooksophy.github.io/index.html
 
 Here is a link to the heroku hosted version : https://hello--books.herokuapp.com
 
-This app was built using the express fraamework with Node Js, Postgres and Sequelize ORM. 
 
-## Features
-Login/Sign up to gain access to books in the library
-Books are in categories
-Ability to borrow books repeatedly
-View your reading/borrowing history
-Admin access to modify book details
+### Development
+This is a javascript application built with [**Express**](http://expressjs.com/)
+framework on the nodejs platform. Authentication of users is done via
+[**JSON Web Tokens**](https://jwt.io/) .
 
-## API ROUTES
+#### Features
+- Login/Sign up to gain access to routes
+- A library of books from different categories
+- Ability to borrow books repeatedly
+- Track your reading/borrowing history
+- Admin access to modify book details
 
-  * User Login Routes
-  POST /api/v1/users/signup
-  POST /api/v1/users/login
+#### API Routes
+- sign up route:
+**POST** /api/v1/users/signup
+parameters - username, password, email
+optional parameters - firstName, lastName
 
-  * This contains the routes that allow a logged in admin user to modify and create books
- POST  /api/v1/books/create
- PUT /api/v1/books/:bookId
- DELETE /api/v1/books/:bookId
 
-  * This contains the routes that  allow a logged in admin to modify and create categories
-  POST /api/v1/categories/create'
+- login route:
+**POST** /api/v1/users/signin
+parameters - username, password
 
-  GET /api/v1/categories/:catId
-  PUT /api/v1/categories/:catId
-  DELETE /api/v1/categories/:catId
+- get books (view library):
+**GET** /api/v1/books'
 
-  * This contains routes that allow a logged in user to borrow and return books and borrow history
-  POST /api/v1/users/:userId/books/:bookId/borrow
-  PUT /api/v1/users/:userId/books/:bookId/return
-  GET /api/v1/users/:userId/history
-  GET /api/v1/users/:userId/books
-  GET /api/v1/categories
-  GET /api/v1/books
-  GET /api/v1/books/:bookId
+- get book (view a book's metadata):
+**GET** /api/v1/books/:id
+parameters - bookId (number)
+
+- add a new book to library:
+**POST** /api/v1/books
+request body - author, title, description, image and moere
+
+- modify book information:
+**PUT** /api/v1/books/
+request body - author, title, description, image and more
+query parameters - book id (number)
+
+- borrow book:
+**POST** /api/v1/users/:id/books
+parameters - user id
+query parameters - book id (number)
+
+- return book:
+**PUT** /api/v1/users/:id/books
+parameters - user id
+query parameters - book id (number)
+
+- get borrowed books:
+**GET** /api/v1/users/:id/books
 
 
 ## The tests
