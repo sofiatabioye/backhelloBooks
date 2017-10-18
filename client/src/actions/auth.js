@@ -34,10 +34,11 @@ export function login(userData, history) {
         );
 }
 
-export function signup(userData) {
+export function signup(userData, history) {
     return (dispatch) => axios.post('/api/v1/users/signup', userData)
         .then((response) => {
             dispatch({ type: 'USER_SIGNUP_SUCCESS', message: response.data.message });
+            history.push('/books');
         },
         (err) => {
             dispatch({ type: 'USER_SIGNUP_FAILURE', errors: err.response.data });

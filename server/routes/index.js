@@ -1,9 +1,8 @@
 import booksController from '../controllers/book';
 import usersController from '../controllers/user';
 import categoriesController from '../controllers/category';
-import canBorrow from '../helper/canBorrow';
 
-const routes = (app, authorize, checkadmin) => {
+const routes = (app, authorize, checkadmin, canBorrow) => {
     app.get('/api', (req, res) => res.status(200).send({
         message: 'Welcome to the Libraries API!',
     }));

@@ -13,14 +13,14 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start:client": "webpack-dev-server --hot",
     "build": "rm -rf dist && babel server -d dist/server  && webpack --config webpack.production.config.js --progress --colors",
-    "build:dev": "rm -rf dist && babel server -d dist/server &&  webpack --config webpack.config.js --env.NODE_ENV=development --env.development --progress --colors --watch",
+    "build:dev": "rm -rf dist && babel server --watch -d dist/server &  webpack --config webpack.config.js --env.NODE_ENV=development --env.development --progress --colors --watch",
     "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.16.2", 
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^8.0.0",

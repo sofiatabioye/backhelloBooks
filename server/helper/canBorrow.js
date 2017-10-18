@@ -3,6 +3,7 @@ import models from '../models/index';
 const BorrowStatus = models.BorrowStatus;
 export default {
     canBorrow(req, res, next) {
+        console.log("im here");
         const userLevel = req.level;
         const userId = req.userId;
         let goldCanBorrow = 9;
@@ -13,11 +14,11 @@ export default {
                 where: { user_id: userId, returned: false }
             })
             .then((userBorrowed) => {
-                if (userLevel === "gold" && userBorrowed.count >= goldCanBorrow) {
+                if (userLevel === "Gold" && userBorrowed.count >= goldCanBorrow) {
                     res.status(401).send({ message: "Oops! You need to return some books first" });
-                } else if (userLevel === "bronze" && userBorrowed.count >= bronzeCanBorrow) {
+                } else if (userLevel === "Bronze" && userBorrowed.count >= bronzeCanBorrow) {
                     res.status(401).send({ message: "Oops! You need to return some books first" });
-                } else if ((userLevel === "silver") && userBorrowed.count >= silverCanBorrow) {
+                } else if ((userLevel === "Silver") && userBorrowed.count >= silverCanBorrow) {
                     res.status(401).send({ message: "Oops! You need to return some books first" });
                 } else {
                     next();

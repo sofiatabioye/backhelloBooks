@@ -78,6 +78,7 @@ class Categories extends Component {
     onSubmit(e) {
         e.preventDefault();
         this.props.saveCategory(this.state);
+        window.location.reload();
     }
 
 

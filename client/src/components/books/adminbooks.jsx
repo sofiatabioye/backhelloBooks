@@ -23,7 +23,7 @@ class LibraryBooks extends Component {
         this.state = {
             books: [],
             offset: 0,
-            numPerPage: 5,
+            numPerPage: 10,
             activePage: 1,
             numOfPages: 0
         };

@@ -11221,7 +11221,7 @@ var Header = function (_React$Component) {
                 null,
                 'Manage Library Stock'
             );
-            var userLinks = cat && cat.length ? cat.slice(0, 9).map(function (category) {
+            var userLinks = cat && cat.length ? cat.slice(0, 7).map(function (category) {
                 return _react2.default.createElement(
                     'li',
                     { key: category.id },
@@ -11237,7 +11237,7 @@ var Header = function (_React$Component) {
                 'No categories'
             );
 
-            var categoryLinksDropdown = cat && cat.length ? cat.slice(10, 50).map(function (category) {
+            var categoryLinksDropdown = cat && cat.length ? cat.slice(7, 50).map(function (category) {
                 return _react2.default.createElement(
                     'li',
                     { key: category.id },
@@ -11344,7 +11344,7 @@ var Header = function (_React$Component) {
                     { className: 'navbar navbar-inverse ' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'container-fluid' },
+                        { className: 'container' },
                         _react2.default.createElement(
                             'div',
                             { className: 'navbar-header' },
@@ -16273,29 +16273,36 @@ function fetchBook(id) {
 }
 
 /**
- * 
- * 
  * @export
- * @param {any} id 
+ * @param {id, book} updates book by Id 
  * @param {any} data 
  * @returns 
  */
-function updateBook(id, data) {
+function updateBook(id, bookData) {
     return function (dispatch) {
-        return _axios2.default.put('/api/v1/books/' + id, data);
+        dispatch({ type: 'UPDATE_BOOK_BEGINS' });
+        return _axios2.default.put('/api/v1/books/' + id, bookData).then(function (response) {
+            dispatch({ type: 'UPDATE_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
+        }, function (err) {
+            dispatch({ type: 'UPDATE_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
+        });
     };
 }
 
 /**
- * 
- * 
  * @export
  * @param {any} data 
  * @returns 
  */
-function saveBooks(data) {
+function saveBooks(data, history) {
     return function (dispatch) {
-        return _axios2.default.post('/api/v1/books/create', data);
+        dispatch({ type: 'SAVE_BOOK_BEGINS' });
+        return _axios2.default.post('/api/v1/books/create', data).then(function (response) {
+            dispatch({ type: 'SAVE_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
+            history.push('/librarybooks');
+        }, function (err) {
+            dispatch({ type: 'SAVE_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
+        });
     };
 }
 
@@ -16312,10 +16319,8 @@ function borrowBook(userId, bookId, history) {
     return function (dispatch) {
         dispatch({ type: 'BORROW_BOOK_BEGINS' });
         return _axios2.default.post('/api/v1/users/' + userId + '/books/' + bookId + '/borrow').then(function (response) {
-            console.log(response);
             dispatch({ type: 'BORROW_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
         }, function (err) {
-            console.log(err);
             dispatch({ type: 'BORROW_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
         });
     };
@@ -18629,10 +18634,11 @@ function login(userData, history) {
     };
 }
 
-function signup(userData) {
+function signup(userData, history) {
     return function (dispatch) {
         return _axios2.default.post('/api/v1/users/signup', userData).then(function (response) {
             dispatch({ type: 'USER_SIGNUP_SUCCESS', message: response.data.message });
+            history.push('/books');
         }, function (err) {
             dispatch({ type: 'USER_SIGNUP_FAILURE', errors: err.response.data });
         });
@@ -29075,16 +29081,24 @@ var _types = __webpack_require__(65);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * @export
+ * @param {any} categories 
+ * @returns 
+ */
 function setCategory(categories) {
-    // eslint-disable-line require-jsdoc
     return {
         type: "FETCH_CAT_SUCCESS",
         categories: categories
     };
 }
 
+/**
+ * @param {any} get categories 
+ * @export
+ * @returns 
+ */
 function getCategories() {
-    // eslint-disable-line require-jsdoc
     return function (dispatch) {
         return _axios2.default.get('/api/v1/categories?limit=1').then(function (response) {
             var data = response.data;
@@ -29095,13 +29109,17 @@ function getCategories() {
     };
 }
 
+/**
+
+ * @export
+ * @param {any} data 
+ * @returns 
+ */
 function saveCategory(data) {
-    // eslint-disable-line require-jsdoc
     return function (dispatch) {
         dispatch({ type: 'ADD_CATEGORY' });
         return _axios2.default.post('/api/v1/categories/create', data).then(function (response) {
             dispatch({ type: 'ADD_CATEGORY_SUCCESS', categories: response.data });
-            console.log(response.data);
             return response.data;
         }, function (err) {
             dispatch({ type: 'ADD_CATEGORY_FAILURE', errors: err.response.data });
@@ -29110,10 +29128,23 @@ function saveCategory(data) {
     };
 }
 
+/**
+ * 
+ * 
+ * @export
+ * @param {any} id 
+ * @returns 
+ */
 function deleteCategory(id) {
-    // eslint-disable-line require-jsdoc
     return function (dispatch) {
-        return _axios2.default.delete('/api/v1/categories/' + id);
+        dispatch({ type: 'DELETE_CATEGORY_BEGINS' });
+        return _axios2.default.delete('/api/v1/categories/' + id).then(function (response) {
+            dispatch({ type: 'DELETE_CATEGORY_SUCCESS', books: response.data });
+            return response.data;
+        }, function (err) {
+            dispatch({ type: 'DELETE_CATEGORY_FAILURE', errors: err.response.data });
+            return err;
+        });
     };
 }
 
@@ -86252,33 +86283,34 @@ exports.default = function () {
             };
 
         case 'USER_LOGIN_FAILURE':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 errors: action.errors
-            }]);
+            };
 
         case 'USER_SIGNUP_SUCCESS':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 message: action.message
-            }]);
+            };
 
         case 'USER_SIGNUP_FAILURE':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 errors: action.errors
-            }]);
+            };
+
         case 'CHANGE_PASSWORD_SUCCESS':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 success: action.message
-            }]);
+            };
 
         case 'CHANGE_PASSWORD_FAILURE':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 errors: action.errors
-            }]);
+            };
 
         case _types.SIGN_UP:
             return [].concat(_toConsumableArray(state), [{
@@ -89458,23 +89490,22 @@ exports.default = function () {
             };
 
         case 'BORROW_BOOK_BEGINS':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: true
-            }]);
+            };
 
         case 'BORROW_BOOK_SUCCESS':
-            return [].concat(_toConsumableArray(state), [{
-                loading: false,
+            return {
                 books: action.books,
                 message: action.message
-            }]);
+            };
 
         case 'BORROW_BOOK_FAILURE':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 books: action.books,
                 errors: action.errors
-            }]);
+            };
 
         case 'BOOKS_CATEGORY_SUCCESS':
             return {
@@ -89486,18 +89517,18 @@ exports.default = function () {
             var borrowedBooks = state.books.UserBorrowHistory.filter(function (book) {
                 if (book.book_id !== action.id) return book;
             });
-            return [].concat(_toConsumableArray(state.books), [{
+            return {
                 books: {
                     UserBorrowHistory: borrowedBooks
                 }
-            }]);
+            };
 
         case 'RETURN_BOOK_FAILURE':
-            return [].concat(_toConsumableArray(state), [{
+            return {
                 loading: false,
                 books: action.books,
                 errors: action.errors
-            }]);
+            };
 
         case 'BORROW_HISTORY_SUCCESS':
             return {
@@ -89662,7 +89693,7 @@ exports = module.exports = __webpack_require__(862)(undefined);
 
 
 // module
-exports.push([module.i, "body {\r\n\tpadding-bottom: 60px;\r\n}\r\n\r\n\r\n.login-box {\r\n  display: flex;\r\n\tborder: 1px solid #ccc;\r\n\tborder-radius: 5px;\r\n\tpadding: 30px;\r\n\tfont-size: 14px;\r\n\tmargin-top: 50px;\r\n}\r\n\r\n.navbar-inverse {\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tpadding-top: 10px;\r\n}\r\n.navbar-inverse .navbar-brand {\r\n\tcolor: #ffffff !important;\r\n\tfont-size: 32px;\r\n\tfont-family: xiomara;\r\n\t\r\n}\r\n.navbar-inverse .navbar-nav > li > a {\r\n\tcolor: #fff;\r\n}\r\n\r\nul > li > a {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.navbar-inverse .navbar-nav > li > a:hover, a:visited {\r\n\ttext-decoration: none;\r\n\tcolor: #ccc;\r\n\t\r\n}\r\n\r\n.dropdown-menu > li > a {\r\n\tfont-size: 14px;\r\n}\r\na:hover; a:visited; a:link; a:active {\r\n\ttext-decoration: none;\r\n\tcolor: #000;\r\n}\r\n\r\n.navbar-search input {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.container-me {\r\n\tmin-height: 520px;\r\n\ttext-align: center;\r\n}\r\n.container-me input {\r\n\tfont-size: 12px;\r\n\tpadding-left: 5px;\r\n}\r\n\r\nlabel .signin h3 {\r\n\ttext-align: center;\r\n\tfont-size: 32px;\r\n}\r\n.usr-img {\r\n\theight:30px;\r\n\twidth: 30px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 15px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.profile-img {\r\n\theight:100px;\r\n\twidth: 100px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 50px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.big-usr-img {\r\n\theight: 100px;\r\n\twidth: 100px;\r\n\tbackground-color: #ccc;\r\n\tborder-radius: 50px;\r\n}\r\n\r\n.btn-me {\r\n\tbackground-color: #000;\r\n\tcolor: #fff;\r\n\twidth: 200px;\r\n\tmargin-left: 170px;\r\n\tposition: relative;\r\n\r\n}\r\n\r\n.bookbox {\r\n\twidth: 100%;\r\n\theight: 300px;\r\n\tborder: 1px solid #ccc;\r\n\tmargin-bottom: 30px;\r\n}\r\n\r\n.booktitle-admin a {\r\n\tmargin-left: 30px;\r\n\tmargin-top: 20px;\r\n\tcolor: #fff;\r\n}\r\n\r\n.glyphicon-add {\r\n\tmargin-left: 30px;\r\n\tfont-size: 200px;\r\n}\r\n\r\n.bookcover {\r\n\theight: 180px;\r\n\twidth: 100%;\r\n}\r\n\r\n.bookcover-admin {\r\n\theight: 130px;\r\n\twidth: 100%;\r\n}\r\n\r\n.booktitle {\r\n\tfont-size: 20px;\r\n\tfont-weight: bold;\r\n\tcolor: #000;\r\n\tpadding: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\n.editbook {\r\n\theight: 30px;\r\n\tbackground-color: black;\r\n\ttext-align: center;\r\n\tpadding-top: 2px;\r\n}\r\n\r\n.bookcat {\r\n\tpadding-left:10px;\r\n}\r\n\r\n.description {\r\n\tfont-size: 14px;\r\n\tcolor: #000;\r\n\tpadding-left: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\na:hover .bookbox {\r\n\tborder-color: blue;\r\n\ttext-decoration: none;\r\n}\r\n\r\n.mydetails {\r\n\tpadding: 20px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.borrow_details {\r\n\tpadding: 80px;\r\n\tfont-size: 16px;\r\n}\r\n\r\n.btn-borrow {\r\n\tmargin-top: 0px; \r\n}\r\n\r\n.singlebook_details {\r\n\tpadding: 40px;\r\n    font-size: 16px;\r\n    text-align: left;\r\n}\r\n\r\n.singlebook_details .fa {\r\n\tcolor: #ccc;\r\n\tpadding-right: 5px;\r\n} \r\n\r\n.col-ava {\r\n\tpadding: 50px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.password-box {\r\n    text-align: center;\r\n    padding: 0px 100px 0px 100px;\r\n}\r\n\r\n.password-box input {\r\n\tfont-size: 18px;\r\n}\r\n\r\n.book_image {\r\n\theight: 300px;\r\n\twidth: 300px;\r\n}\r\n\r\n.container-me h3 {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.borrow-history {\r\n\tfont-size: 16px;\r\n}\r\n\r\n.row-history {\r\n\tmargin-bottom:20px;\r\n}\r\n\r\n.form-me {\r\n\twidth: 600px;\r\n\tborder: 1px solid #ccc;\r\n\tpadding: 20px;\r\n\tmargin:  0 auto;\r\n\tmargin-bottom: 50px;\r\n}\r\n\r\n.login-form {\r\n\tmargin-bottom: 50px;\r\n\twidth: 500px;\r\n\tpadding-top: 50px; \r\n}\r\n\r\n.profile-usertitle {\r\n\ttext-align: center;\r\n\tpadding: 10px 0px 10px 0px;\r\n}\r\n\r\n.profile-userpic {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-sidebar {\r\n\tborder-right: 1px solid #ccc;\r\n\tpadding-top: 30px;\r\n\tpadding-bottom: 30px;\r\n}\r\n\r\n.profile-usermenu {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-usertitle-job {\r\n\tcolor: #ccc;\r\n}\r\n\r\n.profile-content td {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content th {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content a {\r\n    color: blue;\r\n    text-decoration: none;\r\n}\r\n.col-home-a {\r\n\tmargin: 0;\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n\tbackground-repeat:no-repeat;\r\n\tdisplay: compact;\r\n\tbackground-size: 100%;\r\n\theight: 100%; \r\n\t/* background-position: cen */\r\n}\r\n.home-sidea {\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n}\r\n\r\n", ""]);
+exports.push([module.i, "body {\r\n\tpadding-bottom: 60px;\r\n}\r\n\r\n\r\n.login-box {\r\n  display: flex;\r\n\tborder: 1px solid #ccc;\r\n\tborder-radius: 5px;\r\n\tpadding: 30px;\r\n\tfont-size: 14px;\r\n\tmargin-top: 50px;\r\n}\r\n\r\n.navbar-inverse {\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tpadding-top: 10px;\r\n}\r\n.navbar-inverse .navbar-brand {\r\n\tcolor: #ffffff !important;\r\n\tfont-size: 32px;\r\n\tfont-family: xiomara;\r\n\t\r\n}\r\n.navbar-inverse .navbar-nav > li > a {\r\n\tcolor: #fff;\r\n}\r\n\r\nul > li > a {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.navbar-inverse .navbar-nav > li > a:hover, a:visited {\r\n\ttext-decoration: none;\r\n\tcolor: #ccc;\r\n\t\r\n}\r\n\r\n.dropdown-menu > li > a {\r\n\tfont-size: 14px;\r\n}\r\na:hover; a:visited; a:link; a:active {\r\n\ttext-decoration: none;\r\n\tcolor: #000;\r\n}\r\n\r\n.navbar-search input {\r\n\tcolor: #fff;\r\n\tfont-size: 14px;\r\n}\r\n.container-me {\r\n\tmin-height: 520px;\r\n\ttext-align: center;\r\n}\r\n.container-me input {\r\n\tfont-size: 12px;\r\n\tpadding-left: 5px;\r\n}\r\n\r\nlabel .signin h3 {\r\n\ttext-align: center;\r\n\tfont-size: 32px;\r\n}\r\n.usr-img {\r\n\theight:30px;\r\n\twidth: 30px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 15px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.profile-img {\r\n\theight:100px;\r\n\twidth: 100px;\r\n\tbackground-color: #fff;\r\n\tborder-radius: 50px;\r\n\tmargin-right: 5px;\r\n}\r\n\r\n.big-usr-img {\r\n\theight: 100px;\r\n\twidth: 100px;\r\n\tbackground-color: #ccc;\r\n\tborder-radius: 50px;\r\n}\r\n\r\n.btn-me {\r\n\tbackground-color: #000;\r\n\tcolor: #fff;\r\n\twidth: 200px;\r\n\tmargin-left: 170px;\r\n\tposition: relative;\r\n\r\n}\r\n\r\n.bookbox {\r\n\twidth: 100%;\r\n\theight: 300px;\r\n\tborder: 1px solid #ccc;\r\n\tmargin-bottom: 30px;\r\n}\r\n\r\n.booktitle-admin a {\r\n\tmargin-left: 30px;\r\n\tmargin-top: 20px;\r\n\tcolor: #fff;\r\n}\r\n\r\n.glyphicon-add {\r\n\tmargin-left: 30px;\r\n\tfont-size: 200px;\r\n}\r\n\r\n.bookcover {\r\n\theight: 180px;\r\n\twidth: 100%;\r\n}\r\n\r\n.bookcover-admin {\r\n\theight: 130px;\r\n\twidth: 100%;\r\n}\r\n\r\n.booktitle {\r\n\tfont-size: 20px;\r\n\tfont-weight: bold;\r\n\tcolor: #000;\r\n\tpadding: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\n.editbook {\r\n\theight: 30px;\r\n\tbackground-color: black;\r\n\ttext-align: center;\r\n\tpadding-top: 2px;\r\n}\r\n\r\n.bookcat {\r\n\tpadding-left:10px;\r\n}\r\n\r\n.description {\r\n\tfont-size: 14px;\r\n\tcolor: #000;\r\n\tpadding-left: 10px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\na:hover .bookbox {\r\n\tborder-color: blue;\r\n\ttext-decoration: none;\r\n}\r\n\r\n.mydetails {\r\n\tpadding: 20px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.borrow_details {\r\n\tpadding: 80px;\r\n\tfont-size: 16px;\r\n}\r\n\r\n.btn-borrow {\r\n\tmargin-top: 0px; \r\n}\r\n\r\n.singlebook_details {\r\n\tpadding: 40px;\r\n    font-size: 16px;\r\n    text-align: left;\r\n}\r\n\r\n.singlebook_details .fa {\r\n\tcolor: #ccc;\r\n\tpadding-right: 5px;\r\n} \r\n\r\n.col-ava {\r\n\tpadding: 50px;\r\n\tfont-size: 18px;\r\n}\r\n\r\n.password-box {\r\n    text-align: center;\r\n    padding: 0px 100px 0px 100px;\r\n}\r\n\r\n.password-box input {\r\n\tfont-size: 18px;\r\n}\r\n\r\n.book_image {\r\n\theight: 300px;\r\n\twidth: 300px;\r\n}\r\n\r\n.container-me h3 {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.borrow-history {\r\n\tfont-size: 16px;\r\n}\r\n\r\n.row-history {\r\n\tmargin-bottom:20px;\r\n}\r\n\r\n.form-me {\r\n\twidth: 600px;\r\n\tborder: 1px solid #ccc;\r\n\tpadding: 20px;\r\n\tmargin:  0 auto;\r\n\tmargin-bottom: 50px;\r\n}\r\n\r\n.login-form {\r\n\tmargin-bottom: 50px;\r\n\twidth: 500px;\r\n\tmargin-top: 50px;\r\n}\r\n\r\n.profile-usertitle {\r\n\ttext-align: center;\r\n\tpadding: 10px 0px 10px 0px;\r\n}\r\n\r\n.profile-userpic {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-sidebar {\r\n\tborder-right: 1px solid #ccc;\r\n\tpadding-top: 30px;\r\n\tpadding-bottom: 30px;\r\n}\r\n\r\n.profile-usermenu {\r\n\ttext-align: center;\r\n}\r\n\r\n.profile-usertitle-job {\r\n\tcolor: #ccc;\r\n}\r\n\r\n.profile-content td {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content th {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.profile-content a {\r\n    color: blue;\r\n    text-decoration: none;\r\n}\r\n.col-home-a {\r\n\tmargin: 0;\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n\tbackground-repeat:no-repeat;\r\n\tdisplay: compact;\r\n\tbackground-size: 100%;\r\n\theight: 100%; \r\n\t/* background-position: cen */\r\n}\r\n.home-sidea {\r\n\tbackground-image: url(" + __webpack_require__(454) + ");\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -93855,51 +93886,18 @@ var Login = function (_React$Component) {
         };
         _this.onChange = _this.onChange.bind(_this);
         _this.onSubmit = _this.onSubmit.bind(_this);
-        _this.onSignIn = _this.onSignIn.bind(_this);
         return _this;
     }
 
     /**
      * 
-     * @returns {any} google user information
+     * @returns {void}
+     * @param {any} event
      * @memberof Login
      */
 
 
     _createClass(Login, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            gapi.signin2.render('g-signin2', {
-                scope: 'https://www.googleapis.com/auth/plus.login',
-                width: 300,
-                height: 150,
-                longtitle: true,
-                theme: 'dark',
-                onsuccess: this.onSignIn
-            });
-        }
-
-        /**
-         * 
-         * @return {any} googleUser
-         * @param {any} googleUser 
-         * @memberof Login
-         */
-
-    }, {
-        key: 'onSignIn',
-        value: function onSignIn(googleUser) {
-            console.log("====yaay", googleUser);
-            var profile = googleUser.getBasicProfile();
-        }
-        /**
-         * 
-         * @returns {void}
-         * @param {any} event
-         * @memberof Login
-         */
-
-    }, {
         key: 'onChange',
         value: function onChange(event) {
             this.setState(_defineProperty({}, event.target.name, event.target.value));
@@ -93958,7 +93956,6 @@ var Login = function (_React$Component) {
                 _react2.default.createElement(_loginForm2.default, {
                     errors: this.props.errors,
                     onChange: this.onChange.bind(this),
-                    onSignIn: this.onSignIn.bind(this),
                     onSubmit: this.onSubmit.bind(this) })
             );
         }
@@ -97206,7 +97203,7 @@ var _FlashMessagesList2 = _interopRequireDefault(_FlashMessagesList);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LoginForm = function LoginForm(props) {
-    var errors = props.errors ? props.errors.message : '';
+    var errors = props.errors ? props.errors.message : null;
     return _react2.default.createElement(
         'div',
         null,
@@ -97220,7 +97217,7 @@ var LoginForm = function LoginForm(props) {
                 _react2.default.createElement(_FlashMessagesList2.default, null),
                 errors && _react2.default.createElement(
                     'div',
-                    { className: 'alert alert-danger' },
+                    { className: 'text-danger' },
                     errors
                 ),
                 _react2.default.createElement(
@@ -97270,13 +97267,6 @@ var LoginForm = function LoginForm(props) {
                         { href: "/forgotpassword" },
                         'Forgot Password?'
                     )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'g-signin2', 'data-onsuccess': function dataOnsuccess() {
-                            return props.onSignIn();
-                        } },
-                    'Google '
                 )
             )
         ),
@@ -97572,8 +97562,6 @@ var SignUp = function (_React$Component) {
         };
         _this.onChange = _this.onChange.bind(_this);
         _this.onSubmit = _this.onSubmit.bind(_this);
-        // this.onSignIn = this.onSignIn.bind(this);
-        _this.onSuccess = _this.onSuccess.bind(_this);
         return _this;
     }
 
@@ -97587,8 +97575,8 @@ var SignUp = function (_React$Component) {
 
     _createClass(SignUp, [{
         key: 'onChange',
-        value: function onChange(e) {
-            this.setState(_defineProperty({}, e.target.name, e.target.value));
+        value: function onChange(event) {
+            this.setState(_defineProperty({}, event.target.name, event.target.value));
         }
 
         /**
@@ -97614,39 +97602,6 @@ var SignUp = function (_React$Component) {
 
         /**
          * 
-         * @return {void}
-         * @memberof SignUp
-         */
-
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            gapi.signin2.render('g-signin2', {
-                scope: 'https://www.googleapis.com/auth/plus.login',
-                width: 200,
-                height: 50,
-                longtitle: true,
-                theme: 'dark',
-                onsuccess: this.onSuccess
-            });
-        }
-
-        /**
-         * 
-         * @return {any} googleUser
-         * @param {any} googleUser 
-         * @memberof Login
-         */
-
-    }, {
-        key: 'onSuccess',
-        value: function onSuccess() {
-            console.log("====yaay");
-            var profile = googleUser.getBasicProfile();
-        }
-
-        /**
-         * 
          * @returns {User} newly created user account
          * @param {any} e 
          * @memberof SignUp
@@ -97655,23 +97610,9 @@ var SignUp = function (_React$Component) {
     }, {
         key: 'onSubmit',
         value: function onSubmit(e) {
-            var _this2 = this;
-
             e.preventDefault();
             if (this.isValid()) {
-                this.props.signup(this.state).then(function (res) {
-                    _this2.context.router.history.push('/signin');
-                }, function (err) {
-                    _this2.setState({
-                        isLoading: false
-                    });
-                    if (err.data) {
-                        _this2.props.addFlashMessage({
-                            type: 'error',
-                            text: err.data.errors
-                        });
-                    }
-                });
+                this.props.signup(this.state, this.props.history);
             }
         }
 
@@ -97685,12 +97626,14 @@ var SignUp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var error = this.props.error;
             return _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(_signupForm2.default, {
+                    error: this.props.error,
                     errors: this.state.errors,
-                    onSuccess: this.onSuccess.bind(this),
+                    message: this.props.message,
                     onChange: this.onChange.bind(this),
                     onSubmit: this.onSubmit.bind(this)
                 })
@@ -97709,7 +97652,15 @@ SignUp.contextTypes = {
     router: _propTypes2.default.object.isRequired
 };
 
-exports.default = (0, _reactRedux.connect)(null, { signup: _auth.signup, FlashMessagesList: _FlashMessagesList2.default, addFlashMessage: _flashmessages.addFlashMessage })(SignUp);
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        errors: state.auth.errors,
+        message: state.auth.messsage,
+        auth: state.auth
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { signup: _auth.signup, FlashMessagesList: _FlashMessagesList2.default, addFlashMessage: _flashmessages.addFlashMessage })(SignUp);
 
 /***/ }),
 /* 969 */
@@ -97796,6 +97747,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var SignupForm = function SignupForm(props) {
     var errors = props.errors ? props.errors : '';
+    var error = props.error ? props.error : null;
+    var message = props.message ? props.message : null;
     return _react2.default.createElement(
         'div',
         null,
@@ -97804,6 +97757,8 @@ var SignupForm = function SignupForm(props) {
             'div',
             { className: 'col-sm-6 col-sm-offset-3' },
             _react2.default.createElement(_FlashMessagesList2.default, null),
+            error,
+            message,
             errors.form && _react2.default.createElement(
                 'div',
                 { className: 'alert alert-danger' },
@@ -97868,8 +97823,7 @@ var SignupForm = function SignupForm(props) {
                     { type: 'submit', className: 'btn btn-md btn-primary' },
                     'Sign Up'
                 )
-            ),
-            _react2.default.createElement('div', { className: 'g-signin2', onSuccess: props.onSuccess })
+            )
         ),
         _react2.default.createElement(_footer2.default, null)
     );
@@ -97933,7 +97887,7 @@ var Books = function (_Component) {
             books: [],
             categories: [],
             offset: 0,
-            numPerPage: 3,
+            numPerPage: 8,
             activePage: 1,
             numOfPages: 0
         };
@@ -112026,7 +111980,7 @@ var LibraryBooks = function (_Component) {
         _this.state = {
             books: [],
             offset: 0,
-            numPerPage: 5,
+            numPerPage: 10,
             activePage: 1,
             numOfPages: 0
         };
@@ -112538,9 +112492,10 @@ var SingleBook = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var error = this.props.errors;
-            var success = this.props.message;
+            var error = this.props.errors ? this.props.errors.message : null;
+            var success = this.props.message ? this.props.message : null;
             var book = this.state.book;
+
             var BorrowButton = _react2.default.createElement(
                 'div',
                 { className: 'col-ava' },
@@ -112577,9 +112532,9 @@ var SingleBook = function (_Component) {
                         { className: 'btn btn-sm btn-success', onClick: this.goback },
                         'Go back'
                     ),
-                    error !== null && _react2.default.createElement(
+                    _react2.default.createElement(
                         'p',
-                        { className: 'red-text' },
+                        { className: 'text-danger' },
                         error
                     ),
                     success !== null && _react2.default.createElement(
@@ -113363,6 +113318,7 @@ var Categories = function (_Component) {
         value: function onSubmit(e) {
             e.preventDefault();
             this.props.saveCategory(this.state);
+            window.location.reload();
         }
 
         /**
@@ -113678,24 +113634,9 @@ var AddBook = function (_Component) {
     }, {
         key: 'onSubmit',
         value: function onSubmit(e) {
-            var _this3 = this;
-
             e.preventDefault();
             if (this.isValid()) {
-                this.props.saveBooks(this.state).then(function (res) {
-                    console.log(res);
-                    _this3.context.router.history.push('/librarybooks');
-                }, function (err) {
-                    _this3.setState({
-                        isLoading: false
-                    });
-                    if (err.data) {
-                        _this3.props.addFlashMessage({
-                            type: 'error',
-                            text: err.data.errors
-                        });
-                    }
-                });
+                this.props.saveBooks(this.state, this.props.history);
             }
         }
 
@@ -114853,7 +114794,7 @@ var PasswordForm = function PasswordForm(props) {
                     _react2.default.createElement(_sidebar2.default, { user: props.auth }),
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-md-9' },
+                        { className: 'col-sm-6 col-sm-offset-3' },
                         _react2.default.createElement(
                             'div',
                             { className: 'profile-content' },

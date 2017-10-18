@@ -6,11 +6,15 @@ import FlashMessagesList from '../flash/FlashMessagesList';
 
 const SignupForm = (props) => {
     const errors = props.errors ? props.errors : '';
+    const error = props.error ? props.error : null;
+    const message = props.message ? props.message : null;
     return (
         <div>
             <Header />
             <div className="col-sm-6 col-sm-offset-3">
                 <FlashMessagesList />
+                {error}
+                {message}
                 { errors.form && <div className="alert alert-danger">{errors.form}</div> }
                 <form onSubmit={props.onSubmit} className="login-form form-responsive">
                     <label className="signin text-center"><h3>Create Account</h3></label>
@@ -35,7 +39,6 @@ const SignupForm = (props) => {
 
                     <button type="submit" className="btn btn-md btn-primary" >Sign Up</button>
                 </form>
-                <div className="g-signin2" onSuccess={props.onSuccess} />
             </div>
             <Footer />
         </div>

@@ -29,35 +29,8 @@ class Login extends React.Component {
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.onSignIn = this.onSignIn.bind(this);
     }
 
-    /**
-     * 
-     * @returns {any} google user information
-     * @memberof Login
-     */
-    componentDidMount() {
-        gapi.signin2.render('g-signin2', {
-            scope: 'https://www.googleapis.com/auth/plus.login',
-            width: 300,
-            height: 150,
-            longtitle: true,
-            theme: 'dark',
-            onsuccess: this.onSignIn
-        });
-    }
-
-    /**
-     * 
-     * @return {any} googleUser
-     * @param {any} googleUser 
-     * @memberof Login
-     */
-    onSignIn(googleUser) {
-        console.log("====yaay", googleUser);
-        let profile = googleUser.getBasicProfile();
-    }
     /**
      * 
      * @returns {void}
@@ -111,7 +84,6 @@ class Login extends React.Component {
                 <LoginForm
                     errors={this.props.errors}
                     onChange={this.onChange.bind(this)}
-                    onSignIn= {this.onSignIn.bind(this)}
                     onSubmit={this.onSubmit.bind(this)} />
 
             </div>

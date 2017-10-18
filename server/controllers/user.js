@@ -65,13 +65,14 @@ export default {
     login(req, res) {
         return User
             .findOne({
-                where: { username: req.body.identifier,
-                    // $or: [
-                    //     {
-                    //         email:
-                    //      { $eq: req.body.identifier }
-                    //     }
-                    // ]
+                where: { $or: [
+                    {
+                        email: req.body.identifier
+                    },
+                    {
+                        username: req.body.identifier
+                    }
+                ]
                 }
             })
             .then((user) => {

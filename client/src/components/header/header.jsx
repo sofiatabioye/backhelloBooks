@@ -53,12 +53,12 @@ class Header extends React.Component {
             <li>Manage Library Stock</li>
         );
         const userLinks = cat && cat.length ?
-            cat.slice(0, 9).map((category) => (
+            cat.slice(0, 7).map((category) => (
                 <li key={category.id}><Link to={`/books/${category.title}/${category.id}`} >{category.title}</Link></li>
             )) : <h6>No categories</h6>;
 
         const categoryLinksDropdown = cat && cat.length ?
-            cat.slice(10, 50).map((category) => (
+            cat.slice(7, 50).map((category) => (
                 <li key={category.id}><Link to={`/books/${category.title}/${category.id}`} >{category.title}</Link></li>
             )) : <h6>No categories</h6>;
 
@@ -87,7 +87,7 @@ class Header extends React.Component {
         return (
             <div>
                 <nav className="navbar navbar-inverse ">
-                    <div className="container-fluid">
+                    <div className="container">
                         <div className="navbar-header">
                             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                                 <span className="sr-only">Toggle navigation</span>

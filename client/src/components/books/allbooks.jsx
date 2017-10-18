@@ -23,7 +23,7 @@ class Books extends Component {
             books: [],
             categories: [],
             offset: 0,
-            numPerPage: 3,
+            numPerPage: 8,
             activePage: 1,
             numOfPages: 0
         };

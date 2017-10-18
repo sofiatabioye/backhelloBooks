@@ -86,13 +86,11 @@ exports.default = {
     // User logs in to hellobooks. Generates token on login
     login: function login(req, res) {
         return User.findOne({
-            where: { username: req.body.identifier
-                // $or: [
-                //     {
-                //         email:
-                //      { $eq: req.body.identifier }
-                //     }
-                // ]
+            where: { $or: [{
+                    email: req.body.identifier
+                }, {
+                    username: req.body.identifier
+                }]
             }
         }).then(function (user) {
             if (!user) {

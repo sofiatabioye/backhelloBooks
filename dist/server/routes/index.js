@@ -16,13 +16,9 @@ var _category = require('../controllers/category');
 
 var _category2 = _interopRequireDefault(_category);
 
-var _canBorrow = require('../helper/canBorrow');
-
-var _canBorrow2 = _interopRequireDefault(_canBorrow);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var routes = function routes(app, authorize, checkadmin) {
+var routes = function routes(app, authorize, checkadmin, canBorrow) {
     app.get('/api', function (req, res) {
         return res.status(200).send({
             message: 'Welcome to the Libraries API!'
@@ -52,7 +48,7 @@ var routes = function routes(app, authorize, checkadmin) {
     app.delete('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, _category2.default.destroy);
 
     // This contains routes that allow a logged in user to borrow and return books and borrow history
-    app.post('/api/v1/users/:userId/books/:bookId/borrow', authorize.authorize, _canBorrow2.default.canBorrow, _user2.default.borrowBook);
+    app.post('/api/v1/users/:userId/books/:bookId/borrow', authorize.authorize, canBorrow.canBorrow, _user2.default.borrowBook);
     app.put('/api/v1/users/:userId/books/:bookId/return', authorize.authorize, _user2.default.returnBook);
     app.get('/api/v1/users/:userId/history', authorize.authorize, _user2.default.borrowHistory);
     app.get('/api/v1/users/:userId/books', authorize.authorize, _user2.default.booksNotReturned);

@@ -107,26 +107,9 @@ class AddBook extends Component {
     onSubmit(e) {
         e.preventDefault();
         if (this.isValid()) {
-            this.props.saveBooks(this.state).then(
-                (res) => {
-                    console.log(res);
-                    this.context.router.history.push('/librarybooks');
-                },
-                (err) => {
-                    this.setState({
-                        isLoading: false
-                    });
-                    if (err.data) {
-                        this.props.addFlashMessage({
-                            type: 'error',
-                            text: err.data.errors
-                        });
-                    }
-                }
-            );
+            this.props.saveBooks(this.state, this.props.history);
         }
     }
-
 
     /**
      * 

@@ -116,27 +116,40 @@ export function fetchBook(id) {
 
 
 /**
- * 
- * 
  * @export
- * @param {any} id 
+ * @param {id, book} updates book by Id 
  * @param {any} data 
  * @returns 
  */
-export function updateBook(id, data) {
-    return dispatch => axios.put(`/api/v1/books/${id}`, data);
+export function updateBook(id, bookData) {
+    return (dispatch) => {
+        dispatch({ type: 'UPDATE_BOOK_BEGINS' });
+        return axios.put(`/api/v1/books/${id}`, bookData)
+            .then((response) => {
+                dispatch({ type: 'UPDATE_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
+            }, (err) => {
+                dispatch({ type: 'UPDATE_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
+            });
+    };
 }
 
 
 /**
- * 
- * 
  * @export
  * @param {any} data 
  * @returns 
  */
-export function saveBooks(data) {
-    return dispatch => axios.post(`/api/v1/books/create`, data);
+export function saveBooks(data, history) {
+    return (dispatch) => {
+        dispatch({ type: 'SAVE_BOOK_BEGINS' });
+        return axios.post(`/api/v1/books/create`, data)
+            .then((response) => {
+                dispatch({ type: 'SAVE_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
+                history.push('/librarybooks');
+            }, (err) => {
+                dispatch({ type: 'SAVE_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
+            });
+    };
 }
 
 
@@ -154,10 +167,8 @@ export function borrowBook(userId, bookId, history) {
         dispatch({ type: 'BORROW_BOOK_BEGINS' });
         return axios.post(`/api/v1/users/${userId}/books/${bookId}/borrow`)
             .then((response) => {
-                console.log(response);
                 dispatch({ type: 'BORROW_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
             }, (err) => {
-                console.log(err);
                 dispatch({ type: 'BORROW_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
             });
     };

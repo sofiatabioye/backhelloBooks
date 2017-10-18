@@ -15,26 +15,22 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
             };
 
         case 'BORROW_BOOK_BEGINS':
-            return [...state,
-                {
-                    loading: true
-                }];
+            return {
+                loading: true
+            };
 
         case 'BORROW_BOOK_SUCCESS':
-            return [...state,
-                {
-                    loading: false,
-                    books: action.books,
-                    message: action.message
-                }];
+            return {
+                books: action.books,
+                message: action.message
+            };
 
         case 'BORROW_BOOK_FAILURE':
-            return [...state,
-                {
-                    loading: false,
-                    books: action.books,
-                    errors: action.errors
-                }];
+            return {
+                loading: false,
+                books: action.books,
+                errors: action.errors
+            };
 
         case 'BOOKS_CATEGORY_SUCCESS':
             return {
@@ -46,22 +42,19 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
             const borrowedBooks = state.books.UserBorrowHistory.filter(book => {
                 if (book.book_id !== action.id) return book;
             });
-            return [...state.books,
-                {
-                    books:
+            return {
+                books:
                     {
                         UserBorrowHistory: borrowedBooks
                     }
-                }
-            ];
+            };
 
         case 'RETURN_BOOK_FAILURE':
-            return [...state,
-                {
-                    loading: false,
-                    books: action.books,
-                    errors: action.errors
-                }];
+            return {
+                loading: false,
+                books: action.books,
+                errors: action.errors
+            };
 
         case 'BORROW_HISTORY_SUCCESS':
             return {

@@ -83,12 +83,13 @@ class SingleBook extends Component {
      * @memberof SingleBook
      */
     render() {
-        const error = this.props.errors;
-        const success = this.props.message;
+        const error = this.props.errors ? this.props.errors.message : null;
+        const success = this.props.message ? this.props.message : null;
         const book = this.state.book;
+
         const BorrowButton = (
             <div className="col-ava">
-                {book.quantity >= 1 &&
+                { book.quantity >= 1 &&
                 <h3> <span> Book Available </span>
                     <button className="btn btn-info btn-lg" onClick={this.borrowbook} disabled={this.state.canBorrow} >Borrow Book</button>
                 </h3>
@@ -101,7 +102,7 @@ class SingleBook extends Component {
                 <Header />
                 <div className="container container-me">
                     <button className="btn btn-sm btn-success" onClick={this.goback}>Go back</button>
-                    { error !== null && <p className="red-text" >{error}</p> }
+                    <p className="text-danger" >{error}</p>
                     { success !== null && <p className="text-success" >{success}</p> }
                     <div><h3>{book.title} </h3></div>
                     <div className="row">
