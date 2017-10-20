@@ -3,10 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { login } from '../../actions/auth';
+import { login } from '../../actions/authActions';
 import validateInput from '../utils/validation.jsx';
 import FlashMessagesList from '../flash/FlashMessagesList';
-import LoginForm from './loginForm.jsx';
+import Home from '../header/header2.jsx';
 /**
  * 
  * 
@@ -81,11 +81,10 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <LoginForm
+                <Home
                     errors={this.props.errors}
                     onChange={this.onChange.bind(this)}
                     onSubmit={this.onSubmit.bind(this)} />
-
             </div>
         );
     }

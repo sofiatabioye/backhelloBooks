@@ -11,9 +11,9 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
     entry: './client/src/index.js',
     output: {
-        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist/client'),
         publicPath: '/',
+        filename: 'bundle.js',
     },
     devServer: {
         historyApiFallback: true,

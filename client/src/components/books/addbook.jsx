@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { saveBooks } from '../../actions/books';
+import { saveBooks } from '../../actions/bookActions';
 import validateBook from '../utils/validateBook.jsx';
-import { getCategories } from '../../actions/category';
+import { getCategories } from '../../actions/categoryActions';
 import { addFlashMessage } from '../../actions/flashmessages';
 import FlashMessagesList from '../flash/FlashMessagesList';
 import BookForm from './addbookForm.jsx';

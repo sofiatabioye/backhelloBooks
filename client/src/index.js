@@ -7,7 +7,7 @@ import store from './store/store';
 import './assets/css/main.css';
 import App from './App';
 import setAuthorizationToken from './utils/setAuthorizationToken';
-import { setCurrentUser } from './actions/auth';
+import { setCurrentUser } from './actions/authActions';
 
 
 if (localStorage['x-access-token']) {

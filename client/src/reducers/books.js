@@ -1,4 +1,4 @@
-import { SET_BOOKS, ADD_BOOK, GET_BOOK, UPDATE_BOOK } from '../actions/types';
+import { SET_BOOKS, ADD_BOOK, GET_BOOK, UPDATE_BOOK } from '../actions/actionTypes';
 
 export default (state = { loading: false, message: "", errors: [] }, action = {}) => {
     switch (action.type) {
@@ -20,15 +20,13 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
             };
 
         case 'BORROW_BOOK_SUCCESS':
-            return {
-                books: action.books,
+            return { ...state,
                 message: action.message
             };
 
         case 'BORROW_BOOK_FAILURE':
-            return {
+            return { ...state,
                 loading: false,
-                books: action.books,
                 errors: action.errors
             };
 
@@ -72,6 +70,7 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
                 }];
 
         case SET_BOOKS:
+            // console.log(action.books, "======");
             return {
                 loading: false,
                 books: action.books.books,

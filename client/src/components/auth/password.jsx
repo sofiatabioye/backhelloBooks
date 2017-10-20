@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import PasswordForm from './passwordForm.jsx';
-import { changepassword } from '../../actions/auth';
+import { changepassword } from '../../actions/authActions';
 
 import validateInput from '../utils/validatePassword.jsx';
 import { addFlashMessage } from '../../actions/flashmessages';

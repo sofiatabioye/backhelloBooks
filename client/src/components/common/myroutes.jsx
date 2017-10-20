@@ -6,7 +6,6 @@ import ForgotPassword from '../auth/forgotPassword.jsx';
 import SignUp from '../auth/signup.jsx';
 import Books from '../books/allbooks.jsx';
 import LibraryBooks from '../books/adminbooks.jsx';
-import SingleBook from '../books/singlebook.jsx';
 import Profile from './profile.jsx';
 import UserHistory from './history.jsx';
 import Category from '../categories/categories.jsx';
@@ -16,13 +15,14 @@ import BookCat from '../books/bookcat.jsx';
 import Password from '../auth/password.jsx';
 import NotFound from './notfound.jsx';
 import Index from './index.jsx';
+import Home from '../header/header2.jsx';
 import requireAuth from '../../helper/authenticate';
 import requireAdmin from '../../helper/adminAuth';
 
 const helloRoutes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={Index}/>
+            <Route exact path="/" component={Login}/>
             <Route exact path="/books" component={Books}/>
             <Route exact path="/books/categories" component={requireAuth(Category)}/>
             <Route exact path="/books/:title/:id" component={requireAuth(BookCat)}/>
@@ -36,7 +36,6 @@ const helloRoutes = () => (
             <Route exact path="/history" component={requireAuth(UserHistory)}/>
             <Route exact path="/profile" component={requireAuth(Profile)}/>
             <Route exact path="/editbook/:id" component={requireAdmin(EditBook)} />
-            <Route exact path="/book/:id" component={requireAuth(SingleBook)} />
             <Route path="/*" component={NotFound}/>
         </Switch>
     </BrowserRouter>

@@ -31,6 +31,14 @@ module.exports = {
             createdAt: new Date(),
             updatedAt: new Date()
         }, {
+            title: "History",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }, {
+            title: "Women",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }, {
             title: "Folkore",
             createdAt: new Date(),
             updatedAt: new Date()

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { forgotPassword } from '../../actions/auth';
+import { forgotPassword } from '../../actions/authActions';
 import ForgotPasswordForm from './forgotPasswordForm.jsx';
 /**
  * 

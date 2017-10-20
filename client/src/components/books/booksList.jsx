@@ -1,11 +1,11 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-import Header from '../header/header.jsx';
+import { Row, Col, Button, Modal } from 'react-materialize';
 import Footer from '../footer/footer.jsx';
 
-export const Books = (props) => {
+
+const BookList = (props) => {
     const pagination = (
         <Pagination
             className={props.books.length === 0 ? 'hidden' : 'shown'}
@@ -18,37 +18,53 @@ export const Books = (props) => {
             activePage={props.activePage}
             onSelect={props.handleSelect}/>
     );
+    const isDisabled = props.isDisabled;
+    const userId = props.user.user.user;
+    const borrowText = "BORROW BOOK";
 
-    const bookList = props.books && props.books.length ?
+    const borrowButton = (
+        <Button waves="light" className="button-borrow" disabled= {isDisabled} >{borrowText}</Button>
+    );
+    const books = props.books && props.books.length ?
         props.books.map((book) => (
-            <div className="col-md-3" key={book.id}>
-                <Link to={`/book/${book.id}`}>
-                    <div className="bookbox">
+            <Col s={6} m={4} l={3} key={book.id}>
+                <div className="bookbox">
+                    <Link to="#" onClick={() => props.bookModal(book)}>
                         <img src={book.image} className="bookcover" role="presentation" />
-                        <div className="booktitle">{book.title}</div>
-                        <div className="bookcat"><span className="glyphicon glyphicon-tag" /> {book.category}</div>
-                        <div className="description">{book.description}...</div>
+                    </Link>
+                    <div className="booktitle">{book.title}</div>
+                    <div className="author">By: {book.author} </div>
+                    <div className="bookcat"><i className="fa fa-tag"/>  {book.category}</div>
 
+                    <div className="description">
+                        <Button waves="light" className="button-borrow" onClick={() => props.borrowBook(book.id, userId)} disabled= {isDisabled} >{borrowText}</Button>
                     </div>
-                </Link>
-            </div>
+                </div>
+
+            </Col>
 
         )) : <h4>There are no books in the library</h4>;
 
     return (
         <div>
-            <Header />
-            <div className="container">
-                <div><h3>Our Collection</h3></div>
-                <div className="row">
-                    {bookList}
+            <main>
+                <Modal
+                    id="foo">
+                    <div className="book-info" />
+                </Modal>
+                <div className="container">
+                    <div><h4>Our Collection</h4></div>
+
+                    <Row>
+                        {books}
+                    </Row>
+                    {pagination}
                 </div>
-                {pagination}
-            </div>
+            </main>
             <Footer />
         </div>
     );
 };
 
 
-export default Books;
+export default BookList;

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import Sidebar from '../sidebar/sidebar.jsx';
-import { fetchBorrowedBooks, returnBook } from '../../actions/books';
+import { fetchBorrowedBooks, returnBook } from '../../actions/bookActions';
 
 /**
  * 

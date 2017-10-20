@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import AllBooks from './adminBooksList.jsx';
-import { getBooks, setBooks, deleteBook } from '../../actions/books';
+import { getBooks, setBooks, deleteBook } from '../../actions/bookActions';
 import { addFlashMessage } from '../../actions/flashmessages';
 
 /**
@@ -109,9 +109,6 @@ LibraryBooks.proptypes = {
     deleteBook: PropTypes.func.isRequired
 };
 
-LibraryBooks.contextTypes = {
-    router: PropTypes.object.isRequired
-};
 
 const mapStateToProps = state => ({
     books: state.books.books,

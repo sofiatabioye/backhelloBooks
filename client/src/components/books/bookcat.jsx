@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
-import { getBooksByCat } from '../../actions/books';
+import { getBooksByCat } from '../../actions/bookActions';
 
 
 /**

@@ -1,6 +1,6 @@
 import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
-import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE } from '../actions/types';
+import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE } from '../actions/actionTypes';
 
 export default (state = [], action = {}) => {
     const index = findIndex(state, { id: action.id });

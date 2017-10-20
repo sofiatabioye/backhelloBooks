@@ -6,7 +6,7 @@ import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import { addFlashMessage } from '../../actions/flashmessages';
 import validateBook from '../utils/validateBook.jsx';
-import { getBook, fetchBook, updateBook } from '../../actions/books';
+import { getBook, fetchBook, updateBook } from '../../actions/bookActions';
 import FlashMessagesList from '../flash/FlashMessagesList';
 
 /**

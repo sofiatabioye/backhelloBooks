@@ -7,7 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 import Header from '../header/header.jsx';
 import HelloFooter from '../footer/footer.jsx';
 import Sidebar from '../sidebar/sidebar.jsx';
-import { fetchBorrowHistory, returnBook } from '../../actions/books';
+import { fetchBorrowHistory, returnBook } from '../../actions/bookActions';
 
 /**
  * 

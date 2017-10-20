@@ -59,8 +59,4 @@ app.get('*', function (req, res) {
     res.status(200).sendFile(_path2.default.join(__dirname, '../client', 'index.html'));
 });
 
-// app.get('*', (req, res) => res.status(200).send({
-//     message: 'Welcome to the beginning of nothingness.',
-// }));
-
 module.exports = app;
