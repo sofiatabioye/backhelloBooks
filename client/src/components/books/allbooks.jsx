@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 
 import { getBooks, borrowBook } from '../../actions/bookActions';
 import { getCategories } from '../../actions/categoryActions';
+import { logout } from '../../actions/authActions';
 import BookList from './booksList.jsx';
-import Header from '../header/header.jsx';
-
 
 /**
  * 
@@ -24,8 +23,8 @@ class Books extends Component {
         super(props);
         this.state = {
             books: [],
-            categories: [],
             isDisabled: false,
+            text: "",
             offset: 0,
             numPerPage: 8,
             activePage: 1,
@@ -43,7 +42,6 @@ class Books extends Component {
      */
     componentDidMount() {
         this.props.getBooks(this.state.offset, this.state.numPerPage);
-        this.props.getCategories();
     }
 
     /**
@@ -53,15 +51,10 @@ class Books extends Component {
      * @memberof Books
      */
     componentWillReceiveProps(nextProps) {
-        if (nextProps.books) {
-            this.setState({ books: nextProps.books,
-                numOfPages: nextProps.pager.pageCount
-            });
-        }
-        if (nextProps.categories) {
-            this.setState({
-                categories: nextProps.categories.categories });
-        }
+        this.setState({
+            books: nextProps.books,
+            numOfPages: nextProps.pager.pageCount
+        });
     }
     /**
      * 
@@ -88,29 +81,27 @@ class Books extends Component {
     }
 
     /**
-     * 
-     * @returns {userId, bookId} borrows book
+     * @param {userId} user
+     * @param {bookId} book
+     * @param {event} event 
+     * @return {userId, bookId} borrows book
      * @memberof Books
      */
     borrowBook(userId, bookId) {
-        // const userId = this.props.auth.user.user;
-        // const bookId = this.state.book.id;
-        this.props.borrowBook(userId, bookId);
+        this.props.borrowBook(userId, bookId, this.props.history);
     }
+
     /**
-     * 
-     * 
      * @returns {Books} This displays all books for authenticated users to see
      * @memberof Books
      */
     render() {
         return (
             <div>
-                <Header categories= {this.props.categories} user= {this.props.user}/>
+
                 <BookList books ={this.state.books}
-                    user = {this.props.user}
+                    user={this.props.user}
                     isDisabled = {this.state.isDisabled}
-                    categories = {this.props.categories}
                     bookModal = {this.bookModal}
                     numOfPages ={this.state.numOfPages}
                     numPerPage={this.state.numPerPage}
@@ -122,17 +113,18 @@ class Books extends Component {
     }
 }
 
-Books.proptypes = {
-    getBooks: PropTypes.object.isRequired,
+Books.propTypes = {
+    getBooks: PropTypes.func.isRequired,
 };
+
 Books.contextTypes = {
     router: PropTypes.object.isRequired
 };
-const mapDispatchToProps = { getBooks, getCategories, borrowBook };
+const mapDispatchToProps = { getBooks, getCategories, borrowBook, logout };
+
 const mapStateToProps = state => ({
     books: state.books.books,
     pager: state.books.pagination,
-    categories: state.categories.categories,
     user: state.auth
 });
 

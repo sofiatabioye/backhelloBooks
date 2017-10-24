@@ -14,7 +14,6 @@ import EditBook from '../books/editbook.jsx';
 import BookCat from '../books/bookcat.jsx';
 import Password from '../auth/password.jsx';
 import NotFound from './notfound.jsx';
-import Index from './index.jsx';
 import Home from '../header/header2.jsx';
 import requireAuth from '../../helper/authenticate';
 import requireAdmin from '../../helper/adminAuth';
@@ -25,7 +24,7 @@ const helloRoutes = () => (
             <Route exact path="/" component={Login}/>
             <Route exact path="/books" component={Books}/>
             <Route exact path="/books/categories" component={requireAuth(Category)}/>
-            <Route exact path="/books/:title/:id" component={requireAuth(BookCat)}/>
+            <Route exact path="/books/:title" component={requireAuth(BookCat)}/>
             <Route exact path="/librarybooks" component={requireAdmin(LibraryBooks)}/>
             <Route exact path="/signin" component={Login}/>
             <Route exact path="/signup" component={SignUp}/>

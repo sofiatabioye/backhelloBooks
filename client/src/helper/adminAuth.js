@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { addFlashMessage } from '../actions/flashmessages';
 
 /**
  * 
@@ -80,5 +79,5 @@ export default function AdminAuth(ComposedComponent) {
         };
     }
 
-    return connect(mapStateToProps, { addFlashMessage })(AdminAuth);
+    return connect(mapStateToProps, {})(AdminAuth);
 }

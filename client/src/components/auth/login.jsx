@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { login } from '../../actions/authActions';
+import { signup, login } from '../../actions/authActions';
 import validateInput from '../utils/validation.jsx';
-import FlashMessagesList from '../flash/FlashMessagesList';
+import validateSignUpInput from '../utils/validateSignUp';
 import Home from '../header/header2.jsx';
 /**
  * 
@@ -29,6 +29,7 @@ class Login extends React.Component {
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onSignUp = this.onSignUp.bind(this);
     }
 
     /**
@@ -41,7 +42,6 @@ class Login extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-
     /**
      * 
      * 
@@ -50,6 +50,21 @@ class Login extends React.Component {
      */
     isValid() {
         const { errors, isValid } = validateInput(this.state);
+        if (!isValid) {
+            this.setState({ errors });
+            return;
+        }
+        return isValid;
+    }
+
+    /**
+     * 
+     * 
+     * @returns {validatedInput} validates form input
+     * @memberof SignUp
+     */
+    isSignUpValid() {
+        const { errors, isValid } = validateSignUpInput(this.state);
         if (!isValid) {
             this.setState({ errors });
             return;
@@ -71,7 +86,19 @@ class Login extends React.Component {
         }
     }
 
-
+    /**
+     * 
+     * @returns {User} submits user login details
+     * @param {any} event 
+     * @memberof Login
+     */
+    onSignUp(event) {
+        console.log('sifnup', this.state);
+        event.preventDefault();
+        if (this.isSignUpValid()) {
+            this.props.signup(this.state, this.props.history);
+        }
+    }
     /**
      * 
      * 
@@ -84,6 +111,7 @@ class Login extends React.Component {
                 <Home
                     errors={this.props.errors}
                     onChange={this.onChange.bind(this)}
+                    onSignUp ={this.onSignUp.bind(this)}
                     onSubmit={this.onSubmit.bind(this)} />
             </div>
         );
@@ -94,4 +122,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { login, FlashMessagesList })(Login);
+export default connect(mapStateToProps, { login, signup })(Login);

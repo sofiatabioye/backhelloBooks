@@ -6,18 +6,7 @@ export default {
     // Admin add new book
     create(req, res) {
         return Book
-            .create({
-                title: req.body.title,
-                description: req.body.description,
-                category: req.body.category,
-                quantity: req.body.quantity,
-                image: req.body.image,
-                author: req.body.author,
-                ISBN: req.body.isbn,
-                bookEdition: req.body.edition,
-                publisher: req.body.publisher,
-                bookSize: req.body.size,
-            })
+            .create(req.body)
             .then(book => res.status(201).send({ book: book, message: 'Book Created Successfully.' }))
             .catch(error => res.status(500).send(error));
     },

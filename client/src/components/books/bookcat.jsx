@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Header from '../header/header.jsx';
-import Footer from '../footer/footer.jsx';
-import { getBooksByCat } from '../../actions/bookActions';
+import { getBooksByCat, borrowBook } from '../../actions/bookActions';
+import { logout } from '../../actions/authActions';
 
-
+import BookList from './booksList.jsx';
+import Books from './allbooks.jsx';
 /**
  * 
  * 
@@ -22,8 +22,16 @@ class BookCat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            books: []
+            books: [],
+            isDisabled: false,
+            text: "",
+            offset: 0,
+            numPerPage: 8,
+            activePage: 1,
+            numOfPages: 0
         };
+        this.handleSelect = this.handleSelect.bind(this);
+        this.borrowBook = this.borrowBook.bind(this);
     }
 
 
@@ -49,6 +57,32 @@ class BookCat extends Component {
         }
     }
 
+    handleSelect(event) {
+        this.setState({ activePage: event });
+        const offset = this.state.numPerPage * (event - 1);
+        this.props.getBooks(offset, this.state.numPerPage);
+    }
+
+    /**
+     * @returns {Book } returns book information
+     * @param {any} book 
+     * @memberof Books
+     */
+    bookModal(book) {
+        const modal = $('#foo');
+        modal.find('h4').text(book.title);
+        modal.find('.book-info').text(book.description);
+        $('#foo').modal('open');
+    }
+
+    /**
+     * 
+     * @returns {userId, bookId} borrows book
+     * @memberof Books
+     */
+    borrowBook(userId, bookId) {
+        this.props.borrowBook(userId, bookId, this.props.history);
+    }
 
     /**
      * 
@@ -57,40 +91,28 @@ class BookCat extends Component {
      * @memberof BookCat
      */
     render() {
-        const books = this.props.books;
         const title = this.props.match.params.title;
-        const bookList = books && books.books ?
-            books.books.map((book) => (
-                <div className="col-md-3" key={book.id}>
-                    <a href={`/book/${book.id}`}>
-                        <div className="bookbox">
-                            <img src={book.image} className="bookcover" role="presentation" />
-                            <div className="booktitle">{book.title}</div>
-                            <div className="bookcat"><span className="glyphicon glyphicon-tag" /> {book.category}</div>
-                            <div className="description">{book.description}...</div>
-                        </div>
-                    </a>
-                </div>
-
-            )) : <h4>There are no books in this category</h4>;
-
         return (
             <div>
-                <Header />
-                <div className="container">
-                    <div><h3>{title}</h3></div>
-                    <div className="row">
-                        {bookList}
-                    </div>
-                </div>
-                <Footer />
+                <BookList
+                    title={title}
+                    user={this.props.user}
+                    books={this.props.books}
+                    isDisabled = {this.state.isDisabled}
+                    bookModal = {this.bookModal}
+                    numOfPages = {this.state.numOfPages}
+                    numPerPage={this.state.numPerPage}
+                    activePage= {this.state.activePage}
+                    borrowBook = {this.borrowBook.bind(this)}
+                    handleSelect={this.handleSelect.bind(this)}
+                />
             </div>
         );
     }
 }
 
-BookCat.proptypes = {
-    bookcat: PropTypes.array.isRequired,
+BookCat.propTypes = {
+    books: PropTypes.array.isRequired,
 };
 
 BookCat.contextTypes = {
@@ -99,8 +121,9 @@ BookCat.contextTypes = {
 
 const mapStateToProps = state => ({
     books: state.books.books,
+    user: state.auth
 });
 
 
-export default connect(mapStateToProps, { getBooksByCat, })(BookCat);
+export default connect(mapStateToProps, { getBooksByCat, borrowBook, logout })(BookCat);
 

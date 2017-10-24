@@ -8,11 +8,14 @@ import './assets/css/main.css';
 import App from './App';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/authActions';
+import { fetchBorrowedBooks, getBorrowedBooksSuccess } from './actions/bookActions';
+// import { setCategory, getCategories } from './actions/categoryActions';
 
-
+// const user = jwt.decode(localStorage['x-access-token']);
 if (localStorage['x-access-token']) {
     setAuthorizationToken(localStorage['x-access-token']);
     store.dispatch(setCurrentUser(jwt.decode(localStorage['x-access-token'])));
+    //   store.dispatch(getBorrowedBooksSuccess(userId));
 }
 
 

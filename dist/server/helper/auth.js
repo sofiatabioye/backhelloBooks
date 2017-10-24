@@ -36,7 +36,7 @@ exports.default = {
                 }
             });
         } else {
-            res.status(412).send({ message: 'Token not provided' });
+            res.status(412).send({ message: 'You need to sign in first' });
         }
     }
 };

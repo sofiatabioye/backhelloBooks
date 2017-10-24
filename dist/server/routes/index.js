@@ -35,14 +35,14 @@ var routes = function routes(app, authorize, checkadmin, canBorrow) {
     // This contains the routes that allow a logged in admin user to modify and create books
     app.post('/api/v1/books/create', authorize.authorize, checkadmin.checkAdmin, _book2.default.create);
     app.get('/api/v1/books', _book2.default.list);
-    app.get('/api/v1/books/categories/:title', authorize.authorize, _book2.default.getBooksByCat);
-    app.get('/api/v1/books/:bookId', authorize.authorize, _book2.default.retrieve);
+    app.get('/api/v1/books/categories/:title', _book2.default.getBooksByCat);
+    app.get('/api/v1/books/:bookId', _book2.default.retrieve);
     app.put('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, _book2.default.update);
     app.delete('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, _book2.default.destroy);
 
     // This contains the routes that  allow a logged in admin to modify and create categories
     app.post('/api/v1/categories/create', authorize.authorize, checkadmin.checkAdmin, _category2.default.create);
-    app.get('/api/v1/categories', authorize.authorize, _category2.default.list);
+    app.get('/api/v1/categories', _category2.default.list);
     app.get('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, _category2.default.retrieve);
     app.put('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, _category2.default.update);
     app.delete('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, _category2.default.destroy);

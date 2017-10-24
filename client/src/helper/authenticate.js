@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { addFlashMessage } from '../actions/flashmessages';
-
+import toastr from 'toastr';
 /**
  * 
  * 
@@ -26,10 +24,7 @@ export default function Authenticate(ComposedComponent) {
          */
         componentDidMount() {
             if (!this.props.isAuthenticated) {
-                this.props.addFlashMessage({
-                    type: 'error',
-                    text: 'You need to be logged in to access that page'
-                });
+                toastr.warning('You need to sign in first');
                 this.context.router.history.push('/signin');
             }
         }
@@ -60,8 +55,7 @@ export default function Authenticate(ComposedComponent) {
     }
 
     Authenticate.propTypes = {
-        isAuthenticated: PropTypes.bool.isRequired,
-        addFlashMessage: PropTypes.func.isRequired
+        isAuthenticated: PropTypes.bool,
     };
 
     Authenticate.contextTypes = {
@@ -80,5 +74,5 @@ export default function Authenticate(ComposedComponent) {
         };
     }
 
-    return connect(mapStateToProps, { addFlashMessage })(Authenticate);
+    return connect(mapStateToProps, { })(Authenticate);
 }

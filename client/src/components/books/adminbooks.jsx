@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import AllBooks from './adminBooksList.jsx';
 import { getBooks, setBooks, deleteBook } from '../../actions/bookActions';
-import { addFlashMessage } from '../../actions/flashmessages';
 
 /**
  * 
@@ -103,10 +102,10 @@ class LibraryBooks extends Component {
     }
 }
 
-LibraryBooks.proptypes = {
+LibraryBooks.propTypes = {
     books: PropTypes.array.isRequired,
-    getBooks: PropTypes.func.isRequired,
-    deleteBook: PropTypes.func.isRequired
+    getBooks: PropTypes.object.isRequired,
+    deleteBook: PropTypes.object.isRequired
 };
 
 
@@ -114,5 +113,5 @@ const mapStateToProps = state => ({
     books: state.books.books,
     pager: state.books.pagination,
 });
-export default connect(mapStateToProps, { getBooks, addFlashMessage, setBooks, deleteBook })(LibraryBooks);
+export default connect(mapStateToProps, { getBooks, setBooks, deleteBook })(LibraryBooks);
 

@@ -3,11 +3,11 @@ import { Footer } from 'react-materialize';
 
 const Foot = (props) => (
     <div>
-        <Footer className="footer-copyright">
+        <div className="page-footer">
             <div className="container">
                © HelloBooks. All Rights Reserved. Privacy Policy • Terms of Use
             </div>
-        </Footer>
+        </div>
     </div>
 );
 

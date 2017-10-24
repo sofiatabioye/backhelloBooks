@@ -1,6 +1,6 @@
-import { SET_BOOKS, ADD_BOOK, GET_BOOK, UPDATE_BOOK } from '../actions/actionTypes';
+import { SET_BOOKS, ADD_BOOK, GET_BOOK, UPDATE_BOOK, BOOKS_CATEGORY_SUCCESS } from '../actions/actionTypes';
 
-export default (state = { loading: false, message: "", errors: [] }, action = {}) => {
+export default (state = { loading: false, message: "", errors: [] }, action = {}, books = []) => {
     switch (action.type) {
         case 'FETCH_BOOKS_BEGINS':
             return [...state,
@@ -9,13 +9,13 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
                 }];
 
         case 'FETCH_BOOKS_SUCCESS':
-            return {
+            return { ...state,
                 loading: false,
                 books: action.books
             };
 
         case 'BORROW_BOOK_BEGINS':
-            return {
+            return { ...state,
                 loading: true
             };
 
@@ -30,18 +30,21 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
                 errors: action.errors
             };
 
-        case 'BOOKS_CATEGORY_SUCCESS':
+        case BOOKS_CATEGORY_SUCCESS:
             return {
+                ...state,
                 loading: false,
-                books: action.books
+                books: action.categoryBooks.books
             };
 
         case 'RETURN_BOOK_SUCCESS':
-            const borrowedBooks = state.books.UserBorrowHistory.filter(book => {
+            //  console.log(state.borrowedBooks);
+            const borrowedBooks = state.borrowedBooks.borrowedBooks.UserBorrowHistory.filter(book => {
                 if (book.book_id !== action.id) return book;
             });
             return {
-                books:
+                ...state,
+                borrowedBooks:
                     {
                         UserBorrowHistory: borrowedBooks
                     }
@@ -54,43 +57,12 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
                 errors: action.errors
             };
 
-        case 'BORROW_HISTORY_SUCCESS':
-            return {
-                loading: false,
-                books: action.books,
-                errors: action.errors
-            };
-
-        case 'BORROW_HISTORY_FAILURE':
-            return [...state,
-                {
-                    loading: false,
-                    books: action.books,
-                    errors: action.errors
-                }];
-
         case SET_BOOKS:
-            // console.log(action.books, "======");
-            return {
+            return { ...state,
                 loading: false,
                 books: action.books.books,
                 pagination: action.books.pagination
             };
-
-        case "FETCH_BORROWED_BOOKS_SUCCESS":
-            return {
-                loading: false,
-                books: action.books,
-                pagination: action.books.pagination
-            };
-
-        case "FETCH_BORROWED_BOOKS_FAILURE":
-            return [...state,
-                {
-                    loading: false,
-                    books: action.books,
-                    errors: action.errors
-                }];
 
         case "DELETE_BOOK_SUCCESS":
             const allbooks = state.books.filter((book) => {

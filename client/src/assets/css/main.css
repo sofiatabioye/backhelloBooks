@@ -1,8 +1,19 @@
-body {
-	padding-bottom: 60px;
+nav {
+	background-color: #444;
+	height: 6vh;
+}
+.fa {
+color: lightseagreen;
+margin-right: 5px;
 }
 
-
+.page-footer {
+	background-color: #444;
+	color: #fff;
+	padding: 20px; 
+	margin-bottom: 0;
+	height: 6vh;
+}
 .login-box {
   display: flex;
 	border: 1px solid #ccc;
@@ -291,7 +302,8 @@ a:hover .bookcover {
 
 /* Materialize */
 .homepage {
-	height: 100vh;
+	background-image: url("../images/notebook.png");
+	height: 88vh;
 	padding: 50px;
 }
 .tab-demo {
@@ -375,7 +387,9 @@ body {
 	min-height: 100vh;
 	flex-direction: column;
 }
-
 main {
 	flex: 1 0 auto;
+	min-height: 88vh;
+	margin: 0;
 }
+

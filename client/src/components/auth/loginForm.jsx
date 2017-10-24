@@ -2,7 +2,6 @@ import React from 'react';
 
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
-import FlashMessagesList from '../flash/FlashMessagesList';
 
 const LoginForm = (props) => {
     const errors = props.errors ? props.errors.message : null;

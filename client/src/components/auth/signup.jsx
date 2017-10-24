@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { signup } from '../../actions/authActions';
-import validateSignUpInput from '../utils/validateSignUp.jsx';
-import { addFlashMessage } from '../../actions/flashmessages';
-import FlashMessagesList from '../flash/FlashMessagesList';
+import validateSignUpInput from '../utils/validateSignUp';
 import SignupForm from './signupForm.jsx';
 /**
  * 
@@ -96,7 +94,7 @@ class SignUp extends React.Component {
     }
 }
 
-SignUp.prototypes = {
+SignUp.propTypes = {
     signup: PropTypes.func.isRequired
 };
 
@@ -110,4 +108,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { signup, FlashMessagesList, addFlashMessage })(SignUp);
+export default connect(mapStateToProps, { signup })(SignUp);

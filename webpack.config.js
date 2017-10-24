@@ -71,7 +71,7 @@ module.exports = {
         net: 'empty',
         dns: 'empty',
     },
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
     plugins: [
         HtmlWebpackPluginConfig,
         new webpack.HotModuleReplacementPlugin(),

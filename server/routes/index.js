@@ -18,18 +18,17 @@ const routes = (app, authorize, checkadmin, canBorrow) => {
     // This contains the routes that allow a logged in admin user to modify and create books
     app.post('/api/v1/books/create', authorize.authorize, checkadmin.checkAdmin, booksController.create);
     app.get('/api/v1/books', booksController.list);
-    app.get('/api/v1/books/categories/:title', authorize.authorize, booksController.getBooksByCat);
-    app.get('/api/v1/books/:bookId', authorize.authorize, booksController.retrieve);
+    app.get('/api/v1/books/categories/:title', booksController.getBooksByCat);
+    app.get('/api/v1/books/:bookId', booksController.retrieve);
     app.put('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.update);
     app.delete('/api/v1/books/:bookId', authorize.authorize, checkadmin.checkAdmin, booksController.destroy);
 
     // This contains the routes that  allow a logged in admin to modify and create categories
     app.post('/api/v1/categories/create', authorize.authorize, checkadmin.checkAdmin, categoriesController.create);
-    app.get('/api/v1/categories', authorize.authorize, categoriesController.list);
+    app.get('/api/v1/categories', categoriesController.list);
     app.get('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.retrieve);
     app.put('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.update);
     app.delete('/api/v1/categories/:catId', authorize.authorize, checkadmin.checkAdmin, categoriesController.destroy);
-
 
     // This contains routes that allow a logged in user to borrow and return books and borrow history
     app.post('/api/v1/users/:userId/books/:bookId/borrow', authorize.authorize, canBorrow.canBorrow, usersController.borrowBook);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-
+import toastr from 'toastr';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER } from './actionTypes';
 /* eslint-disable require-jsdoc */
@@ -25,10 +25,12 @@ export function login(userData, history) {
             localStorage.setItem('x-access-token', token);
             setAuthorizationToken(token);
             dispatch(setCurrentUser(jwt.decode(token)));
+            toastr.success("You are signed In");
             history.push('/books');
         },
         (err) => {
             dispatch({ type: 'USER_LOGIN_FAILURE', errors: err.response.data });
+            toastr.warning(err.response.data.message);
         }
 
         );

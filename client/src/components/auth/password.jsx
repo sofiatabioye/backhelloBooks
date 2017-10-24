@@ -6,8 +6,6 @@ import PasswordForm from './passwordForm.jsx';
 import { changepassword } from '../../actions/authActions';
 
 import validateInput from '../utils/validatePassword.jsx';
-import { addFlashMessage } from '../../actions/flashmessages';
-import FlashMessagesList from '../flash/FlashMessagesList';
 
 /**
  * 
@@ -113,4 +111,4 @@ const mapStateToProps = state => ({
     success: state.auth.success
 });
 
-export default connect(mapStateToProps, { changepassword, FlashMessagesList, addFlashMessage })(Password);
+export default connect(mapStateToProps, { changepassword })(Password);

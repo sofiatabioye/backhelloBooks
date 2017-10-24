@@ -9,7 +9,7 @@ exports.default = {
     checkAdmin: function checkAdmin(req, res, next) {
         var userRole = req.locals;
         if (userRole !== 'admin') {
-            var message = 'You do not have the privilege';
+            var message = 'Oops! You do not have access';
             res.status(401).send({ message: message });
         } else {
             next();

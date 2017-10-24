@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { saveBooks } from '../../actions/bookActions';
 import validateBook from '../utils/validateBook.jsx';
 import { getCategories } from '../../actions/categoryActions';
-import { addFlashMessage } from '../../actions/flashmessages';
-import FlashMessagesList from '../flash/FlashMessagesList';
 import BookForm from './addbookForm.jsx';
 
 /**
@@ -132,8 +130,8 @@ class AddBook extends Component {
     }
 }
 
-AddBook.protoTypes = {
-    saveBooks: PropTypes.func.isRequired
+AddBook.propTypes = {
+    saveBooks: PropTypes.object.isRequired
 };
 AddBook.contextTypes = {
     router: PropTypes.object.isRequired
@@ -142,5 +140,5 @@ const mapStateToProps = state => ({
     categories: state.categories.categories.categories
 });
 
-export default connect(mapStateToProps, { saveBooks, FlashMessagesList, addFlashMessage, getCategories })(AddBook);
+export default connect(mapStateToProps, { saveBooks, getCategories })(AddBook);
 

@@ -15,18 +15,7 @@ var Book = _index2.default.Book;
 exports.default = {
     // Admin add new book
     create: function create(req, res) {
-        return Book.create({
-            title: req.body.title,
-            description: req.body.description,
-            category: req.body.category,
-            quantity: req.body.quantity,
-            image: req.body.image,
-            author: req.body.author,
-            ISBN: req.body.isbn,
-            bookEdition: req.body.edition,
-            publisher: req.body.publisher,
-            bookSize: req.body.size
-        }).then(function (book) {
+        return Book.create(req.body).then(function (book) {
             return res.status(201).send({ book: book, message: 'Book Created Successfully.' });
         }).catch(function (error) {
             return res.status(500).send(error);

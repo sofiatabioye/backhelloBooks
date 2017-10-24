@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_CATEGORY } from './actionTypes';
+import { SET_CATEGORY, FETCH_CAT_SUCCESS } from './actionTypes';
 
 /**
  * @export
@@ -8,7 +8,7 @@ import { SET_CATEGORY } from './actionTypes';
  */
 export function setCategory(categories) {
     return {
-        type: "FETCH_CAT_SUCCESS",
+        type: FETCH_CAT_SUCCESS,
         categories
     };
 }
