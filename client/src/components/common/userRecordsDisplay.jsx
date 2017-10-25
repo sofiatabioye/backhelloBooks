@@ -28,7 +28,7 @@ const UserRecordsDisplay = (props) => {
                     <th>Borrow Date</th>
                     <th>Return Due Date</th>
                     { props.userPage === '/history' ? <th>Return Date</th> : <th>Return</th>}
-                    { props.userPage === '/history' ? <th>Status</th> : ""}
+                    { props.userPage === '/history' ? <th>Status</th> : null}
                 </tr>
             </thead>
             { books && books.UserBorrowHistory ?

@@ -30,33 +30,6 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
                 errors: action.errors
             };
 
-        case BOOKS_CATEGORY_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                books: action.categoryBooks.books
-            };
-
-        case 'RETURN_BOOK_SUCCESS':
-            //  console.log(state.borrowedBooks);
-            const borrowedBooks = state.borrowedBooks.borrowedBooks.UserBorrowHistory.filter(book => {
-                if (book.book_id !== action.id) return book;
-            });
-            return {
-                ...state,
-                borrowedBooks:
-                    {
-                        UserBorrowHistory: borrowedBooks
-                    }
-            };
-
-        case 'RETURN_BOOK_FAILURE':
-            return {
-                loading: false,
-                books: action.books,
-                errors: action.errors
-            };
-
         case SET_BOOKS:
             return { ...state,
                 loading: false,

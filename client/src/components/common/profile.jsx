@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Table, Row, Col } from 'react-materialize';
 
-import Sidebar from '../sidebar/sidebar.jsx';
 import UserRecordsDisplay from './userRecordsDisplay.jsx';
 import { fetchBorrowedBooks, returnBook } from '../../actions/bookActions';
 

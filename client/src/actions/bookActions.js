@@ -1,6 +1,6 @@
 import axios from 'axios';
 import toastr from 'toastr';
-import { SET_BOOKS, ADD_BOOK, GET_BOOK, UPDATE_BOOK, BOOKS_CATEGORY_SUCCESS, UPDATE_BOOK_BEGINS, UPDATE_BOOK_SUCCESS, UPDATE_BOOK_FAILURE, BORROW_BOOK_BEGINS, FETCH_BORROWED_BOOKS_BEGINS, FETCH_BORROWED_BOOKS_SUCCESS, FETCH_BORROWED_BOOKS_FAILURE
+import { SET_BOOKS, SAVE_BOOK_BEGINS, SAVE_BOOK_SUCCESS, SAVE_BOOK_FAILURE, GET_BOOK, UPDATE_BOOK, BOOKS_CATEGORY_SUCCESS, UPDATE_BOOK_BEGINS, UPDATE_BOOK_SUCCESS, UPDATE_BOOK_FAILURE, BORROW_BOOK_BEGINS, FETCH_BORROWED_BOOKS_BEGINS, FETCH_BORROWED_BOOKS_SUCCESS, FETCH_BORROWED_BOOKS_FAILURE
 } from './actionTypes';
 
 /**
@@ -24,13 +24,37 @@ export function setBooks(books) {
  * @param {any} book 
  * @returns 
  */
-export function addBook(book) {
+export function addBookBegins() {
     return {
-        type: ADD_BOOK,
+        type: SAVE_BOOK_BEGINS,
+    };
+}
+/**
+ * 
+ * 
+ * @export
+ * @param {any} message 
+ * @returns 
+ */
+export function addBook(message, book) {
+    return {
+        type: SAVE_BOOK_SUCCESS,
+        message,
         book
     };
 }
 
+/**
+ * @export
+ * @param {any} errors 
+ * @returns {errors}
+ */
+export function addBookFails(errors) {
+    return {
+        type: SAVE_BOOK_FAILURE,
+        errors
+    };
+}
 
 /**
  * 
@@ -143,6 +167,7 @@ export function updateBookFailure(errors) {
     };
 }
 
+
 /**
  * @export
  * @param {any} book
@@ -206,7 +231,6 @@ export function updateBook(id, bookData) {
     };
 }
 
-
 /**
  * @export
  * @param {any} data 
@@ -214,13 +238,15 @@ export function updateBook(id, bookData) {
  */
 export function saveBooks(data, history) {
     return (dispatch) => {
-        dispatch({ type: 'SAVE_BOOK_BEGINS' });
+        dispatch(addBookBegins());
         return axios.post(`/api/v1/books/create`, data)
             .then((response) => {
-                dispatch({ type: 'SAVE_BOOK_SUCCESS', books: response.data.books, message: response.data.message });
-            }, (err) => {
-                dispatch({ type: 'SAVE_BOOK_FAILURE', errors: err.response.data, books: err.response.data.book });
-                Materialize.toast("hello", 5000);
+                dispatch(addBook(response.data.books, response.data.message));
+                toastr.success(response.data.message);
+            })
+            .catch((err) => {
+                dispatch(addBookFails(err.response.data.message));
+                toastr.warning(err.response.data.message);
             });
     };
 }
@@ -261,11 +287,14 @@ export function returnBook(userId, bookId) {
     return (dispatch) =>
         axios.put(`/api/v1/users/${userId}/books/${bookId}/return`)
             .then((response) => {
+                console.log(response);
                 dispatch({ type: 'RETURN_BOOK_SUCCESS', id: bookId });
-                toastr.success("Book returned Successfully");
-            }, (err) => {
-                dispatch({ type: 'RETURN_BOOK_FAILURE', errors: err.response.data.message });
-                toastr.warning(err.response.data.message);
+                toastr.success(response.data.message);
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch({ type: 'RETURN_BOOK_FAILURE', errors: err.response });
+                toastr.warning(err.response);
             });
 }
 
@@ -283,9 +312,10 @@ export function fetchBorrowedBooks(userId) {
         return axios.get(`/api/v1/users/${userId}/books`)
             .then((response) => {
                 dispatch(getBorrowedBooksSuccess(response.data));
-            }, (err) => {
+            })
+            .catch((err) => {
                 dispatch(getBorrowedBooksFailure(err.response.data));
-                toastr.warning(err.response.data);
+                toastr.warning(err.response.data.message);
             });
     };
 }
@@ -304,7 +334,8 @@ export function fetchBorrowHistory(userId) {
             .then((response) => {
                 dispatch({ type: 'BORROW_HISTORY_SUCCESS', books: response.data });
                 return response.data;
-            }, (err) => {
+            })
+            .catch((err) => {
                 dispatch({ type: 'BORROWED_HISTORY_FAILURE', errors: err.response.data });
                 return err;
             });
@@ -325,7 +356,8 @@ export function deleteBook(bookId) {
         return axios.delete(`/api/v1/books/${bookId}`)
             .then((response) => {
                 dispatch({ type: 'DELETE_BOOK_SUCCESS', id: bookId });
-            }, (err) => {
+            })
+            .catch((err) => {
                 dispatch({ type: 'DELETE_BOOK_FAILURE', errors: err.response.data });
             });
     };

@@ -28,7 +28,7 @@ class Login extends React.Component {
             isLoading: false
         };
         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onSignIn = this.onSignIn.bind(this);
         this.onSignUp = this.onSignUp.bind(this);
     }
 
@@ -79,7 +79,7 @@ class Login extends React.Component {
      * @param {any} event 
      * @memberof Login
      */
-    onSubmit(event) {
+    onSignIn(event) {
         event.preventDefault();
         if (this.isValid()) {
             this.props.login(this.state, this.props.history);
@@ -112,7 +112,7 @@ class Login extends React.Component {
                     errors={this.props.errors}
                     onChange={this.onChange.bind(this)}
                     onSignUp ={this.onSignUp.bind(this)}
-                    onSubmit={this.onSubmit.bind(this)} />
+                    onSignIn={this.onSignIn.bind(this)} />
             </div>
         );
     }

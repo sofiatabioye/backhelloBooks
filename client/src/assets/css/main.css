@@ -49,6 +49,17 @@ ul > li > a {
 	
 }
 
+@media(min-width: 768px) {
+.divider{
+	position:absolute;
+	left:50%;
+	top:10%;
+	bottom:10%;
+	border-left:1px solid #e0e0ee;
+	height: 300px;
+}
+}
+
 .dropdown-menu > li > a {
 	font-size: 14px;
 }
@@ -302,7 +313,7 @@ a:hover .bookcover {
 
 /* Materialize */
 .homepage {
-	background-image: url("../images/notebook.png");
+	background-image: url("../images/bg.jpg");
 	height: 88vh;
 	padding: 50px;
 }
