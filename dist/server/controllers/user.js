@@ -282,6 +282,8 @@ exports.default = {
 
     // Logged in user views his/her borrow history
     borrowHistory: function borrowHistory(req, res) {
+        var offset = req.query.offset || null;
+        var limit = req.query.limit || null;
         User.findById(req.params.userId).then(function (user) {
             if (!user) {
                 res.status(404).send({ message: 'User Not found' });
@@ -290,14 +292,22 @@ exports.default = {
                     if (!borrowstatus) {
                         res.status(201).send({ message: 'You have not borrowed any book' });
                     } else {
-                        BorrowStatus.findAll({
-                            where: { user_id: req.params.userId },
+                        BorrowStatus.findAndCountAll({
+                            offset: offset,
+                            limit: limit,
+                            where: { user_id: [req.params.userId] },
                             include: [{ model: Book,
                                 attributes: ['title']
                             }]
                         }).then(function (borrowstat) {
                             res.status(200).send({
-                                UserBorrowHistory: borrowstat
+                                UserBorrowHistory: borrowstat.rows,
+                                pagination: {
+                                    totalCount: borrowstat.count,
+                                    pageSize: borrowstat.rows.length,
+                                    pageCount: Math.ceil(borrowstat.count / limit),
+                                    page: Math.floor(offset / limit) + 1
+                                }
                             });
                         }).catch(function (error) {
                             return res.status(400).send(error);

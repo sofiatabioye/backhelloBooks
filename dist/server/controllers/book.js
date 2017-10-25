@@ -25,8 +25,8 @@ exports.default = {
 
     // lists all books in the library
     list: function list(req, res) {
-        var offset = req.query.offset || null;
-        var limit = req.query.limit || null;
+        var offset = req.query.offset || 0;
+        var limit = req.query.limit || 1;
         return Book.findAndCountAll({ offset: offset, limit: limit, order: [['id']] }).then(function (book) {
             res.status(200).send({
                 books: book.rows,

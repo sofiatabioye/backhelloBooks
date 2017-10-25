@@ -13,8 +13,8 @@ export default {
 
     // lists all books in the library
     list(req, res) {
-        const offset = req.query.offset || null;
-        const limit = req.query.limit || null;
+        const offset = req.query.offset || 0;
+        const limit = req.query.limit || 1;
         return Book
             .findAndCountAll({ offset, limit, order: [['id']] })
             .then(book => {

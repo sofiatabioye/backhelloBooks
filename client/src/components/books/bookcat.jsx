@@ -32,7 +32,6 @@ class BookCat extends Component {
         };
         this.handleSelect = this.handleSelect.bind(this);
         this.borrowBook = this.borrowBook.bind(this);
-        console.log('m in bookcat');
     }
 
 

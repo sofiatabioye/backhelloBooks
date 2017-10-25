@@ -10,6 +10,18 @@ import Header from '../header/header.jsx';
 const UserRecordsDisplay = (props) => {
     const books = props.books.borrowedBooks;
     const title = props.userPage === '/history' ? 'Borrow History' : 'Borrowed Books';
+    const pagination = (
+        <Pagination
+            className={props.books.length === 0 ? 'hidden' : 'shown'}
+            prev
+            next
+            first
+            last
+            ellipsis
+            items={props.numOfPages}
+            activePage={props.activePage}
+            onSelect={props.handleSelect}/>
+    );
 
     const historyCol = (book) => (<td>{ isEmpty(book.dateReturned) ? "" : moment(book.dateReturned).format('MM/DD/YYYY') }</td>
     );
@@ -61,6 +73,7 @@ const UserRecordsDisplay = (props) => {
                                 </div>
                             </Col>
                         </Row>
+                        { props.userPage === '/history' ? pagination : null }
                     </div>
                 </div>
             </div>
