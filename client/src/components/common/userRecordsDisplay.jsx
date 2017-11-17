@@ -6,6 +6,7 @@ import { Row, Col, Table } from 'react-materialize';
 
 import Footer from '../footer/footer.jsx';
 import Header from '../header/header.jsx';
+import SideBar from '../books/sidebar.jsx';
 
 const UserRecordsDisplay = (props) => {
     const books = props.books.borrowedBooks;
@@ -32,7 +33,7 @@ const UserRecordsDisplay = (props) => {
         <td><button type="submit" onClick={() => props.handleReturnBook(book.book_id)} className="btn btn-md btn-info btn-borrow">Return Book</button></td>
     );
     const booklist = (
-        <Table className="table table-bordered table-responsive table-hello">
+        <table className="bordered">
             <thead className="blue-grey lighten-4">
                 <tr>
                     <th>#</th>
@@ -56,28 +57,27 @@ const UserRecordsDisplay = (props) => {
                         </tr>
                     </tbody>
                 )) : <tbody><tr><td>You have not borrowed any books</td></tr></tbody>}
-        </Table>);
+        </table>);
 
 
     return (
         <div>
-            <Header categories= {props.categories} user= {props.user}/>/
-            <div className="container">
-                <div className="row">
-                    <div className="container">
-                        <Row>
-                            <Col s={12} m={12} l={12} >
-                                <div className="profile-content">
-                                    <h3>{title}</h3>
-                                    {booklist}
-                                </div>
-                            </Col>
-                        </Row>
-                        { props.userPage === '/history' ? pagination : null }
-                    </div>
-                </div>
+            <Header categories= {props.categories} user= {props.user}/>
+            <SideBar
+                categories={props.categories}
+                user={props.user}
+            />
+            <div className="books-container">
+                <Row>
+                    <Col s={12} m={12} l={12} >
+                        <div className="profile-content">
+                            <h5>{title}</h5>
+                            {booklist}
+                        </div>
+                    </Col>
+                </Row>
+                { props.userPage === '/history' ? pagination : null }
             </div>
-            <Footer />
         </div>
     );
 };

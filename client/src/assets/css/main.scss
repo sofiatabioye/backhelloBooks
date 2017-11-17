@@ -1,3 +1,12 @@
+@import '../../../../node_modules/react-tabs/style/react-tabs.scss';
+$font-stack1: 'Rancho', sans-serif;
+$font-stack2: 'Neucha', sans-serif;
+$font-stack3: 'Neucha', sans-serif;
+
+body{
+	font-family: $font-stack2;
+	font-size: 16px;
+}
 nav {
 	background-color: #444;
 	height: 6vh;
@@ -25,14 +34,13 @@ margin-right: 5px;
 
 .navbar-inverse {
 	color: #fff;
-	text-align: center;
 	padding-top: 10px;
 }
-.navbar-inverse .navbar-brand {
-	padding-left: 20px; 
+.brand-logo {
+	padding-left: 20px !important; 
 	color: #ffffff !important;
-	font-size: 32px;
-	font-family: xiomara;
+	font-size: 2.5rem !important;
+	font-family: $font-stack1;
 	
 }
 .navbar-inverse .navbar-nav > li > a {
@@ -43,29 +51,13 @@ ul > li > a {
 	color: #fff;
 	font-size: 14px;
 }
-.navbar-inverse .navbar-nav > li > a:hover, a:visited {
-	text-decoration: none;
-	color: #ffffff;
-	
-}
-
-@media(min-width: 768px) {
-.divider{
-	position:absolute;
-	left:50%;
-	top:10%;
-	bottom:10%;
-	border-left:1px solid #e0e0ee;
-	height: 300px;
-}
-}
+// .authpage .navbar-nav > li > a:hover, a:visited {
+// 	text-decoration: none;
+// 	color: #fae13a;
+// }
 
 .dropdown-menu > li > a {
 	font-size: 14px;
-}
-a:hover; a:visited; a:link; a:active {
-	text-decoration: none;
-	color: #fff;
 }
 
 .navbar-search input {
@@ -119,10 +111,9 @@ label .signin h3 {
 
 .bookbox {
 	width: 100%;
-	height: 330px;
+	height: 55%;
 	border: 1px solid #ccc;
-	border-radius: 5px;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 	margin-right: 10px;
 	box-shadow: 6px 8px 6px -7px #ccc;
 }
@@ -142,8 +133,8 @@ label .signin h3 {
 }
 
 .bookcover {
-	height: 180px;
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 .bookcover-admin {
@@ -152,14 +143,12 @@ label .signin h3 {
 }
 
 .author {
-	height: 30px;
 	padding: 10px;
 }
 .booktitle {
 	font-size: 16px;
 	font-weight: bold;
 	color: #000;
-	height: 40px;
 	margin-left: 10px;
 }
 
@@ -174,7 +163,7 @@ label .signin h3 {
 	color: #ccc;
 	margin-bottom: 5px;
 	margin-top: 5px;
-	height: 20px;
+	height: 30px;
 	padding-left: 10px;
 }
 
@@ -222,14 +211,6 @@ a:hover .bookcover {
 	font-size: 18px;
 }
 
-.password-box {
-    text-align: center;
-    padding: 0px 100px 0px 100px;
-}
-
-.password-box input {
-	font-size: 18px;
-}
 
 .book_image {
 	height: 300px;
@@ -293,29 +274,10 @@ a:hover .bookcover {
 	font-size: 14px;
 }
 
-.profile-content a {
-    color: blue;
-    text-decoration: none;
-}
-.col-home-a {
-	margin: 0;
-	background-image: url("../images/bg.jpg");
-	background-repeat:no-repeat;
-	display: compact;
-	background-size: 100%;
-	height: 100%; 
-	/* background-position: cen */
-}
-.home-sidea {
-	background-image: url("../images/bg.jpg");
-}
-
 
 /* Materialize */
 .homepage {
-	background-image: url("../images/bg.jpg");
-	height: 88vh;
-	padding: 50px;
+	height: 100vh;
 }
 .tab-demo {
 	align-items: center;
@@ -323,8 +285,8 @@ a:hover .bookcover {
 }
 
 .navbar-home {
-	padding-left: 10px;
-	padding-right: 10px;
+	background-color: #384aab !important;
+	height: 8vh !important;
 }
 .cat-icons {
 	font-size: 16px;
@@ -354,7 +316,6 @@ span .book-title {
 img .card-image {
 	height: 180px;
 }
-
 }
 
 .book-card{
@@ -402,5 +363,105 @@ main {
 	flex: 1 0 auto;
 	min-height: 88vh;
 	margin: 0;
+}
+.book-tooltip {
+	border : 3px solid #0B1341;
+	background-color: #ffffff !important;
+	color: #000 !important;
+}
+.sidebar-home {
+	background: url('http://res.cloudinary.com/ddvm5tzhm/image/upload/v1510652627/seamless_xero0o.jpg') no-repeat center;
+	background-size: cover;
+	height: 100vh;
+}
+
+div .mainbar-home{
+	padding: 0px !important;
+}
+
+.authpage {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	font-family: $font-stack1;
+}
+
+.authpage p {
+	color: #fa9e3a;
+	font-size: 26px;
+}
+
+ .react-tabs__tab-list {
+	border-bottom: 1px solid #fa9e3a !important;
+}
+.react-tabs__tab--selected{
+	background-color: #fa9e3a !important;
+	color: #ffffff;
+}
+
+.react-tabs {
+	height: 400px;
+	padding: 20px;
+}
+
+.react-tabs__tab {
+  width: 50%;
+}
+.btn-hb{
+	background-color: #112279;
+}
+
+.btn-hb:hover {
+	background-color: #fa9e3a;
+}
+
+.authpage input {
+	font-size: 26px !important;
+}
+.genreList {
+	display: inline-block;
+}
+.genreList__genre {
+	list-style-type: none;
+	line-height: 18px;
+}
+.pager {
+	text-align: center;
+}
+.fa-actions {
+	color: #ffffff;
+}
+@media screen and (min-width: 1024px){
+	#dropdown_0 {
+		width: 500px !important;
+		top: 50px !important;
+	}
+
+	#slide-out {
+		width: 20%;
+		padding-top: 20px;
+		background-color: #f5f5f5;
+		margin-top: 8vh;
+	}
+	.user-view {
+		text-align: center;
+	}
+	.side-nav a {
+		height: 36px !important;
+	}
+	.books-container {
+		width: 80%;
+		margin-left: 20%;
+		padding: 20px;
+	}
+ .side-nav.fixed .collapsible-header {
+	 font-size: 14px;
+	 border-bottom: 1px solid #ddd;
+ }
+ .side-nav.fixed .collapsible-body {
+	 padding: 0 !important;
+ }
+
 }
 

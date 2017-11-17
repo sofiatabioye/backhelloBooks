@@ -1,6 +1,6 @@
 import axios from 'axios';
 import toastr from 'toastr';
-import { SET_BOOKS, SAVE_BOOK_BEGINS, SAVE_BOOK_SUCCESS, SAVE_BOOK_FAILURE, GET_BOOK, UPDATE_BOOK, BOOKS_CATEGORY_SUCCESS, UPDATE_BOOK_BEGINS, UPDATE_BOOK_SUCCESS, UPDATE_BOOK_FAILURE, BORROW_BOOK_BEGINS, BORROW_BOOK_SUCCESS, BORROW_BOOK_FAILURE, FETCH_BORROWED_BOOKS_BEGINS, FETCH_BORROWED_BOOKS_SUCCESS, FETCH_BORROWED_BOOKS_FAILURE, BORROW_HISTORY_BEGINS, BORROW_HISTORY_SUCCESS, BORROW_HISTORY_FAILURE, DELETE_BOOK_BEGINS, DELETE_BOOK_SUCCESS, DELETE_BOOK_FAILURE,
+import { SET_BOOKS, SAVE_BOOK_BEGINS, SAVE_BOOK_SUCCESS, SAVE_BOOK_FAILURE, GET_BOOK, BOOKS_CATEGORY_SUCCESS, UPDATE_BOOK_BEGINS, UPDATE_BOOK_SUCCESS, UPDATE_BOOK_FAILURE, BORROW_BOOK_BEGINS, BORROW_BOOK_SUCCESS, BORROW_BOOK_FAILURE, FETCH_BORROWED_BOOKS_BEGINS, FETCH_BORROWED_BOOKS_SUCCESS, FETCH_BORROWED_BOOKS_FAILURE, BORROW_HISTORY_BEGINS, BORROW_HISTORY_SUCCESS, BORROW_HISTORY_FAILURE, DELETE_BOOK_BEGINS, DELETE_BOOK_SUCCESS, DELETE_BOOK_FAILURE, GET_BOOK_FAILURE,
     RETURN_BOOK_BEGINS, RETURN_BOOK_SUCCESS, RETURN_BOOK_FAILURE
 } from './actionTypes';
 
@@ -64,32 +64,32 @@ export function addBookFails(errors) {
  * @param {any} id 
  * @returns {id} of book
  */
-export function getBook(id) {
+export function getBook(book) {
     return {
         type: GET_BOOK,
-        id
+        book
     };
 }
-
 
 /**
  * @export
- * @param {any} id 
- * @returns {id} update book by Id
+ * @param {any} errors 
+ * @returns {errors}
  */
-export function updatedBook(id) {
+export function getBookFails(errors) {
     return {
-        type: UPDATE_BOOK,
-        id
+        type: GET_BOOK_FAILURE,
+        errors
     };
 }
+
 
 /**
  * @param {any} void
  * @export
  * @returns {void}
  */
-export function updatedBookBegins() {
+export function updateBookBegins() {
     return {
         type: UPDATE_BOOK_BEGINS
     };
@@ -325,6 +325,22 @@ export function getBooks(offset, limit) {
         .catch((error) => error);
 }
 
+/**
+ * @export
+ * @returns {books} all books
+ * @param {offset}
+ * @param {limit}
+ */
+export function getBookById(bookId) {
+    return (dispatch) => axios.get(`/api/v1/books/${bookId}`)
+        .then((response) => {
+            dispatch(getBook(response.data));
+        })
+        .catch((error) => {
+            dispatch(getBookFails(error.response));
+        });
+}
+
 
 /**
  * @export
@@ -348,15 +364,17 @@ export function getBooksByCat(title) {
  */
 export function updateBook(id, bookData) {
     return (dispatch) => {
-        dispatch(updatedBookBegins);
+        dispatch(updateBookBegins);
         return axios.put(`/api/v1/books/${id}`, bookData)
             .then((response) => {
                 const book = response.data.books;
                 const message = response.data.message;
                 dispatch(updateBookSuccess(book, message));
+                toastr.success("Book Updated Successfully");
             }, (err) => {
                 const errors = err.response.data;
                 dispatch(updateBookFailure(errors));
+                toastr.warning("Error Updating Book");
             });
     };
 }
@@ -371,12 +389,16 @@ export function saveBooks(data, history) {
         dispatch(addBookBegins());
         return axios.post(`/api/v1/books/create`, data)
             .then((response) => {
+                // debugger;
+                console.log(response);
                 dispatch(addBook(response.data.books, response.data.message));
                 toastr.success(response.data.message);
             })
             .catch((err) => {
-                dispatch(addBookFails(err.response.data.message));
-                toastr.warning(err.response.data.message);
+                // debugger;
+                console.log(err);
+                dispatch(addBookFails(err.response));
+                toastr.warning(err.response);
             });
     };
 }
@@ -465,6 +487,7 @@ export function fetchBorrowHistory(offset, limit, userId) {
                 dispatch(setBorrowHistory(response.data));
             })
             .catch((err) => {
+                console.log(err);
                 dispatch(setBorrowHistoryFailure(err.response));
                 toastr.warning(err.response);
             });
@@ -476,18 +499,21 @@ export function fetchBorrowHistory(offset, limit, userId) {
  * 
  * 
  * @export
- * @param {any} id 
+ * @param {bookId, history} id 
  * @returns {void} 
  */
-export function deleteBook(bookId) {
+export function deleteBook(bookId, history) {
     return (dispatch) => {
         dispatch(deleteBookBegins());
         return axios.delete(`/api/v1/books/${bookId}`)
             .then((response) => {
                 dispatch(deleteBookSuccess(bookId));
+                toastr.success("Book deleted successfully");
+                history.push('/books');
             })
             .catch((err) => {
-                dispatch(deleteBookFailure(err.response.data));
+                dispatch(deleteBookFailure(err.response));
+                toastr.warning(err.response);
             });
     };
 }

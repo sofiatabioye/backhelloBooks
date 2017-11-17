@@ -93,7 +93,6 @@ class Login extends React.Component {
      * @memberof Login
      */
     onSignUp(event) {
-        console.log('sifnup', this.state);
         event.preventDefault();
         if (this.isSignUpValid()) {
             this.props.signup(this.state, this.props.history);
@@ -106,9 +105,12 @@ class Login extends React.Component {
      * @memberof Login
      */
     render() {
+        const isLoggedIn = this.props.auth.isAuthenticated;
         return (
             <div>
+
                 <Home
+                    isLoggedIn = {isLoggedIn}
                     errors={this.props.errors}
                     onChange={this.onChange.bind(this)}
                     onSignUp ={this.onSignUp.bind(this)}

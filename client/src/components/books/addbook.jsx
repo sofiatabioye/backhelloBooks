@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { saveBooks } from '../../actions/bookActions';
-import validateBook from '../utils/validateBook.jsx';
 import { getCategories } from '../../actions/categoryActions';
 import BookForm from './addbookForm.jsx';
 

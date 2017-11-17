@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Navbar, NavItem, Dropdown } from 'react-materialize';
+import { Navbar, NavItem, Dropdown, Col, Row } from 'react-materialize';
 import { Link } from 'react-router-dom';
 
 import { getCategories } from '../../actions/categoryActions';
@@ -58,17 +58,12 @@ class Header extends Component {
         const userLevel = this.props.user.user.level;
 
         const categoriesList = categories && categories.length ?
-            categories.slice(0, 8).map((category) => (
-                <li key={category.id}>
-                    <Link to={`/books/${category.title}`}>{category.title}</Link>
-                </li>
-            )) : <h6>No Categories yet </h6>;
-
-        const categoriesList2 = categories && categories.length ?
-            categories.slice(8, 100).map((category) => (
-                <li key={category.id}>
-                    <Link to={`/books/${category.title}`} key={category.id}>{category.title}</Link>
-                </li>
+            categories.map((category) => (
+                <Col s={12} m={3} l={3} key={category.id}>
+                    <li className="genreList__genre">
+                        <Link to={`/books/${category.title}`}>{category.title}</Link>
+                    </li>
+                </Col>
             )) : <h6>No Categories yet </h6>;
 
 
@@ -82,7 +77,7 @@ class Header extends Component {
             }>
                 <li className="dropdown">
                     <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="http://res.cloudinary.com/ddvm5tzhm/image/upload/c_scale,w_150/v1508745614/avatar-1295430_640_qybi3d.png" role="presentation" className="usr-img"/>
+                        <img src="http://res.cloudinary.com/ddvm5tzhm/image/upload/c_scale,h_100/v1510679454/man_cidthh.png" role="presentation" className="usr-img"/>
                         <span className="caret" /></Link>
                     <ul className="dropdown-menu">
                         <li><Link to={"/profile"}>My Profile</Link></li>
@@ -103,18 +98,33 @@ class Header extends Component {
 
         return (
             <div>
+
                 <Navbar brand="HelloBooks" right className="navbar-home">
-                    {categoriesList}
+                    <li><Link to={"/books"}>Home</Link></li>
+                    <li>
+                        <div className="center row">
+                            <div className="col s12 " >
+                                <div className="row" id="topbarsearch">
+                                    <div className="input-field col s6 s12 white-text">
+                                        <i className="white-text material-icons prefix">search</i>
+                                        <input type="text" placeholder="search" id="autocomplete-input" className="autocomplete white-text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                     <Dropdown trigger={
                         <li>
-                            <a>More Categories
+                            <a>Browse Categories
                                 <i className="material-icons right">arrow_drop_down</i>
                             </a>
                         </li>
                     }>
-                        {categoriesList2 }
+                        <Row>
+                            {categoriesList }
+                        </Row>
                     </Dropdown>
-                    <ul id="dropdown1" className="dropdown-content" />
+                    <ul id="dropdown1" className="dropdown-content genreList" style={{ height: `${100}px !important ` }} />
                     {isLoggedIn ? profileList : guestLinks }
                 </Navbar>
             </div>
