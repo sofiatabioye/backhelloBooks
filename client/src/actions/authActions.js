@@ -102,9 +102,13 @@ export function changepassword(data, userId) {
     return (dispatch) => axios.post(`/api/v1/user/${userId}/changepassword`, data)
         .then((response) => {
             dispatch(setPasswordChange(response.data.message));
+            console.log("im here");
+            toastr.success(response.data.message);
         })
         .catch((err) => {
-            dispatch(setPasswordChangeFails(err.response.data));
+            dispatch(setPasswordChangeFails(err.response.data.message));
+            console.log("im here", err.response.data);
+            toastr.warning(err.response.data.message);
         });
 }
 

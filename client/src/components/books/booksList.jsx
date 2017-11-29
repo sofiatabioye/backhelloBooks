@@ -1,12 +1,17 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
+import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
-import { Row, Col, Button, Modal } from 'react-materialize';
-import Footer from '../footer/footer.jsx';
+
+import { Row, Col, Modal } from 'react-materialize';
 import Header from '../header/header.jsx';
+import SideBar from './sidebar.jsx';
+import BookForm from './bookForm.jsx';
+import CategoryForm from './categoryForm.jsx';
 
 const BookList = (props) => {
     const title = props.title ? props.title : "Our Collection";
+
     const pagination = (
         <Pagination
             className={props.books.length === 0 ? 'hidden' : 'shown'}
@@ -19,31 +24,25 @@ const BookList = (props) => {
             activePage={props.activePage}
             onSelect={props.handleSelect}/>
     );
-    const isDisabled = props.isDisabled;
-    const userId = props.user.user.user;
-    const userRole = props.user.user.role;
-    const borrowText = "BORROW BOOK";
-
-    const userAction = book => (<Button waves="light" className="button-borrow" onClick={() => props.borrowBook(book.id, userId)} disabled= {isDisabled} >{borrowText}</Button>);
-    const adminAction = (<div className="valign-wrapper"><span><Link to="#"><i className="fa fa-edit fa-2x" /></Link>
-    </span><span><Link to="#"><i className="fa fa-trash fa-2x"/></Link></span></div>);
-
 
     const books = props.books && props.books.length ?
         props.books.map((book) => (
             <Col s={6} m={4} l={3} key={book.id}>
-                <div className="bookbox">
-                    <Link to="#" onClick={() => props.bookModal(book)}>
-                        <img src={book.image} className="bookcover" role="presentation" />
-                    </Link>
-                    <div className="booktitle">{book.title}</div>
-                    <div className="author">By: {book.author} </div>
-                    <div className="bookcat"><i className="fa fa-tag"/>  {book.category}</div>
-                    <div className="description">
-                        {userRole === "admin" ? adminAction : userAction(book) }
-                    </div>
-                </div>
-
+                <ReactTooltip />
+                <Link
+                    data-tip={`<h5>${book.title}</h5>
+                    <p>Written by: ${book.author}</p>
+                    <p>Edition: ${book.bookEdition}</p>
+                    <p>Size: ${book.bookSize} pages</p>
+                    <p>Published by: ${book.publisher}</p>
+                    *******
+                    <p>${book.description}</p>
+                  `}
+                    data-html data-class="book-tooltip" data-place="right" data-multiline
+                    to={`/book/show/${book.id}`}
+                >
+                    <img src={book.image} className="bookcover"/>
+                </Link>
             </Col>
 
         )) : <h4>No books here!!!</h4>;
@@ -53,19 +52,44 @@ const BookList = (props) => {
             <Header />
             <main>
                 <Modal
-                    id="foo">
-                    <div className="book-info" />
+                    id= "addBook">
+                    <BookForm
+                        saveBook = {props.saveBook}
+                        states={props.states}
+                        onChange={props.onChange}
+                        categories={props.categories}
+                    />
                 </Modal>
-                <div className="container">
-                    <div><h4>{title}</h4></div>
+                <Modal
+                    id="addCategory">
+                    <CategoryForm
+                        saveCategory = {props.saveCategory}
+                        states={props.states}
+                        onChange={props.onChange}
+                    />
+                </Modal>
+                <SideBar
+                    categories={props.categories}
+                    user={props.user}
+                    openAddBookModal={props.openAddBookModal}
+                    openAddCategoryModal ={props.openAddCategoryModal}
+                />
+                <div className="books-container">
+                    <Row>
+                        <Col s={6} m={6} l={6}>
+                            <h5>{title}</h5>
+                        </Col>
 
+                    </Row>
                     <Row>
                         {books}
                     </Row>
-                    {pagination}
+                    <div className="pager">
+                        {pagination}
+                    </div>
                 </div>
+
             </main>
-            <Footer />
         </div>
     );
 };

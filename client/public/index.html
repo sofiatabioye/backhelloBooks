@@ -10,6 +10,9 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Neucha" rel="stylesheet">
+   
     <script src="https://use.fontawesome.com/7fe7ec13f6.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js"></script>
 
@@ -55,6 +58,14 @@
     <script>
     $(document).ready(() => {
             $(".dropdown-button").dropdown();
+            $('select').material_select();
+            $('.button-collapse').sideNav({
+                closeOnClick: true
+            });
+            $('.collapsible').collapsible();
+            $('#addBook').on('close', function() {
+    clear()
+  });
         });
     </script>
   </body>

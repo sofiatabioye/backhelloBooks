@@ -1,18 +1,7 @@
-import { SET_BOOKS, ADD_BOOK, GET_BOOK, UPDATE_BOOK, BORROW_BOOK_BEGINS, BORROW_BOOK_SUCCESS, BORROW_BOOK_FAILURE, DELETE_BOOK_SUCCESS, } from '../actions/actionTypes';
+import { SET_BOOKS, ADD_BOOK, UPDATE_BOOK, BORROW_BOOK_BEGINS, BORROW_BOOK_SUCCESS, BORROW_BOOK_FAILURE, SAVE_BOOK_BEGINS, SAVE_BOOK_SUCCESS, SAVE_BOOK_FAILURE, DELETE_BOOK_SUCCESS, DELETE_BOOK_FAILURE, DELETE_BOOK_BEGINS } from '../actions/actionTypes';
 
-export default (state = { loading: false, message: "", errors: [] }, action = {}, books = []) => {
+export default (state = { loading: false, message: "", errors: [], pagination: {} }, action = {}, books = []) => {
     switch (action.type) {
-        // case 'FETCH_BOOKS_BEGINS':
-        //     return { ...state,
-        //         loading: true
-        //     };
-
-        // case 'FETCH_BOOKS_SUCCESS':
-        //     return { ...state,
-        //         loading: false,
-        //         books: action.books
-        //     };
-
         case BORROW_BOOK_BEGINS:
             return { ...state,
                 loading: true
@@ -35,31 +24,38 @@ export default (state = { loading: false, message: "", errors: [] }, action = {}
                 books: action.books.books,
                 pagination: action.books.pagination
             };
+        case DELETE_BOOK_BEGINS:
+            return { ...state,
+                loading: true
+            };
 
         case DELETE_BOOK_SUCCESS:
-            const allbooks = state.books.filter((book) => {
-                if (book.id !== action.id) { return book; }
-            });
-            return [...state.books,
-                {
-                    loading: false,
-                    books: allbooks,
-                    pagination: state.books.pagination
-                }];
+            return {
+                ...state,
+                loading: true
+            };
+        case DELETE_BOOK_FAILURE:
+            return { ...state,
+                loading: false,
+                errors: action.errors
+            };
 
-        case ADD_BOOK:
-            return [...state,
-                {
-                    loading: false,
-                    books: action.books
-                }];
+        case SAVE_BOOK_BEGINS:
+            return { ...state,
+                loading: true
+            };
 
-        case GET_BOOK:
-            return [...state,
-                {
-                    loading: false,
-                    id: action.id
-                }];
+        case SAVE_BOOK_SUCCESS:
+            return { ...state,
+                loading: false,
+                books: action.books
+            };
+
+        case SAVE_BOOK_FAILURE:
+            return { ...state,
+                loading: false,
+                errors: action.errors
+            };
 
         case UPDATE_BOOK:
             return [...state,

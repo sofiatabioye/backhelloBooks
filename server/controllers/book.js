@@ -5,6 +5,7 @@ const Book = models.Book;
 export default {
     // Admin add new book
     create(req, res) {
+        console.log(req.body);
         return Book
             .create(req.body)
             .then(book => res.status(201).send({ book: book, message: 'Book Created Successfully.' }))
