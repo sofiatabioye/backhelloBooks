@@ -11,9 +11,9 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
     entry: './client/src/index.js',
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, './client/dist'),
+        path: path.resolve(__dirname, 'dist/client'),
         publicPath: '/',
+        filename: 'bundle.js',
     },
     devServer: {
         historyApiFallback: true,
@@ -59,7 +59,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: /node-modules/,
-                loader: ['style-loader', 'css-loader']
+                loader: ['style-loader', 'css-loader', 'resolve-url-loader']
             },
             {
                 test: /\.(woff|png|jpg|gif)$/,
@@ -71,6 +71,7 @@ module.exports = {
         net: 'empty',
         dns: 'empty',
     },
+    devtool: 'inline-source-map',
     plugins: [
         HtmlWebpackPluginConfig,
         new webpack.HotModuleReplacementPlugin(),

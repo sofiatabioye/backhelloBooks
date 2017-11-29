@@ -29,6 +29,14 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        resetPasswordToken: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        resetPasswordExpires: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        }
     }, {
         classMethods: {
             associate(models) {
