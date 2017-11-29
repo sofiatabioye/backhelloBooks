@@ -389,14 +389,10 @@ export function saveBooks(data, history) {
         dispatch(addBookBegins());
         return axios.post(`/api/v1/books/create`, data)
             .then((response) => {
-                // debugger;
-                console.log(response);
                 dispatch(addBook(response.data.books, response.data.message));
                 toastr.success(response.data.message);
             })
             .catch((err) => {
-                // debugger;
-                console.log(err);
                 dispatch(addBookFails(err.response));
                 toastr.warning(err.response);
             });
@@ -413,7 +409,7 @@ export function saveBooks(data, history) {
  * @param {any} history BORROW_BOOK_SUCCESS
  * @returns 
  */
-export function borrowBook(bookId, userId, history) {
+export function borrowBook(userId, bookId, history) {
     return (dispatch) => {
         dispatch(borrowBookBegins());
         return axios.post(`/api/v1/users/${userId}/books/${bookId}/borrow`)

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import SideBar from './sidebar.jsx';
 import Header from '../header/header.jsx';
-import BookForm from './addbookForm.jsx';
+import BookForm from './bookForm.jsx';
 
 
 const Book = (props) => {
@@ -12,19 +12,20 @@ const Book = (props) => {
     const book = props.book;
     const userId = props.user.user.user;
 
+
     const userAction = currentBook => (
         <Button waves="light" className="amber darken-3"
-            onClick={() => props.borrowBook(currentBook.id, userId)}>
+            onClick={() => props.borrowBook(userId, currentBook.id)}>
             Borrow Book
         </Button>
     );
 
     const adminAction = currentBook => (
-        <div className="valign-wrapper" style={{ width: '80%' }} >
-            <div className="col s6">
+        <div className="valign-wrapper">
+            <div className="">
                 <span><Link to="#" className="btn amber darken-3" onClick={() => props.openEditBookModal(currentBook)} ><i className="fa fa-edit fa-actions" /></Link></span>
             </div>
-            <div className="col s6 right">
+            <div className="right-align">
                 <span><Link to="#" className="btn amber darken-3" onClick={() => props.onDeleteBook(currentBook.id)}><i className="fa fa-trash fa-actions" /></Link></span>
             </div>
         </div>
@@ -56,7 +57,6 @@ const Book = (props) => {
                     <Col s={4} m={4} l={4}>
                         <img src={props.states.image} role="presentation"/>
                         { userRole === "user" ? userAction(props.states) : adminAction(props.states) }
-
                     </Col>
                     <Col s={8} m={8} l={8}>
                          Author: {props.states.author}

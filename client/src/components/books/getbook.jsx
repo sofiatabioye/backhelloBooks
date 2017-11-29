@@ -57,8 +57,12 @@ class GetBook extends Component {
      * @memberof Books
      */
     componentWillReceiveProps(nextProps) {
+        $(document).ready(() => {
+            $('select').material_select();
+        });
         if (nextProps.book) {
             this.setState({
+                id: nextProps.book.id,
                 title: nextProps.book.title,
                 description: nextProps.book.description,
                 category: nextProps.book.category,

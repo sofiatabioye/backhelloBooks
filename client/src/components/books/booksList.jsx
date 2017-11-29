@@ -2,12 +2,12 @@ import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
-import { InfiniteScroll } from 'react-infinite-scroll';
 
 import { Row, Col, Modal } from 'react-materialize';
 import Header from '../header/header.jsx';
 import SideBar from './sidebar.jsx';
-import BookForm from './addbookForm.jsx';
+import BookForm from './bookForm.jsx';
+import CategoryForm from './categoryForm.jsx';
 
 const BookList = (props) => {
     const title = props.title ? props.title : "Our Collection";
@@ -47,15 +47,6 @@ const BookList = (props) => {
 
         )) : <h4>No books here!!!</h4>;
 
-    const adminLinks = (
-        <span>
-            <div>
-                <Link to="#" onClick={props.openAddBookModal}>Add new Book</Link>
-            </div>
-            <Link to="#" onClick={props.openAddCategoryModal}>Add new Category</Link>
-        </span>
-    );
-
     return (
         <div>
             <Header />
@@ -70,26 +61,25 @@ const BookList = (props) => {
                     />
                 </Modal>
                 <Modal
-                    id= "addCategory">
-                    <BookForm
-                        saveBook = {props.saveBook}
+                    id="addCategory">
+                    <CategoryForm
+                        saveCategory = {props.saveCategory}
                         states={props.states}
                         onChange={props.onChange}
-                        categories={props.categories}
                     />
                 </Modal>
                 <SideBar
                     categories={props.categories}
                     user={props.user}
+                    openAddBookModal={props.openAddBookModal}
+                    openAddCategoryModal ={props.openAddCategoryModal}
                 />
                 <div className="books-container">
                     <Row>
                         <Col s={6} m={6} l={6}>
                             <h5>{title}</h5>
                         </Col>
-                        <Col s={6} m={6} l={6}>
-                            {adminLinks}
-                        </Col>
+
                     </Row>
                     <Row>
                         {books}

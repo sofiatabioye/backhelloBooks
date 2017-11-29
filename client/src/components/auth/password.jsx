@@ -65,6 +65,7 @@ class Password extends React.Component {
      * @memberof Password
      */
     onSubmit(e) {
+        console.log(this.props.auth.user.user);
         e.preventDefault();
         if (this.isValid()) {
             this.props.changepassword(this.state, this.props.auth.user.user);
@@ -85,10 +86,12 @@ class Password extends React.Component {
                 <PasswordForm
                     success = {success}
                     error = {error}
-                    errors = {this.state.errors}
+                    errors={this.state.errors}
+                    user = {this.props.user}
                     onChange = {this.onChange.bind(this)}
                     onSubmit = {this.onSubmit.bind(this)}
                     auth = {this.props.auth}
+                    categories={this.props.categories}
                 />
             </div>
         );
@@ -107,8 +110,8 @@ Password.contextTypes = {
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    error: state.auth.errors,
-    success: state.auth.success
+    user: state.auth,
+    categories: state.categories.categories.categories
 });
 
 export default connect(mapStateToProps, { changepassword })(Password);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { swal } from 'sweetalert2';
 
 import { getBooks, borrowBook, saveBooks, deleteBook } from '../../actions/bookActions';
-import { getCategories } from '../../actions/categoryActions';
+import { getCategories, saveCategory } from '../../actions/categoryActions';
 import { logout } from '../../actions/authActions';
 import validateBook from '../utils/validateBook.jsx';
 import BookList from './booksList.jsx';
@@ -53,6 +53,7 @@ class Books extends Component {
         this.borrowBook = this.borrowBook.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onAddBook = this.onAddBook.bind(this);
+        this.saveCategory = this.saveCategory.bind(this);
         this.openAddBookModal = this.openAddBookModal.bind(this);
         this.openAddCategoryModal = this.openAddCategoryModal.bind(this);
         this.openUploadWidget = this.openUploadWidget.bind(this);
@@ -80,6 +81,8 @@ class Books extends Component {
             $('.button-collapse').sideNav({
                 closeOnClick: true
             });
+            $('select').material_select();
+            $('.collapsible').collapsible();
         });
         if (nextProps.books && (nextProps.pager !== undefined)) {
             this.setState({
@@ -169,10 +172,20 @@ class Books extends Component {
      */
     onAddBook(event) {
         event.preventDefault();
-        console.log("hello");
         if (this.isValid()) {
             this.props.saveBooks(this.state, this.props.history);
         }
+    }
+    /**
+     * 
+     * @returns {void}
+     * @param {any} event 
+     * @memberof AddBook
+     */
+    saveCategory(event) {
+        console.log("hello", this.state.newCategory);
+        event.preventDefault();
+        this.props.saveCategory({ title: this.state.newCategory });
     }
 
     /**
@@ -210,6 +223,7 @@ class Books extends Component {
                     isDisabled = {this.state.isDisabled}
                     openBook = {this.openBook}
                     onAddBook= {this.onAddBook.bind(this)}
+                    saveCategory = {this.saveCategory.bind(this)}
                     onChange = {this.onChange.bind(this)}
                     states= {this.state}
                     openAddBookModal = {this.openAddBookModal.bind(this)}
@@ -234,7 +248,7 @@ Books.propTypes = {
 Books.contextTypes = {
     router: PropTypes.object.isRequired
 };
-const mapDispatchToProps = { getBooks, getCategories, borrowBook, saveBooks, deleteBook, logout };
+const mapDispatchToProps = { getBooks, getCategories, saveCategory, borrowBook, saveBooks, deleteBook, logout };
 
 const mapStateToProps = state => ({
     books: state.books.books,

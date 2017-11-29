@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { SET_CATEGORY, FETCH_CAT_SUCCESS } from './actionTypes';
+import toastr from 'toastr';
+import { SET_CATEGORY, FETCH_CAT_SUCCESS, ADD_CATEGORY_BEGINS, ADD_CATEGORY_FAILURE, ADD_CATEGORY_SUCCESS } from './actionTypes';
 
 /**
  * @export
@@ -10,6 +11,43 @@ export function setCategory(categories) {
     return {
         type: FETCH_CAT_SUCCESS,
         categories
+    };
+}
+
+/**
+ * @param {any} void
+ * @export
+ * @returns {void}
+ */
+export function addCategoryBegins() {
+    return {
+        type: ADD_CATEGORY_BEGINS
+    };
+}
+/**
+ * 
+ * @export
+ * @param {any} errors 
+ * @returns {errors } on book update
+ */
+export function addCategorySuccess(message, categories) {
+    return {
+        type: ADD_CATEGORY_SUCCESS,
+        message,
+        categories
+    };
+}
+
+/**
+ * 
+ * @export
+ * @param {any} errors 
+ * @returns {errors } on book update
+ */
+export function addCategoryFailure(errors) {
+    return {
+        type: ADD_CATEGORY_FAILURE,
+        errors
     };
 }
 
@@ -30,21 +68,22 @@ export function getCategories() {
 
 
 /**
-
  * @export
  * @param {any} data 
  * @returns 
  */
 export function saveCategory(data) {
+    console.log(data, "+++++++");
     return (dispatch) => {
-        dispatch({ type: 'ADD_CATEGORY' });
+        dispatch(addCategoryBegins);
         return axios.post(`/api/v1/categories/create`, data)
             .then((response) => {
-                dispatch({ type: 'ADD_CATEGORY_SUCCESS', categories: response.data });
-                return response.data;
-            }, (err) => {
-                dispatch({ type: 'ADD_CATEGORY_FAILURE', errors: err.response.data });
-                return err;
+                dispatch(addCategorySuccess(response.data.message, response.data.categories));
+                toastr.success(response.data.message);
+            })
+            .catch((err) => {
+                dispatch(addCategoryFailure(err.response));
+                console.log(err);
             });
     };
 }

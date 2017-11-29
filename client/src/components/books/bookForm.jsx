@@ -2,7 +2,6 @@ import React from 'react';
 
 const BookForm = (props) => {
     const errors = props.errors ? props.errors.message : '';
-    console.log(props);
     return (
         <div>
             { errors.form && <div className="alert alert-danger">{errors.form}</div> }
@@ -17,8 +16,8 @@ const BookForm = (props) => {
                             </div> <div className="input-field">
                                 <label className="active" htmlFor="category">Category</label>
                                 <select name="category" onChange={props.onChange} className="form-control">
-                                    <option value={props.states.category}>{props.states.category || "Select Category"}</option>
-                                    { props.categories && props.categories.length ?
+                                    <option value={props.states.category}>{props.states.category}</option>
+                                    { props && props.categories ?
                                         props.categories.map((category) => (
                                             <option id="rm" value={category.title || ""} key={category.id}>{category.title || ""}</option>
                                         )) : <option>There are no categories in the library</option>}
