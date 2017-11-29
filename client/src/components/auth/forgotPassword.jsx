@@ -57,7 +57,6 @@ class ForgotPassword extends React.Component {
      */
     render() {
         const errors = this.props.error ? this.props.error : "";
-        console.log(errors);
         return (
             <div>
                 <ForgotPasswordForm
