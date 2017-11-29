@@ -65,13 +65,14 @@ export default {
     login(req, res) {
         return User
             .findOne({
-                where: { username: req.body.identifier,
-                    // $or: [
-                    //     {
-                    //         email:
-                    //      { $eq: req.body.identifier }
-                    //     }
-                    // ]
+                where: { $or: [
+                    {
+                        email: req.body.identifier
+                    },
+                    {
+                        username: req.body.identifier
+                    }
+                ]
                 }
             })
             .then((user) => {
@@ -276,7 +277,10 @@ export default {
 
     // Logged in user views his/her borrow history
     borrowHistory(req, res) {
-        User.findById(req.params.userId)
+        const offset = req.query.offset || null;
+        const limit = req.query.limit || null;
+        User
+            .findById(req.params.userId)
             .then((user) => {
                 if (!user) {
                     res.status(404).send({ message: 'User Not found' });
@@ -288,8 +292,10 @@ export default {
                                 res.status(201).send({ message: 'You have not borrowed any book' });
                             } else {
                                 BorrowStatus
-                                    .findAll({
-                                        where: { user_id: req.params.userId },
+                                    .findAndCountAll({
+                                        offset,
+                                        limit,
+                                        where: { user_id: [req.params.userId] },
                                         include: [
                                             { model: Book,
                                                 attributes: ['title'],
@@ -297,7 +303,13 @@ export default {
                                     })
                                     .then((borrowstat) => {
                                         res.status(200).send({
-                                            UserBorrowHistory: borrowstat
+                                            UserBorrowHistory: borrowstat.rows,
+                                            pagination: {
+                                                totalCount: borrowstat.count,
+                                                pageSize: borrowstat.rows.length,
+                                                pageCount: Math.ceil(borrowstat.count / limit),
+                                                page: Math.floor(offset / limit) + 1
+                                            }
                                         });
                                     })
                                     .catch(error => res.status(400).send(error));

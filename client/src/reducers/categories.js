@@ -1,3 +1,5 @@
+import { FETCH_CAT_SUCCESS } from '../actions/actionTypes';
+
 export default (state = { categories: [], loading: false, errors: [] }, action = {}) => {
     switch (action.type) {
         case 'FETCH_CAT_BEGINS':
@@ -7,14 +9,14 @@ export default (state = { categories: [], loading: false, errors: [] }, action =
                 }
             ];
 
-        case 'FETCH_CAT_SUCCESS':
-            return {
+        case FETCH_CAT_SUCCESS:
+            return { ...state,
                 loading: false,
                 categories: action.categories
             };
 
         case 'FETCH_CAT_FAILURE':
-            return {
+            return { ...state,
                 loading: false,
                 errors: action.errors
 

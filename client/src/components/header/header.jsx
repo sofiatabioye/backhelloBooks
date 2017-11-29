@@ -1,12 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Navbar, NavItem, Dropdown } from 'react-materialize';
+import { Link } from 'react-router-dom';
 
-import { logout } from '../../actions/auth';
-import { getCategories } from '../../actions/category';
-
-import { addFlashMessage } from '../../actions/flashmessages';
+import { getCategories } from '../../actions/categoryActions';
+import { logout } from '../../actions/authActions';
 
 /**
  * 
@@ -14,135 +13,128 @@ import { addFlashMessage } from '../../actions/flashmessages';
  * @class Header
  * @extends {React.Component}
  */
-
-class Header extends React.Component {
+class Header extends Component {
     /**
-     * 
-     * @returns {void} 
-     * @memberof Header
+     * Creates an instance of Books.
+     * @param {any} props 
+     * @memberof Books
      */
-    componentWillMount() {
-        this.props.getCategories().then(() => {
-            this.setState({ categories: this.props.categories });
-        });
+    constructor(props) {
+        super(props);
+        this.state = {
+            categories: [],
+        };
     }
 
     /**
      * 
-     * @returns {void}
-     * @param {any} event 
-     * @memberof Header
+     * @returns {Books} This fetches all books from the api
+     * @memberof Books
+     */
+    componentDidMount() {
+        this.props.getCategories();
+    }
+
+    /**
+     * @return {User} not logged in
+     * @param {event} event
+     * @memberof Books
      */
     logout(event) {
         event.preventDefault();
         this.props.logout();
     }
 
-
     /**
-     * 
-     * 
-     * @returns {Links} Contains user profile links
+     * @returns {Categories} This displays all categories
      * @memberof Header
      */
     render() {
-        const cat = this.props.categories.categories;
-        const { isAuthenticated } = this.props.auth;
-        const userType = this.props.user;
-        const adminLinks = (
-            <li>Manage Library Stock</li>
-        );
-        const userLinks = cat && cat.length ?
-            cat.slice(0, 9).map((category) => (
-                <li key={category.id}><Link to={`/books/${category.title}/${category.id}`} >{category.title}</Link></li>
-            )) : <h6>No categories</h6>;
+        const categories = this.props.categories.categories;
+        const userType = this.props.user.user.role;
+        const userName = this.props.user.user.name;
+        const isLoggedIn = this.props.user.isAuthenticated;
+        const userEmail = this.props.user.user.email;
+        const userLevel = this.props.user.user.level;
 
-        const categoryLinksDropdown = cat && cat.length ?
-            cat.slice(10, 50).map((category) => (
-                <li key={category.id}><Link to={`/books/${category.title}/${category.id}`} >{category.title}</Link></li>
-            )) : <h6>No categories</h6>;
+        const categoriesList = categories && categories.length ?
+            categories.slice(0, 8).map((category) => (
+                <li key={category.id}>
+                    <Link to={`/books/${category.title}`}>{category.title}</Link>
+                </li>
+            )) : <h6>No Categories yet </h6>;
+
+        const categoriesList2 = categories && categories.length ?
+            categories.slice(8, 100).map((category) => (
+                <li key={category.id}>
+                    <Link to={`/books/${category.title}`} key={category.id}>{category.title}</Link>
+                </li>
+            )) : <h6>No Categories yet </h6>;
+
 
         const profileList = (
-            <li className="dropdown">
-                <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="../client/src/assets/images/tales.jpg" role="presentation" className="usr-img"/>
-                    <span className="caret" /></Link>
-                <ul className="dropdown-menu">
-                    <li><Link to="/profile">My Profile</Link></li>
-                    <li><Link to="/history">Rent History</Link></li>
-                    {userType == "admin" && <li><a href="/librarybooks">Manage Library Stock</a></li> }
-                    <li><Link to="#" onClick={this.logout.bind(this)} >Logout</Link></li>
-                </ul>
-            </li>
+            <Dropdown trigger={
+                <li>
+                    <a><i className="fa fa-user"/> {userName}
+                        <i className="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+            }>
+                <li className="dropdown">
+                    <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="http://res.cloudinary.com/ddvm5tzhm/image/upload/c_scale,w_150/v1508745614/avatar-1295430_640_qybi3d.png" role="presentation" className="usr-img"/>
+                        <span className="caret" /></Link>
+                    <ul className="dropdown-menu">
+                        <li><Link to={"/profile"}>My Profile</Link></li>
+                        <li><Link to={"/history"}>Rent History</Link></li>
+                        {userType === "admin" && <li><Link to="/librarybooks">Manage Library Stock</Link></li> }
+                        <li><Link to="#" onClick={this.props.logout} >Logout</Link></li>
+                    </ul>
+                </li>
+            </Dropdown>
         );
 
         const guestLinks = (
-            <ul className="nav navbar-nav navbar-right">
-                <li><Link to="/signin">Sign In</Link></li>
-                <li><Link to="/signup">Sign Up</Link></li>
-                <li><Link to="/books">Library</Link></li>
-            </ul>
+            <span>
+                <li><Link to={"/signin"}>Sign In </Link></li>
+                <li><Link to={"/signup"}>Sign Up </Link></li>
+            </span>
         );
 
         return (
             <div>
-                <nav className="navbar navbar-inverse ">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar" />
-                                <span className="icon-bar" />
-                                <span className="icon-bar" />
-                            </button>
-                            <Link className="navbar-brand" to="/books">HelloBooks</Link>
-                        </div>
-
-                        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-                            <ul className="nav navbar-nav navbar-right" >
-                                { isAuthenticated ? userLinks : guestLinks }
-                                { isAuthenticated ?
-                                    <li className="dropdown">
-                                        <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Categories<span className="caret" /></Link>
-                                        <ul className="dropdown-menu">
-                                            { isAuthenticated ? categoryLinksDropdown : "" }
-                                        </ul>
-                                    </li> : <span />}
-                                {isAuthenticated ? profileList : <span/>}
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <Navbar brand="HelloBooks" right className="navbar-home">
+                    {categoriesList}
+                    <Dropdown trigger={
+                        <li>
+                            <a>More Categories
+                                <i className="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
+                    }>
+                        {categoriesList2 }
+                    </Dropdown>
+                    <ul id="dropdown1" className="dropdown-content" />
+                    {isLoggedIn ? profileList : guestLinks }
+                </Navbar>
             </div>
 
         );
     }
 }
 
-Header.proptypes = {
-    auth: PropTypes.object.isRequired,
-    user: PropTypes.element.isRequired,
+const mapDispatchToProps = { getCategories, logout };
+Header.propTypes = {
+    auth: PropTypes.object,
+    user: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    getCategories: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.func.isRequired
+    isAuthenticated: PropTypes.bool,
+    getCategories: PropTypes.func.isRequired
 };
 
+const mapStateToProps = state => ({
+    categories: state.categories.categories,
+    user: state.auth
+});
 
-/**
- * 
- * 
- * @param {any} state 
- * @returns {state} maps props to state
- */
-function mapStateToProps(state) {
-    return {
-        auth: state.auth,
-        user: state.auth.user.role,
-        categories: state.categories.categories
-    };
-}
-
-
-export default connect(mapStateToProps, { logout, getCategories, addFlashMessage })(Header);
-
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

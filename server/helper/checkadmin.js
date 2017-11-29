@@ -5,7 +5,7 @@ export default {
     checkAdmin(req, res, next) {
         const userRole = req.locals;
         if (userRole !== 'admin') {
-            const message = 'You do not have the privilege';
+            const message = 'Oops! You do not have access';
             res.status(401).send({ message });
         } else {
             next();

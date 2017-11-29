@@ -1,8 +1,19 @@
-body {
-	padding-bottom: 60px;
+nav {
+	background-color: #444;
+	height: 6vh;
+}
+.fa {
+color: lightseagreen;
+margin-right: 5px;
 }
 
-
+.page-footer {
+	background-color: #444;
+	color: #fff;
+	padding: 20px; 
+	margin-bottom: 0;
+	height: 6vh;
+}
 .login-box {
   display: flex;
 	border: 1px solid #ccc;
@@ -18,6 +29,7 @@ body {
 	padding-top: 10px;
 }
 .navbar-inverse .navbar-brand {
+	padding-left: 20px; 
 	color: #ffffff !important;
 	font-size: 32px;
 	font-family: xiomara;
@@ -33,8 +45,19 @@ ul > li > a {
 }
 .navbar-inverse .navbar-nav > li > a:hover, a:visited {
 	text-decoration: none;
-	color: #ccc;
+	color: #ffffff;
 	
+}
+
+@media(min-width: 768px) {
+.divider{
+	position:absolute;
+	left:50%;
+	top:10%;
+	bottom:10%;
+	border-left:1px solid #e0e0ee;
+	height: 300px;
+}
 }
 
 .dropdown-menu > li > a {
@@ -42,7 +65,7 @@ ul > li > a {
 }
 a:hover; a:visited; a:link; a:active {
 	text-decoration: none;
-	color: #000;
+	color: #fff;
 }
 
 .navbar-search input {
@@ -96,15 +119,21 @@ label .signin h3 {
 
 .bookbox {
 	width: 100%;
-	height: 300px;
+	height: 330px;
 	border: 1px solid #ccc;
+	border-radius: 5px;
 	margin-bottom: 30px;
+	margin-right: 10px;
+	box-shadow: 6px 8px 6px -7px #ccc;
 }
 
 .booktitle-admin a {
 	margin-left: 30px;
 	margin-top: 20px;
 	color: #fff;
+}
+.button-borrow {
+	width: 100%;
 }
 
 .glyphicon-add {
@@ -122,12 +151,16 @@ label .signin h3 {
 	width: 100%;
 }
 
+.author {
+	height: 30px;
+	padding: 10px;
+}
 .booktitle {
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: bold;
 	color: #000;
-	padding: 10px;
-	padding-bottom: 5px;
+	height: 40px;
+	margin-left: 10px;
 }
 
 .editbook {
@@ -138,18 +171,24 @@ label .signin h3 {
 }
 
 .bookcat {
-	padding-left:10px;
+	color: #ccc;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	height: 20px;
+	padding-left: 10px;
 }
 
 .description {
+	height: 40px;
+	border-top: 1px solid #ccc;
 	font-size: 14px;
 	color: #000;
-	padding-left: 10px;
-	padding-bottom: 5px;
+	margin-top: 10px;
 }
 
-a:hover .bookbox {
+a:hover .bookcover {
 	border-color: blue;
+	opacity: 0.6;
 	text-decoration: none;
 }
 
@@ -220,7 +259,7 @@ a:hover .bookbox {
 .login-form {
 	margin-bottom: 50px;
 	width: 500px;
-	padding-top: 50px; 
+	margin-top: 50px;
 }
 
 .profile-usertitle {
@@ -269,5 +308,99 @@ a:hover .bookbox {
 }
 .home-sidea {
 	background-image: url("../images/bg.jpg");
+}
+
+
+/* Materialize */
+.homepage {
+	background-image: url("../images/bg.jpg");
+	height: 88vh;
+	padding: 50px;
+}
+.tab-demo {
+	align-items: center;
+	text-align: center;
+}
+
+.navbar-home {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.cat-icons {
+	font-size: 16px;
+}
+
+@media (max-height: 425px){
+	.book-card {
+		height: 200px;
+	}
+}
+@media (min-height: 450){
+.book-card {
+	height: 300px;
+}
+span .book-title {
+	font-size: 16px;
+	font-weight: bold;
+	height: 40px;
+	margin: 2px;
+	color: #000;
+	padding: 10px;
+	padding-bottom: 5px;
+}
+.card-image{
+	height: 180px;
+}
+img .card-image {
+	height: 180px;
+}
+
+}
+
+.book-card{
+	display: flex;
+}
+
+.bookbox > div{
+	display: flex;
+}
+
+
+
+.book-container, .book-body{
+	position: relative;
+}
+
+.book-actions{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 300px;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.book-body img{
+	width: 100%;
+}
+
+.book-title{
+	font-size: 0.9rem;
+	color: #fff;
+	font-weight: bold;
+}
+.book-image {
+	height: 200px;
+	margin-bottom: 10px;
+}
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+main {
+	flex: 1 0 auto;
+	min-height: 88vh;
+	margin: 0;
 }
 

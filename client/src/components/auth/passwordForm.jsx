@@ -15,7 +15,7 @@ const PasswordForm = (props) => {
                 <div className="row">
                     <div className="container">
                         <Sidebar user= {props.auth}/>
-                        <div className="col-md-9">
+                        <div className="col-sm-6 col-sm-offset-3">
                             <div className="profile-content">
                                 <h3>Change Password</h3>
 

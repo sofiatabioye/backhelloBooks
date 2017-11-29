@@ -1,11 +1,12 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-import Header from '../header/header.jsx';
+import { Row, Col, Button, Modal } from 'react-materialize';
 import Footer from '../footer/footer.jsx';
+import Header from '../header/header.jsx';
 
-export const Books = (props) => {
+const BookList = (props) => {
+    const title = props.title ? props.title : "Our Collection";
     const pagination = (
         <Pagination
             className={props.books.length === 0 ? 'hidden' : 'shown'}
@@ -18,37 +19,56 @@ export const Books = (props) => {
             activePage={props.activePage}
             onSelect={props.handleSelect}/>
     );
+    const isDisabled = props.isDisabled;
+    const userId = props.user.user.user;
+    const userRole = props.user.user.role;
+    const borrowText = "BORROW BOOK";
 
-    const bookList = props.books && props.books.length ?
+    const userAction = book => (<Button waves="light" className="button-borrow" onClick={() => props.borrowBook(book.id, userId)} disabled= {isDisabled} >{borrowText}</Button>);
+    const adminAction = (<div className="valign-wrapper"><span><Link to="#"><i className="fa fa-edit fa-2x" /></Link>
+    </span><span><Link to="#"><i className="fa fa-trash fa-2x"/></Link></span></div>);
+
+
+    const books = props.books && props.books.length ?
         props.books.map((book) => (
-            <div className="col-md-3" key={book.id}>
-                <Link to={`/book/${book.id}`}>
-                    <div className="bookbox">
+            <Col s={6} m={4} l={3} key={book.id}>
+                <div className="bookbox">
+                    <Link to="#" onClick={() => props.bookModal(book)}>
                         <img src={book.image} className="bookcover" role="presentation" />
-                        <div className="booktitle">{book.title}</div>
-                        <div className="bookcat"><span className="glyphicon glyphicon-tag" /> {book.category}</div>
-                        <div className="description">{book.description}...</div>
-
+                    </Link>
+                    <div className="booktitle">{book.title}</div>
+                    <div className="author">By: {book.author} </div>
+                    <div className="bookcat"><i className="fa fa-tag"/>  {book.category}</div>
+                    <div className="description">
+                        {userRole === "admin" ? adminAction : userAction(book) }
                     </div>
-                </Link>
-            </div>
+                </div>
 
-        )) : <h4>There are no books in the library</h4>;
+            </Col>
+
+        )) : <h4>No books here!!!</h4>;
 
     return (
         <div>
             <Header />
-            <div className="container">
-                <div><h3>Our Collection</h3></div>
-                <div className="row">
-                    {bookList}
+            <main>
+                <Modal
+                    id="foo">
+                    <div className="book-info" />
+                </Modal>
+                <div className="container">
+                    <div><h4>{title}</h4></div>
+
+                    <Row>
+                        {books}
+                    </Row>
+                    {pagination}
                 </div>
-                {pagination}
-            </div>
+            </main>
             <Footer />
         </div>
     );
 };
 
 
-export default Books;
+export default BookList;

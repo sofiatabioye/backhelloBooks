@@ -4,10 +4,8 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Header from '../header/header.jsx';
-import Footer from '../footer/footer.jsx';
-import Sidebar from '../sidebar/sidebar.jsx';
-import { fetchBorrowedBooks, returnBook } from '../../actions/books';
+import UserRecordsDisplay from './userRecordsDisplay.jsx';
+import { fetchBorrowedBooks, returnBook } from '../../actions/bookActions';
 
 /**
  * 
@@ -33,7 +31,7 @@ class Profile extends Component {
      * @memberof Profile
      */
     componentDidMount() {
-        this.props.fetchBorrowedBooks(this.props.auth.user.user);
+        this.props.fetchBorrowedBooks(this.props.user.user.user);
     }
 
     /**
@@ -55,7 +53,7 @@ class Profile extends Component {
      * @memberof Profile
      */
     handleReturnBook(id) {
-        this.props.returnBook(this.props.auth.user.user, id);
+        this.props.returnBook(this.props.user.user.user, id);
     }
 
 
@@ -67,52 +65,22 @@ class Profile extends Component {
      */
     render() {
         const { books } = this.state;
-        const booklist = books && books.UserBorrowHistory ?
-            books.UserBorrowHistory.map((book, index) => (
-                <tbody key={book.id}>
-                    <tr>
-                        <th scope="row">{index + 1 }</th>
-                        <td><Link to={`/book/${book.book_id}`}>{book.Book.title}</Link></td>
-                        <td>{moment(book.borrowDate).format('MM/DD/YYYY')}</td>
-                        <td>{moment(book.expectedReturnDate).fromNow()}</td>
-                        <td><button type="submit" onClick={() => this.handleReturnBook(book.book_id)} className="btn btn-md btn-info btn-borrow">Return Book</button></td>
-                    </tr>
-                </tbody>
-            )) : <h4>You have not borrowed any books</h4>;
+        const userPage = this.props.location.pathname;
         return (
             <div>
-                <Header />
-                <div className="container container-me">
-                    <div className="row">
-                        <div className="container">
-                            <Sidebar user= {this.props.auth}/>
-                            <div className="col-md-9">
-                                <div className="profile-content">
-                                    <h3>Borrowed Books</h3>
-                                    <table className="table table-bordered table-responsive table-hello">
-                                        <thead className="blue-grey lighten-4">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Title</th>
-                                                <th>Borrow Date</th>
-                                                <th>Return Due Date</th>
-                                                <th>Return</th>
-                                            </tr>
-                                        </thead>
-                                        {booklist}
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <Footer />
+                <UserRecordsDisplay
+                    books= {books}
+                    userPage ={userPage}
+                    categories={this.props.categories}
+                    user={this.props.user}
+                    handleReturnBook={this.handleReturnBook.bind(this)}
+                />
             </div>
         );
     }
 }
 
-Profile.proptypes = {
+Profile.propTypes = {
     books: PropTypes.object.isRequired,
     fetchBorrowedBooks: PropTypes.func.isRequired,
     returnBook: PropTypes.func.isRequired,
@@ -124,8 +92,9 @@ Profile.contextTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    books: state.books.books,
-    auth: state.auth,
+    books: state.borrowedBooks,
+    categories: state.categories.categories,
+    user: state.auth,
 });
 
 

@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 
-import Header from '../header/header.jsx';
-import HelloFooter from '../footer/footer.jsx';
-import Sidebar from '../sidebar/sidebar.jsx';
-import { fetchBorrowHistory, returnBook } from '../../actions/books';
+import UserRecordsDisplay from './userRecordsDisplay.jsx';
+import { fetchBorrowHistory, returnBook } from '../../actions/bookActions';
 
 /**
  * 
@@ -23,7 +19,14 @@ class History extends Component {
      */
     constructor(props) {
         super(props);
-        this.state = { books: [] };
+        this.state = {
+            books: [],
+            offset: 0,
+            numPerPage: 10,
+            activePage: 1,
+            numOfPages: 0,
+        };
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     /**
@@ -32,7 +35,19 @@ class History extends Component {
      * @memberof History
      */
     componentDidMount() {
-        this.props.fetchBorrowHistory(this.props.auth.user.user);
+        this.props.fetchBorrowHistory(this.state.offset, this.state.numPerPage, this.props.user.user.user);
+    }
+
+    /**
+     * 
+     * @returns {void} This returns the current number of the page
+     * @param {any} event
+     * @memberof Books
+     */
+    handleSelect(event) {
+        this.setState({ activePage: event });
+        const offset = this.state.numPerPage * (event - 1);
+        this.props.fetchBorrowHistory(offset, this.state.numPerPage, this.props.user.user.user);
     }
 
     /**
@@ -42,58 +57,27 @@ class History extends Component {
      * @memberof History
      */
     render() {
-        const book = this.props.books;
-        const booklist = book && book.UserBorrowHistory ?
-            book.UserBorrowHistory.map((book, index) => (
-
-                <tr key={book.id}>
-                    <th scope="row">{index + 1}</th>
-                    <td><Link to={`/book/${book.book_id}`}>{book.Book.title}</Link></td>
-                    <td className="time">{moment(book.borrowDate).format('MM/DD/YYYY')}</td>
-                    <td>{moment(book.expectedReturnDate).format('MM/DD/YYYY')}</td>
-                    <td>{ isEmpty(book.dateReturned) ? "" : moment(book.dateReturned).format('MM/DD/YYYY') }</td>
-                    {isEmpty(book.dateReturned) ? <td>Not Returned</td> :
-                        <td> Returned</td> }
-                </tr>
-            )) : <h4>You have not borrowed any books</h4>;
-
+        const numOfPages = this.props.pager ? this.props.pager.pageCount : null;
+        const books = this.props.books;
+        const userPage = this.props.location.pathname;
         return (
             <div>
-                <Header />
-                <div className="container container-me">
-                    <div className="row">
-                        <div className="container">
-                            <Sidebar user= {this.props.auth}/>
-                            <div className="col-md-9">
-                                <div className="profile-content">
-                                    <h3>Borrow History</h3>
-                                    <table className="table table-bordered table-responsive table-hello">
-                                        <thead className="blue-grey lighten-4">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Title</th>
-                                                <th>Borrow Date</th>
-                                                <th>Return Due Date</th>
-                                                <th>Return Date</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            {booklist}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <HelloFooter />
+                <UserRecordsDisplay
+                    books= {books}
+                    userPage={userPage}
+                    categories={this.props.categories}
+                    user={this.props.user}
+                    numOfPages ={numOfPages}
+                    numPerPage={this.state.numPerPage}
+                    activePage= {this.state.activePage}
+                    handleSelect={this.handleSelect.bind(this)}
+                />
             </div>
         );
     }
 }
-History.proptypes = {
-    books: PropTypes.object.isRequired,
+History.propTypes = {
+    books: PropTypes.object,
     fetchBorrowHistory: PropTypes.func.isRequired,
     returnBook: PropTypes.func.isRequired,
 };
@@ -103,8 +87,10 @@ History.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-    books: state.books.books,
-    auth: state.auth,
+    books: state.borrowedBooks,
+    pager: state.borrowedBooks.borrowedBooks.pagination,
+    user: state.auth,
+    categories: state.categories.categories
 });
 
 export default connect(mapStateToProps, { fetchBorrowHistory, returnBook })(History);
