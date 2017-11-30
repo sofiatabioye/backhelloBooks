@@ -26,18 +26,16 @@ export default (state = { categories: [], loading: false, errors: {}, message: {
 
         case ADD_CATEGORY_SUCCESS:
             return { ...state,
-                loading: false,
-                message: action.message,
-                categories: action.categories,
+                categories: {
+                    categories: state.categories.categories.concat(action.category)
+                }
             };
 
         case ADD_CATEGORY_FAILURE:
-            return [...state,
-                {
-                    loading: false,
-                    errors: action.errors
-                }
-            ];
+            return { ...state,
+                errors: action.errors
+            }
+            ;
 
         default: return state;
     }

@@ -9,7 +9,7 @@ const forgotPasswordForm = (props) => (
                 <div className="container">
                     <h1>Welcome to HelloBooks</h1>
                     <p>The best online library to quench your reading thirst</p>
-                    <div><h3>Forgot Password? </h3></div>
+                    <div><h3>Forgot your Password? </h3></div>
                     <form onSubmit={props.onSubmit} className="form-responsive">
 
                         <div className="form-group">
