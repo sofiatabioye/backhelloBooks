@@ -88,7 +88,7 @@ History.contextTypes = {
 
 const mapStateToProps = state => ({
     books: state.borrowedBooks,
-    pager: state.borrowedBooks.borrowedBooks.pagination,
+    pager: state.borrowedBooks.pagination,
     user: state.auth,
     categories: state.categories.categories
 });

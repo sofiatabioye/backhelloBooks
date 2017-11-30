@@ -1,8 +1,7 @@
-import shortid from 'shortid';
-import findIndex from 'lodash/findIndex';
-import { FETCH_BORROWED_BOOKS_SUCCESS, FETCH_BORROWED_BOOKS_FAILURE, BORROW_HISTORY_SUCCESS, BORROW_HISTORY_FAILURE, BORROW_HISTORY_BEGINS, RETURN_BOOK_BEGINS, RETURN_BOOK_SUCCESS, RETURN_BOOK_FAILURE } from '../actions/actionTypes';
+import {
+    FETCH_BORROWED_BOOKS_SUCCESS, FETCH_BORROWED_BOOKS_FAILURE, BORROW_HISTORY_SUCCESS, BORROW_HISTORY_FAILURE, BORROW_HISTORY_BEGINS, RETURN_BOOK_BEGINS, RETURN_BOOK_SUCCESS, RETURN_BOOK_FAILURE } from '../actions/actionTypes';
 
-export default (state = { borrowedBooks: [], pagination: [], loading: false, errors: [], success: [] }, action = {}) => {
+export default (state = { borrowedBooks: [], pagination: {}, loading: false, errors: [], success: [] }, action = {}) => {
     switch (action.type) {
         case RETURN_BOOK_BEGINS:
             return { ...state,

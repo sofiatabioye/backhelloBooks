@@ -17,12 +17,14 @@ import NotFound from './notfound.jsx';
 import Home from '../header/header2.jsx';
 import requireAuth from '../../helper/authenticate';
 import requireAdmin from '../../helper/adminAuth';
+import GetBook from '../books/getbook.jsx';
 
 const helloRoutes = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Login}/>
             <Route exact path="/books" component={Books}/>
+            <Route exact path="/book/show/:id" component={GetBook}/>
             <Route exact path="/books/categories" component={requireAuth(Category)}/>
             <Route exact path="/books/:title" component={requireAuth(BookCat)}/>
             <Route exact path="/librarybooks" component={requireAdmin(LibraryBooks)}/>

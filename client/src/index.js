@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
 
 import store from './store/store';
-import './assets/css/main.css';
+import './assets/css/main.scss';
 import App from './App';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/authActions';

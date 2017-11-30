@@ -1,5 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
-import { SET_CURRENT_USER, SIGN_UP } from '../actions/actionTypes';
+import { SET_CURRENT_USER, SIGN_UP, CHANGE_PASSWORD_FAILURE, CHANGE_PASSWORD_SUCCESS } from '../actions/actionTypes';
 
 const initialState = {
     isAuthenticated: false,
@@ -42,14 +42,14 @@ export default (state = { user: [], loading: false, errors: [], success: [] }, a
                 errors: action.errors
             };
 
-        case 'CHANGE_PASSWORD_SUCCESS':
-            return {
+        case CHANGE_PASSWORD_SUCCESS:
+            return { ...state,
                 loading: false,
                 success: action.message
             };
 
-        case 'CHANGE_PASSWORD_FAILURE':
-            return {
+        case CHANGE_PASSWORD_FAILURE:
+            return { ...state,
                 loading: false,
                 errors: action.errors
             };
