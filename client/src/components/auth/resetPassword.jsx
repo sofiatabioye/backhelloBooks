@@ -1,35 +1,107 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import Header from '../header/header.jsx';
-import Footer from '../footer/footer.jsx';
+import PropTypes from 'prop-types';
+import ResetPasswordForm from './resetPasswordForm.jsx';
+import { resetPassword } from '../../actions/authActions';
+
+import validateInput from '../utils/validatePassword.jsx';
+
+/**
+ * 
+ * 
+ * @class Login
+ * @extends {React.Component}
+ */
+class ResetPassword extends React.Component {
+    /**
+     * Creates an instance of Password.
+     * @param {any} props 
+     * @memberof Password
+     */
+    constructor(props) {
+        super(props);
+        this.state = {
+            newPassword: '',
+            confirmPassword: '',
+            errors: {},
+            isLoading: false
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    /**
+     * 
+     * @returns {void}
+     * @param {any} e 
+     * @memberof Password
+     */
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
 
 
-const resetPasswordForm = (props) =>
-    (
-        <div>
-            <Header />
-            <div className="container container-me">
-                <div><h3>Reset Password</h3></div>
-                <p className="text-success" >{success}</p>
-                { error !== null && <p className="red-text" >{error}</p> }
+    /**
+     * 
+     * 
+     * @returns {validatedInput} validates form input
+     * @memberof Password
+     */
+    isValid() {
+        const { errors, isValid } = validateInput(this.state);
+        if (!isValid) {
+            this.setState({ errors });
+            return;
+        }
+        return isValid;
+    }
 
-                <form onSubmit={props.onSubmit} className="form-me form-responsive">
-                    <div className="form-group">
-                        <label htmlFor="pwd">New Password</label>
-                        <input type="password" value={props.newPassword} onChange={props.onChange} name="newPassword" placeholder="Password" className="form-control" required />
-                        {errors.newPassword && <span className="text-danger">{errors.newPassword}</span> }
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="pwd">Confirm Password</label>
-                        <input type="password" value={props.confirmPassword} onChange={props.onChange} name="confirmPassword" placeholder="Confirm Password" className="form-control" required />
-                        {errors.confirmPassword && <span className="text-danger">{errors.confirmPassword}</span> }
-                    </div>
-                    <button type="submit" className="btn btn-info btn-lg" >Reset Password</button>
+    /**
+     * 
+     * @returns {Password} This submits password change form
+     * @param {any} e 
+     * @memberof Password
+     */
+    onSubmit(e) {
+        e.preventDefault();
+        if (this.isValid()) {
+            this.props.resetPassword({ password: this.state.newPassword }, this.props.match.params.token, this.props.history);
+        }
+    }
 
-                </form>
+    /**
+     * 
+     * 
+     * @returns {Form} for password change
+     * @memberof Password
+     */
+    render() {
+        return (
+            <div>
+                <ResetPasswordForm
+                    errors={this.state.errors}
+                    onChange = {this.onChange.bind(this)}
+                    onSubmit = {this.onSubmit.bind(this)}
+                    auth = {this.props.auth}
+                />
             </div>
-            <Footer />
-        </div>
-    )
-;
-export default resetPasswordForm;
+        );
+    }
+}
+
+ResetPassword.prototypes = {
+    changepassword: PropTypes.func.isRequired,
+    error: PropTypes.object.isRequired,
+    success: PropTypes.object.isRequired
+};
+
+ResetPassword.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps, { resetPassword })(ResetPassword);

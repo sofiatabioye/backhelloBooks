@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Row, Col, Input, Icon, Button } from 'react-materialize';
 
@@ -22,6 +23,7 @@ const Home = (props) => (
                                 <Input type="password" name="password" label="password" onChange={props.onChange} s={12} validate><Icon>lock</Icon></Input>
                                 <Button waves="light" type="submit" className="btn-hb">Sign In</Button>
                             </form>
+                            <p className="forgot"><Link to={"/forgotpassword"}>Forgot Password?></Link></p>
                         </TabPanel>
                         <TabPanel>
                             <form method="post" onSubmit={props.onSignUp}>

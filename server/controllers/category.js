@@ -7,7 +7,6 @@ export default {
     // Admin create category
     create(req, res) {
         const title = req.body.title;
-        const categories = Category.all();
         if (title === null) {
             res.status(400).send({ message: 'Category title cannot be null' });
         }
@@ -17,7 +16,7 @@ export default {
                 if (!category) {
                     return Category
                         .create({ title })
-                        .then(res.status(201).send({ categories: categories, message: 'Category Created Successfully' }))
+                        .then(newCategory => res.status(201).send({ category: newCategory, message: 'Category Created Successfully' }))
                         .catch(error => res.status(400).send(error));
                 } else {
                     res.status(200).send({ message: 'Category already exists' });

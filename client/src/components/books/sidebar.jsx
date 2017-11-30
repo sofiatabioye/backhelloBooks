@@ -55,14 +55,10 @@ const SideBar = (props) => {
                     <div className="collapsible-body">
                         {categoriesList}
                     </div>
-
-
                     <div className="collapsible-header"><span>Popular</span></div>
                     <div className="collapsible-body">
                         {categoriesList2}
                     </div>
-
-
                     <div className="collapsible-header">More</div>
                     <div className="collapsible-body">{categoriesList}</div>
 

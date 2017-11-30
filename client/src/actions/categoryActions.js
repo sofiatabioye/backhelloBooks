@@ -30,11 +30,11 @@ export function addCategoryBegins() {
  * @param {any} errors 
  * @returns {errors } on book update
  */
-export function addCategorySuccess(message, categories) {
+export function addCategorySuccess(message, category) {
     return {
         type: ADD_CATEGORY_SUCCESS,
         message,
-        categories
+        category
     };
 }
 
@@ -73,17 +73,15 @@ export function getCategories() {
  * @returns 
  */
 export function saveCategory(data) {
-    console.log(data, "+++++++");
     return (dispatch) => {
         dispatch(addCategoryBegins);
         return axios.post(`/api/v1/categories/create`, data)
             .then((response) => {
-                dispatch(addCategorySuccess(response.data.message, response.data.categories));
+                dispatch(addCategorySuccess(response.data.message, response.data.category));
                 toastr.success(response.data.message);
             })
             .catch((err) => {
                 dispatch(addCategoryFailure(err.response));
-                console.log(err);
             });
     };
 }

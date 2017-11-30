@@ -10,7 +10,7 @@ const CategoryForm = (props) => {
                     <div className="row">
                         <div className="input-field">
                             <label className="active" htmlFor="title">Title</label>
-                            <input type="text" placeholder="Title" value={props.states.newCategory || ""} onChange={props.onChange} className="active validate" name="newCategory" required/>
+                            <input type="text" placeholder="Title" value={props.states.newCategory} onChange={props.onChange} className="active validate" name="newCategory" required/>
                             <span className="help-text">{errors.title}</span>
                         </div>
                     </div>
