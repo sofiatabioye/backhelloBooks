@@ -5,27 +5,17 @@ const Book = models.Book;
 export default {
     // Admin add new book
     create(req, res) {
+        console.log(req.body);
         return Book
-            .create({
-                title: req.body.title,
-                description: req.body.description,
-                category: req.body.category,
-                quantity: req.body.quantity,
-                image: req.body.image,
-                author: req.body.author,
-                ISBN: req.body.isbn,
-                bookEdition: req.body.edition,
-                publisher: req.body.publisher,
-                bookSize: req.body.size,
-            })
+            .create(req.body)
             .then(book => res.status(201).send({ book: book, message: 'Book Created Successfully.' }))
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // lists all books in the library
     list(req, res) {
-        const offset = req.query.offset || null;
-        const limit = req.query.limit || null;
+        const offset = req.query.offset || 0;
+        const limit = req.query.limit || 1;
         return Book
             .findAndCountAll({ offset, limit, order: [['id']] })
             .then(book => {
@@ -40,7 +30,7 @@ export default {
                     }
                 });
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error, "err"));
     },
 
     // lists books by category
@@ -49,7 +39,7 @@ export default {
         return Book
             .findAll({ where: { category: catTitle } })
             .then(books => res.status(200).send({ books: books, message: `${catTitle} Books` }))
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // View book information by Id
@@ -64,7 +54,7 @@ export default {
                 }
                 return res.status(200).send(book);
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin update book information
@@ -93,7 +83,7 @@ export default {
                     .then(() => res.status(200).send(book)) // Send back the updated book.
                     .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin delete book
@@ -111,7 +101,7 @@ export default {
                     .then(() => res.status(204).send({ message: 'Book deleted successfully.' }))
                     .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
 

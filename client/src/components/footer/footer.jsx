@@ -1,13 +1,14 @@
 import React from 'react';
+import { Footer } from 'react-materialize';
 
-const Footer = (props) => (
+const Foot = (props) => (
     <div>
-        <nav className="navbar navbar-inverse navbar-fixed-bottom">
+        <div className="page-footer">
             <div className="container">
                © HelloBooks. All Rights Reserved. Privacy Policy • Terms of Use
             </div>
-        </nav>
+        </div>
     </div>
 );
 
-export default Footer;
+export default Foot;

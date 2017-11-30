@@ -1,5 +1,3 @@
-import models from './book';
-
 export default (sequelize, DataTypes) => {
     const Category = sequelize.define('Category', {
         title: {
@@ -9,8 +7,6 @@ export default (sequelize, DataTypes) => {
         }
     });
 
-    Category.associate = (models) => {
-        Category.hasMany(models.Book, { foreignKey: 'cat_id' });
-    };
+
     return Category;
 };

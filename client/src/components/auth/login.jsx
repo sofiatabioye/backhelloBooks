@@ -3,10 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { login } from '../../actions/auth';
+import { signup, login } from '../../actions/authActions';
 import validateInput from '../utils/validation.jsx';
-import FlashMessagesList from '../flash/FlashMessagesList';
-import LoginForm from './loginForm.jsx';
+import validateSignUpInput from '../utils/validateSignUp';
+import Home from '../header/header2.jsx';
 /**
  * 
  * 
@@ -28,36 +28,10 @@ class Login extends React.Component {
             isLoading: false
         };
         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
         this.onSignIn = this.onSignIn.bind(this);
+        this.onSignUp = this.onSignUp.bind(this);
     }
 
-    /**
-     * 
-     * @returns {any} google user information
-     * @memberof Login
-     */
-    componentDidMount() {
-        gapi.signin2.render('g-signin2', {
-            scope: 'https://www.googleapis.com/auth/plus.login',
-            width: 300,
-            height: 150,
-            longtitle: true,
-            theme: 'dark',
-            onsuccess: this.onSignIn
-        });
-    }
-
-    /**
-     * 
-     * @return {any} googleUser
-     * @param {any} googleUser 
-     * @memberof Login
-     */
-    onSignIn(googleUser) {
-        console.log("====yaay", googleUser);
-        let profile = googleUser.getBasicProfile();
-    }
     /**
      * 
      * @returns {void}
@@ -67,7 +41,6 @@ class Login extends React.Component {
     onChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
-
 
     /**
      * 
@@ -84,6 +57,21 @@ class Login extends React.Component {
         return isValid;
     }
 
+    /**
+     * 
+     * 
+     * @returns {validatedInput} validates form input
+     * @memberof SignUp
+     */
+    isSignUpValid() {
+        const { errors, isValid } = validateSignUpInput(this.state);
+        if (!isValid) {
+            this.setState({ errors });
+            return;
+        }
+        return isValid;
+    }
+
 
     /**
      * 
@@ -91,14 +79,25 @@ class Login extends React.Component {
      * @param {any} event 
      * @memberof Login
      */
-    onSubmit(event) {
+    onSignIn(event) {
         event.preventDefault();
         if (this.isValid()) {
             this.props.login(this.state, this.props.history);
         }
     }
 
-
+    /**
+     * 
+     * @returns {User} submits user login details
+     * @param {any} event 
+     * @memberof Login
+     */
+    onSignUp(event) {
+        event.preventDefault();
+        if (this.isSignUpValid()) {
+            this.props.signup(this.state, this.props.history);
+        }
+    }
     /**
      * 
      * 
@@ -106,14 +105,16 @@ class Login extends React.Component {
      * @memberof Login
      */
     render() {
+        const isLoggedIn = this.props.auth.isAuthenticated;
         return (
             <div>
-                <LoginForm
+
+                <Home
+                    isLoggedIn = {isLoggedIn}
                     errors={this.props.errors}
                     onChange={this.onChange.bind(this)}
-                    onSignIn= {this.onSignIn.bind(this)}
-                    onSubmit={this.onSubmit.bind(this)} />
-
+                    onSignUp ={this.onSignUp.bind(this)}
+                    onSignIn={this.onSignIn.bind(this)} />
             </div>
         );
     }
@@ -123,4 +124,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { login, FlashMessagesList })(Login);
+export default connect(mapStateToProps, { login, signup })(Login);

@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-// import sendmail from 'sendmail';
+import crypto from 'crypto';
 
 import models from '../models/index';
-import { smtpTransport, mailOptions } from '../helper/mailer';
+import { smtpTransport, forgotPassword, resetPassword, lateReturn } from '../helper/mailer';
 
 const Book = models.Book;
 const User = models.User;
@@ -13,23 +13,21 @@ dotenv.config();
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.TOKEN_SECRET;
 
-const checkReturnDate = (expectedReturnDate, returnDate, req, res) => {
+// checks if user returned book late and sends user a mail with surcharge
+const checkReturnDate = (expectedReturnDate, returnDate, email) => {
     const borrowTime = Math.round((expectedReturnDate - returnDate) / 864000);
     if (borrowTime > 1400) {
-        console.log("you did not return this book in time");
-    } else {
-        smtpTransport.sendMail(mailOptions, (error, response) => {
+        smtpTransport.sendMail(lateReturn(email, expectedReturnDate), (error, response) => {
             if (error) {
-                res.status(400).send({ message: error });
+                return `An error occured`;
             } else {
-                console.log(`Message sent: ${response.message}`);
+                return `An e-mail has been sent to ${email} with further instructions.`;
             }
-
             smtpTransport.close();
         });
-        console.log("You returned it in time");
     }
 };
+
 
 export default {
     // user signup on hellobooks. This creates a new user
@@ -60,14 +58,22 @@ export default {
                 }
             })
 
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // User logs in to hellobooks. Generates token on login
     login(req, res) {
         return User
             .findOne({
-                where: { username: req.body.identifier, }
+                where: { $or: [
+                    {
+                        email: req.body.identifier
+                    },
+                    {
+                        username: req.body.identifier
+                    }
+                ]
+                }
             })
             .then((user) => {
                 if (!user) {
@@ -75,9 +81,13 @@ export default {
                 } else {
                     bcrypt.compare(req.body.password, user.password, (err, result) => {
                         if (result) {
-                            const myToken = jwt.sign({ user: user.id, role: user.role, level: user.level, name: user.username },
-                                secret,
-                                { expiresIn: 72 * 60 * 60 });
+                            const myToken = jwt.sign({ user: user.id,
+                                role: user.role,
+                                level: user.level,
+                                name: user.username,
+                                email: user.email },
+                            secret,
+                            { expiresIn: 72 * 60 * 60 });
                             res.send(200, { token: myToken,
                                 userId: user.id,
                                 userName: user.username,
@@ -89,10 +99,74 @@ export default {
                     });
                 }
             })
-            .catch(error => res.status(400).send({ message: "Oops! Sorry, an internal server error just occured" }));
+            .catch(error => res.status(500).send({ message: error }));
     },
 
-    changepassword(req, res) {
+
+    forgotPassword(req, res) {
+        const userEmail = req.body.email;
+        const today = new Date();
+        const tokenExpires = new Date(today.getTime() + (24 * 60 * 60));
+        const token = crypto.randomBytes(16).toString('hex');
+        User
+            .findOne({
+                where: { email: userEmail }
+            })
+            .then((user) => {
+                if (!user) {
+                    res.status(404).send({ message: 'No account with that email address' });
+                } else {
+                    return user
+                        .update({
+                            resetPasswordToken: "" || token,
+                            resetPasswordExpires: null || tokenExpires
+                        })
+                        .then(() => {
+                            smtpTransport.sendMail(forgotPassword(user.email, req.headers.host, token), (error, response) => {
+                                if (error) {
+                                    res.status(400).send({ message: error });
+                                } else {
+                                    res.status(200).send(`An e-mail has been sent to ${user.email} with further instructions.`);
+                                }
+
+                                smtpTransport.close();
+                            });
+                        })
+                        .catch(error => res.status(400).send(error));
+                }
+            })
+            .catch(error => res.status(500).send(error));
+    },
+
+    resetPassword(req, res) {
+        const password = req.body.password;
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        User
+            .findOne({
+                where: { resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }
+            })
+            .then((user) => {
+                if (!user) {
+                    res.status(404).send({ error: 'Password reset token is invalid or has expired.' });
+                }
+                user.password = hashedPassword;
+                user.resetPasswordToken = null;
+                user.resetPasswordExpires = null;
+                user.save();
+                smtpTransport.sendMail(resetPassword(user.email), (error, response) => {
+                    if (error) {
+                        res.status(400).send({ message: error });
+                    } else {
+                        res.status(200).send({ message: `Success! Your password has been changed..` });
+                    }
+
+                    smtpTransport.close();
+                });
+            })
+            .catch(error => res.status(500).send(error));
+    },
+
+    changePassword(req, res) {
         const password = req.body.password;
         const newPassword = req.body.newPassword;
         let hashedPassword = bcrypt.hashSync(newPassword, 10);
@@ -120,7 +194,7 @@ export default {
                     });
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Logged in user borrows book
@@ -157,18 +231,20 @@ export default {
                                     .then(() => {
                                         res.status(201).send({ message: 'Book Borrowed Successfully.', books: book });
                                     })
-                                    .catch(error => res.status(400).send(error));
+                                    .catch(error => res.status(400).send(error, "======"));
                             }
                         })
-                        .catch(error => res.status(400).send(error));
+                        .catch(error => res.status(400).send(error, "+++++"));
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error, "------"));
     },
 
 
     // Logged in user returns borrowed book
     returnBook(req, res) {
+        console.log(req.email, "=====");
+        const email = req.email;
         const today = new Date();
         Book
             .findById(req.params.bookId)
@@ -189,19 +265,22 @@ export default {
                                 dateReturned: today
                             })
                             .then(() => {
-                                checkReturnDate(borrowstatus.expectedReturnDate, borrowstatus.dateReturned);
-                                return res.status(200).send({ message: 'Book returned successfully.' });
+                                checkReturnDate(borrowstatus.expectedReturnDate, borrowstatus.dateReturned, email);
+                                res.status(200).send({ message: 'Book returned successfully.' });
                             })
                             .catch(error => res.status(400).send(error));
                     })
                     .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Logged in user views his/her borrow history
     borrowHistory(req, res) {
-        User.findById(req.params.userId)
+        const offset = req.query.offset || null;
+        const limit = req.query.limit || null;
+        User
+            .findById(req.params.userId)
             .then((user) => {
                 if (!user) {
                     res.status(404).send({ message: 'User Not found' });
@@ -213,8 +292,10 @@ export default {
                                 res.status(201).send({ message: 'You have not borrowed any book' });
                             } else {
                                 BorrowStatus
-                                    .findAll({
-                                        where: { user_id: req.params.userId },
+                                    .findAndCountAll({
+                                        offset,
+                                        limit,
+                                        where: { user_id: [req.params.userId] },
                                         include: [
                                             { model: Book,
                                                 attributes: ['title'],
@@ -222,7 +303,13 @@ export default {
                                     })
                                     .then((borrowstat) => {
                                         res.status(200).send({
-                                            UserBorrowHistory: borrowstat
+                                            UserBorrowHistory: borrowstat.rows,
+                                            pagination: {
+                                                totalCount: borrowstat.count,
+                                                pageSize: borrowstat.rows.length,
+                                                pageCount: Math.ceil(borrowstat.count / limit),
+                                                page: Math.floor(offset / limit) + 1
+                                            }
                                         });
                                     })
                                     .catch(error => res.status(400).send(error));
@@ -231,7 +318,7 @@ export default {
                         .catch(error => res.status(400).send(error));
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // gets books which user has borrowed but not returned
@@ -260,15 +347,12 @@ export default {
                                     .catch(error => res.status(400).send(error));
                             }
                         })
-                        .catch(error => res.status(400).send(error));
+                        .catch(error => res.status(500).send(error));
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
 
-    changepass(req, res) {
-
-    }
 };
 

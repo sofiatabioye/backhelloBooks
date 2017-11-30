@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { saveBooks } from '../../actions/books';
-import validateBook from '../utils/validateBook.jsx';
-import { getCategories } from '../../actions/category';
-import { addFlashMessage } from '../../actions/flashmessages';
-import FlashMessagesList from '../flash/FlashMessagesList';
-import BookForm from './addbookForm.jsx';
+import { saveBooks } from '../../actions/bookActions';
+import { getCategories } from '../../actions/categoryActions';
+import BookForm from './bookForm.jsx';
 
 /**
  * 
@@ -107,26 +104,9 @@ class AddBook extends Component {
     onSubmit(e) {
         e.preventDefault();
         if (this.isValid()) {
-            this.props.saveBooks(this.state).then(
-                (res) => {
-                    console.log(res);
-                    this.context.router.history.push('/librarybooks');
-                },
-                (err) => {
-                    this.setState({
-                        isLoading: false
-                    });
-                    if (err.data) {
-                        this.props.addFlashMessage({
-                            type: 'error',
-                            text: err.data.errors
-                        });
-                    }
-                }
-            );
+            this.props.saveBooks(this.state, this.props.history);
         }
     }
-
 
     /**
      * 
@@ -149,8 +129,8 @@ class AddBook extends Component {
     }
 }
 
-AddBook.protoTypes = {
-    saveBooks: PropTypes.func.isRequired
+AddBook.propTypes = {
+    saveBooks: PropTypes.object.isRequired
 };
 AddBook.contextTypes = {
     router: PropTypes.object.isRequired
@@ -159,5 +139,5 @@ const mapStateToProps = state => ({
     categories: state.categories.categories.categories
 });
 
-export default connect(mapStateToProps, { saveBooks, FlashMessagesList, addFlashMessage, getCategories })(AddBook);
+export default connect(mapStateToProps, { saveBooks, getCategories })(AddBook);
 

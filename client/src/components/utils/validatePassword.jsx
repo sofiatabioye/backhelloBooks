@@ -16,9 +16,7 @@ export default function validateInput(data) {
     if (data.newPassword.match(passw)) {
         errors.newPassword = 'newPassword must be between 7 to 15 characters and include uppercase, lowercase, number/special characters';
     }
-    if (Validator.isEmpty(data.password)) {
-        errors.password = 'This field is required ';
-    }
+
     if (data.confirmPassword !== data.newPassword) {
         errors.confirmPassword = 'Passwords do not match ';
     }

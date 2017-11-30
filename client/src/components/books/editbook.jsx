@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
-import { addFlashMessage } from '../../actions/flashmessages';
 import validateBook from '../utils/validateBook.jsx';
-import { getBook, fetchBook, updateBook } from '../../actions/books';
-import FlashMessagesList from '../flash/FlashMessagesList';
+import { getBook, fetchBook, updateBook } from '../../actions/bookActions';
 
 /**
  * 
@@ -228,7 +226,7 @@ class EditBook extends Component {
     }
 }
 
-EditBook.proptypes = {
+EditBook.propTypes = {
     book: PropTypes.object.isRequired,
     fetchBook: PropTypes.func.isRequired,
     getBook: PropTypes.func.isRequired,
@@ -237,12 +235,12 @@ EditBook.proptypes = {
 };
 
 EditBook.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     book: state.books
 });
 
-export default connect(mapStateToProps, { updateBook, getBook, addFlashMessage, fetchBook })(EditBook);
+export default connect(mapStateToProps, { updateBook, getBook, fetchBook })(EditBook);
 

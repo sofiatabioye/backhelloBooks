@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { signup } from '../../actions/auth';
-import validateSignUpInput from '../utils/validateSignUp.jsx';
-import { addFlashMessage } from '../../actions/flashmessages';
-import FlashMessagesList from '../flash/FlashMessagesList';
+import { signup } from '../../actions/authActions';
+import validateSignUpInput from '../utils/validateSignUp';
 import SignupForm from './signupForm.jsx';
 /**
  * 
@@ -34,8 +32,6 @@ class SignUp extends React.Component {
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        // this.onSignIn = this.onSignIn.bind(this);
-        this.onSuccess = this.onSuccess.bind(this);
     }
 
     /**
@@ -44,8 +40,8 @@ class SignUp extends React.Component {
      * @param {any} e 
      * @memberof SignUp
      */
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
+    onChange(event) {
+        this.setState({ [event.target.name]: event.target.value });
     }
 
     /**
@@ -65,33 +61,6 @@ class SignUp extends React.Component {
 
     /**
      * 
-     * @return {void}
-     * @memberof SignUp
-     */
-    componentDidMount() {
-        gapi.signin2.render('g-signin2', {
-            scope: 'https://www.googleapis.com/auth/plus.login',
-            width: 200,
-            height: 50,
-            longtitle: true,
-            theme: 'dark',
-            onsuccess: this.onSuccess
-        });
-    }
-
-    /**
-     * 
-     * @return {any} googleUser
-     * @param {any} googleUser 
-     * @memberof Login
-     */
-    onSuccess() {
-        console.log("====yaay");
-        let profile = googleUser.getBasicProfile();
-    }
-
-    /**
-     * 
      * @returns {User} newly created user account
      * @param {any} e 
      * @memberof SignUp
@@ -99,22 +68,7 @@ class SignUp extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         if (this.isValid()) {
-            this.props.signup(this.state).then(
-                (res) => {
-                    this.context.router.history.push('/signin');
-                },
-                (err) => {
-                    this.setState({
-                        isLoading: false
-                    });
-                    if (err.data) {
-                        this.props.addFlashMessage({
-                            type: 'error',
-                            text: err.data.errors
-                        });
-                    }
-                }
-            );
+            this.props.signup(this.state, this.props.history);
         }
     }
 
@@ -125,11 +79,13 @@ class SignUp extends React.Component {
      * @memberof SignUp
      */
     render() {
+        const error = this.props.error;
         return (
             <div>
                 <SignupForm
+                    error = {this.props.error}
                     errors = {this.state.errors}
-                    onSuccess = {this.onSuccess.bind(this)}
+                    message = {this.props.message}
                     onChange = {this.onChange.bind(this)}
                     onSubmit = {this.onSubmit.bind(this)}
                 />
@@ -138,7 +94,7 @@ class SignUp extends React.Component {
     }
 }
 
-SignUp.prototypes = {
+SignUp.propTypes = {
     signup: PropTypes.func.isRequired
 };
 
@@ -146,4 +102,10 @@ SignUp.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default connect(null, { signup, FlashMessagesList, addFlashMessage })(SignUp);
+const mapStateToProps = state => ({
+    errors: state.auth.errors,
+    message: state.auth.messsage,
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, { signup })(SignUp);

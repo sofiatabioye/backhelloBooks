@@ -12,17 +12,17 @@ export default {
         }
         Category
             .findOne({ where: { title } })
-            .then((categories) => {
-                if (!categories) {
+            .then((category) => {
+                if (!category) {
                     return Category
                         .create({ title })
-                        .then(res.status(201).send({ categories, message: 'Category Created Successfully' }))
+                        .then(newCategory => res.status(201).send({ category: newCategory, message: 'Category Created Successfully' }))
                         .catch(error => res.status(400).send(error));
                 } else {
                     res.status(200).send({ message: 'Category already exists' });
                 }
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin view list of categories
@@ -30,7 +30,7 @@ export default {
         return Category
             .all()
             .then(category => res.status(200).send({ categories: category, message: 'All categories' }))
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin view category by Id
@@ -45,7 +45,7 @@ export default {
                 }
                 return res.status(200).send(category);
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin update category title
@@ -67,9 +67,9 @@ export default {
                         title: Title || category.title,
                     })
                     .then(() => res.status(200).send(category)) // Send back the updated todo.
-                    .catch(error => res.status(400).send(error.toString()));
+                    .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error.toString()));
+            .catch(error => res.status(500).send(error));
     },
 
     // Admin delete category
@@ -87,7 +87,7 @@ export default {
                     .then(() => res.status(204).send({ message: 'Category deleted successfully.' }))
                     .catch(error => res.status(400).send(error));
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => res.status(500).send(error));
     },
 
 

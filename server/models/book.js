@@ -27,12 +27,12 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
         },
         ISBN: {
-            type: DataTypes.STRING,
+            type: DataTypes.CHAR,
             allowNull: false,
             unique: true
         },
         bookEdition: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         publisher: {
@@ -40,7 +40,7 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
         },
         bookSize: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
 
@@ -52,8 +52,6 @@ export default (sequelize, DataTypes) => {
             },
         },
     });
-    Book.associate = (models) => {
-        Book.belongsTo(models.Category, { foreignKey: 'cat_id', targetKey: 'id' });
-    };
+
     return Book;
 };
