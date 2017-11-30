@@ -44,8 +44,8 @@ export const notifyAdmin = (email, expectedReturnDate, returnDate) => ({
     to: "abisoph16@gmail.com",
     from: 'HelloBooks@noreply.com',
     subject: 'A Book has been returned on HelloBooks',
-    text: `${'Hello,\n\n' +
-          'This is to notify you that the user with the email - '}${email} has just been returned a book. The expected return date is ${expectedReturnDate}.\n`
+    text: `${'Hello admin,\n\n' +
+          'This is to notify you that the user with the email - '}${email} has just returned a book. The expected return date is ${expectedReturnDate}.\n`
 });
 
 export const lateReturn = (email, expectedReturnDate) => ({
