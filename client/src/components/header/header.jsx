@@ -66,7 +66,18 @@ class Header extends Component {
                 </Col>
             )) : <h6>No Categories yet </h6>;
 
-
+        const userActions = (
+            <span>
+                <li><Link to={"/profile"} >Borrowed Books</Link></li>
+                <li><Link to={"/history"}>Borrow History</Link></li>
+            </span>
+        );
+        const adminActions = (
+            <span>
+                <li><Link to="#">Add new Book</Link></li>
+                <li><Link to="#">Add new Category</Link></li>
+            </span>
+        );
         const profileList = (
             <Dropdown trigger={
                 <li>
@@ -80,9 +91,8 @@ class Header extends Component {
                         <img src="http://res.cloudinary.com/ddvm5tzhm/image/upload/c_scale,h_100/v1510679454/man_cidthh.png" role="presentation" className="usr-img"/>
                         <span className="caret" /></Link>
                     <ul className="dropdown-menu">
-                        <li><Link to={"/profile"}>Borrowed Books</Link></li>
-                        <li><Link to={"/history"}>Rent History</Link></li>
-                        {userType === "admin" && <li><Link to="/librarybooks">Manage Library Stock</Link></li> }
+                        { userType === "user" ? userActions : adminActions}
+
                         <li><Link to="#" onClick={this.props.logout} >Logout</Link></li>
                     </ul>
                 </li>

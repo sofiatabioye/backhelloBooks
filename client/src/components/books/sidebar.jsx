@@ -30,7 +30,6 @@ const SideBar = (props) => {
         <span>
             <li><Link to="#" onClick={props.openAddBookModal}>Add new Book</Link></li>
             <li><Link to="#" onClick={props.openAddCategoryModal} >Add new Category</Link></li>
-            <li><Link to="#" onClick={props.openAddCategoryModal} >Manage Library Stock</Link></li>
         </span>
     );
 

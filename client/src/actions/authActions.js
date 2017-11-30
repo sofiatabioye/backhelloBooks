@@ -129,8 +129,8 @@ export function changepassword(data, userId) {
 export function forgotPassword(email) {
     return (dispatch) => axios.post(`/api/v1/forgotpassword`, email)
         .then((response) => {
-            dispatch(setforgotPassword(response.data));
-            toastr.success(response.data);
+            dispatch(setforgotPassword(response.data.message));
+            toastr.success(response.data.message);
         })
         .catch((err) => {
             dispatch(forgotPasswordFailure(err.response));

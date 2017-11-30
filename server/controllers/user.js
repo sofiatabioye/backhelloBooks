@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 
 import models from '../models/index';
-import { smtpTransport, forgotPassword, resetPassword, lateReturn } from '../helper/mailer';
+import { smtpTransport, forgotPassword, resetPassword, lateReturn, notifyAdmin, sendmail } from '../helper/mailer';
 
 const Book = models.Book;
 const User = models.User;
@@ -14,18 +14,21 @@ const salt = bcrypt.genSaltSync(10);
 const secret = process.env.TOKEN_SECRET;
 
 // checks if user returned book late and sends user a mail with surcharge
-const checkReturnDate = (expectedReturnDate, returnDate, email) => {
+const checkReturnDate = (expectedReturnDate, returnDate, email, res) => {
     const borrowTime = Math.round((expectedReturnDate - returnDate) / 864000);
     if (borrowTime > 1400) {
-        smtpTransport.sendMail(lateReturn(email, expectedReturnDate), (error, response) => {
-            if (error) {
-                return `An error occured`;
-            } else {
-                return `An e-mail has been sent to ${email} with further instructions.`;
-            }
-            smtpTransport.close();
-        });
+        const successMessage = `An e-mail has been sent to ${email} with further instructions.`;
+        sendmail(lateReturn(email, expectedReturnDate), res, successMessage);
     }
+
+    smtpTransport.sendMail(notifyAdmin(email, expectedReturnDate, returnDate), (error, response) => {
+        if (error) {
+            return `An error occured`;
+        } else {
+            return `An e-mail has been sent to admin`;
+        }
+        smtpTransport.close();
+    });
 };
 
 
@@ -122,15 +125,8 @@ export default {
                             resetPasswordExpires: null || tokenExpires
                         })
                         .then(() => {
-                            smtpTransport.sendMail(forgotPassword(user.email, req.headers.host, token), (error, response) => {
-                                if (error) {
-                                    res.status(400).send({ message: error });
-                                } else {
-                                    res.status(200).send(`An e-mail has been sent to ${user.email} with further instructions.`);
-                                }
-
-                                smtpTransport.close();
-                            });
+                            const successMessage = `An e-mail has been sent to ${user.email} with further instructions.`;
+                            sendmail(forgotPassword(user.email, req.headers.host, token), res, successMessage);
                         })
                         .catch(error => res.status(400).send(error));
                 }
@@ -153,15 +149,8 @@ export default {
                 user.resetPasswordToken = null;
                 user.resetPasswordExpires = null;
                 user.save();
-                smtpTransport.sendMail(resetPassword(user.email), (error, response) => {
-                    if (error) {
-                        res.status(400).send({ message: error });
-                    } else {
-                        res.status(200).send({ message: `Success! Your password has been changed..` });
-                    }
-
-                    smtpTransport.close();
-                });
+                const successMessage = `Success! Your password has been changed..`;
+                sendmail(resetPassword(user.email), res, successMessage);
             })
             .catch(error => res.status(500).send(error));
     },
@@ -231,19 +220,18 @@ export default {
                                     .then(() => {
                                         res.status(201).send({ message: 'Book Borrowed Successfully.', books: book });
                                     })
-                                    .catch(error => res.status(400).send(error, "======"));
+                                    .catch(error => res.status(400).send(error));
                             }
                         })
-                        .catch(error => res.status(400).send(error, "+++++"));
+                        .catch(error => res.status(400).send(error));
                 }
             })
-            .catch(error => res.status(500).send(error, "------"));
+            .catch(error => res.status(500).send(error));
     },
 
 
     // Logged in user returns borrowed book
     returnBook(req, res) {
-        console.log(req.email, "=====");
         const email = req.email;
         const today = new Date();
         Book
@@ -265,7 +253,7 @@ export default {
                                 dateReturned: today
                             })
                             .then(() => {
-                                checkReturnDate(borrowstatus.expectedReturnDate, borrowstatus.dateReturned, email);
+                                checkReturnDate(borrowstatus.expectedReturnDate, borrowstatus.dateReturned, email, res);
                                 res.status(200).send({ message: 'Book returned successfully.' });
                             })
                             .catch(error => res.status(400).send(error));
