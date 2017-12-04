@@ -56,8 +56,10 @@ const BookList = (props) => {
                     <BookForm
                         saveBook = {props.saveBook}
                         states={props.states}
+                        errors={props.errors}
                         onChange={props.onChange}
                         categories={props.categories}
+                        openUploadWidget = {props.openUploadWidget}
                     />
                 </Modal>
                 <Modal
@@ -72,12 +74,17 @@ const BookList = (props) => {
                     categories={props.categories}
                     user={props.user}
                     openAddBookModal={props.openAddBookModal}
-                    openAddCategoryModal ={props.openAddCategoryModal}
+                    openAddCategoryModal={props.openAddCategoryModal}
                 />
                 <div className="books-container">
                     <Row>
-                        <Col s={6} m={6} l={6}>
+                        <Col s={12} m={6} l={6}>
                             <h5>{title}</h5>
+                        </Col>
+                        <Col s={12} m={6} l={6}>
+                            <form onSubmit= {props.searchBook}>
+                                <input type="text" placeholder="search" name="searchTerm" onChange= {props.onChange}id="autocomplete-input" className="autocomplete" />
+                            </form>
                         </Col>
 
                     </Row>

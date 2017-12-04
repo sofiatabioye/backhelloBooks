@@ -35,7 +35,7 @@ const routes = (app, authorize, checkadmin, canBorrow) => {
     app.put('/api/v1/users/:userId/books/:bookId/return', authorize.authorize, usersController.returnBook);
     app.get('/api/v1/users/:userId/history', authorize.authorize, usersController.borrowHistory);
     app.get('/api/v1/users/:userId/books', authorize.authorize, usersController.booksNotReturned);
-
+    app.get('/api/v1/searchbooks', booksController.search);
 
     // Method not allowed
     app.all('/api/v1/books/:bookId', (req, res) =>

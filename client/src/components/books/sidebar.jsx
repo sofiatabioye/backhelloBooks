@@ -7,18 +7,11 @@ const SideBar = (props) => {
     const categories = props.categories ? props.categories : null;
     const userRole = props.user.user.role;
     const categoriesList = categories && categories.length ?
-        categories.slice(0, 5).map((category) => (
+        categories.map((category) => (
             <li key={category.id}>
                 <Link to={`/books/${category.title}`}>{category.title}</Link>
             </li>
         )) : <h6>No Categories</h6>;
-
-    const categoriesList2 = categories && categories.length ?
-        categories.slice(5, 100).map((category) => (
-            <li key={category.id}>
-                <Link to={`/books/${category.title}`} key={category.id}>{category.title}</Link>
-            </li>
-        )) : <h6>No Categories yet </h6>;
 
     const userActions = (
         <span>
@@ -30,7 +23,6 @@ const SideBar = (props) => {
         <span>
             <li><Link to="#" onClick={props.openAddBookModal}>Add new Book</Link></li>
             <li><Link to="#" onClick={props.openAddCategoryModal} >Add new Category</Link></li>
-            <li><Link to="#" onClick={props.openAddCategoryModal} >Manage Library Stock</Link></li>
         </span>
     );
 
@@ -49,20 +41,15 @@ const SideBar = (props) => {
                 { userRole === "user" ? userActions : adminActions}
                 <li><Link to={"/changepassword"}>Change Password</Link></li>
                 <li><div className="divider" /></li>
-                <li><a className="subheader">Categories</a></li>
+                {/* <li><a className="subheader">Categories</a></li> */}
                 <ul className="collapsible" data-collapsible="accordion">
-                    <div className="collapsible-header"><li>Latest </li></div>
-                    <div className="collapsible-body">
-                        {categoriesList}
-                    </div>
-                    <div className="collapsible-header"><span>Popular</span></div>
-                    <div className="collapsible-body">
-                        {categoriesList2}
-                    </div>
-                    <div className="collapsible-header">More</div>
-                    <div className="collapsible-body">{categoriesList}</div>
+                    <li>
+                        <div className="collapsible-header"><span className="category"><i className="fa fa-chevron-down"/>Categories</span></div>
+                        <div className="collapsible-body"> {categoriesList}</div>
+                    </li>
 
                 </ul>
+
             </ul>
         </div>
     );

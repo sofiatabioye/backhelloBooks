@@ -322,8 +322,24 @@ export function getBooks(offset, limit) {
         .then((response) => {
             dispatch(setBooks(response.data));
         })
-        .catch((error) => error);
+        .catch((error) =>
+            error
+        );
 }
+
+export function searchBook(searchTerm, category, offset, limit) {
+    return (dispatch) => axios.get(`/api/v1/searchbooks?searchTerm=${searchTerm}&catgegory=${category}&offset=${offset}&limit=${limit}`)
+        .then((response) => {
+            if (category !== null) {
+                dispatch(getBooksByCategory(response.data.booksFound));
+            }
+            dispatch(setBooks(response.data.booksFound));
+        })
+        .catch((error) => {
+            toastr.warning(error.response.data.message);
+        });
+}
+
 
 /**
  * @export
@@ -371,7 +387,8 @@ export function updateBook(id, bookData) {
                 const message = response.data.message;
                 dispatch(updateBookSuccess(book, message));
                 toastr.success("Book Updated Successfully");
-            }, (err) => {
+            })
+            .catch((err) => {
                 const errors = err.response.data;
                 dispatch(updateBookFailure(errors));
                 toastr.warning("Error Updating Book");
@@ -389,7 +406,7 @@ export function saveBooks(data, history) {
         dispatch(addBookBegins());
         return axios.post(`/api/v1/books/create`, data)
             .then((response) => {
-                dispatch(addBook(response.data.books, response.data.message));
+                dispatch(addBook(response.data.book, response.data.message));
                 toastr.success(response.data.message);
             })
             .catch((err) => {

@@ -30,17 +30,16 @@ const PasswordForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="pwd">Old Password</label>
                                     <input type="password" value={props.password} onChange={props.onChange} name="password" placeholder="Password" className="form-control" required />
-                                    {errors.password && <span className="red-text">{errors.password}</span> }
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="pwd">New Password</label>
                                     <input type="password" value={props.newPassword} onChange={props.onChange} name="newPassword" placeholder="Password" className="form-control" required />
-                                    {errors.newPassword && <span className="red-text">{errors.newPassword}</span> }
+                                    {errors.newPassword && <div className="red-text">{errors.newPassword}</div> }
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="pwd">Confirm Password</label>
                                     <input type="password" value={props.confirmPassword} onChange={props.onChange} name="confirmPassword" placeholder="Confirm Password" className="form-control" required />
-                                    {errors.confirmPassword && <span className="red-text">{errors.confirmPassword}</span> }
+                                    {errors.confirmPassword && <div className="red-text">{errors.confirmPassword}</div> }
                                 </div>
                                 <button type="submit" className="btn btn-lg btn-info">Change Password</button>
                             </form>

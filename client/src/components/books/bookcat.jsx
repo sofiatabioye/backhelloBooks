@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getBooksByCat, borrowBook } from '../../actions/bookActions';
+import { getBooksByCat, borrowBook, searchBook } from '../../actions/bookActions';
 import { logout } from '../../actions/authActions';
 
 import BookList from './booksList.jsx';
@@ -28,10 +28,13 @@ class BookCat extends Component {
             offset: 0,
             numPerPage: 8,
             activePage: 1,
-            numOfPages: 0
+            numOfPages: 0,
+            searchTerm: ''
         };
         this.handleSelect = this.handleSelect.bind(this);
         this.borrowBook = this.borrowBook.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.searchBook = this.searchBook.bind(this);
     }
 
 
@@ -86,6 +89,29 @@ class BookCat extends Component {
 
     /**
      * 
+     * @returns {changedInput} This saves input as it is changed
+     * @param {any} e 
+     * @memberof AddBook
+     */
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+        console.log(this.state);
+    }
+
+    /**
+     * 
+     * @returns {void}
+     * @param {any} event 
+     * @memberof AddBook
+     */
+    searchBook(event) {
+        event.preventDefault();
+        console.log(this.state);
+        this.props.searchBook(this.state.searchTerm, this.props.match.params.title, this.state.offset, this.state.numPerPage);
+    }
+
+    /**
+     * 
      * 
      * @returns {Books} By category
      * @memberof BookCat
@@ -98,12 +124,15 @@ class BookCat extends Component {
                     title={title}
                     user={this.props.user}
                     books={this.props.books}
+                    states= {this.state}
                     isDisabled = {this.state.isDisabled}
                     bookModal = {this.bookModal}
+                    searchBook = {this.searchBook.bind(this)}
                     numOfPages = {this.state.numOfPages}
                     numPerPage={this.state.numPerPage}
                     activePage= {this.state.activePage}
                     borrowBook = {this.borrowBook.bind(this)}
+                    onChange = {this.onChange.bind(this)}
                     handleSelect={this.handleSelect.bind(this)}
                 />
             </div>
@@ -125,5 +154,5 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { getBooksByCat, borrowBook, logout })(BookCat);
+export default connect(mapStateToProps, { getBooksByCat, borrowBook, logout, searchBook })(BookCat);
 

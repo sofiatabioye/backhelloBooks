@@ -1,4 +1,3 @@
-import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
 
@@ -11,10 +10,9 @@ import isEmpty from 'lodash/isEmpty';
  */
 export default function validateInput(data) {
     let errors = {};
-    var passw = /^[A-Za-z]\w{7,14}$/;
 
-    if (data.newPassword.match(passw)) {
-        errors.newPassword = 'newPassword must be between 7 to 15 characters and include uppercase, lowercase, number/special characters';
+    if (data.newPassword.length < 4 || data.newPassword.length > 20) {
+        errors.newPassword = 'Password must contain a minimum of 4 characters and maximum of 10 ';
     }
 
     if (data.confirmPassword !== data.newPassword) {

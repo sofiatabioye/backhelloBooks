@@ -12,6 +12,16 @@ export const smtpTransport = nodemailer.createTransport({
     }
 });
 
+export const sendmail = (getEmail, res, successMessage) => smtpTransport.sendMail(getEmail, (error, response) => {
+    if (error) {
+        res.status(400).send({ message: error });
+    } else {
+        res.status(200).send({ message: successMessage });
+    }
+
+    smtpTransport.close();
+});
+
 export const forgotPassword = (email, header, token) => ({
     from: 'HelloBooks@noreply.com',
     to: email,
@@ -30,6 +40,13 @@ export const resetPassword = email => ({
           'This is a confirmation that the password for your account '}${email} has just been changed.\n`
 });
 
+export const notifyAdmin = (email, expectedReturnDate, returnDate) => ({
+    to: "abisoph16@gmail.com",
+    from: 'HelloBooks@noreply.com',
+    subject: 'A Book has been returned on HelloBooks',
+    text: `${'Hello admin,\n\n' +
+          'This is to notify you that the user with the email - '}${email} has just returned a book. The expected return date is ${expectedReturnDate}.\n`
+});
 
 export const lateReturn = (email, expectedReturnDate) => ({
     from: 'HelloBooks@noreply.com',
