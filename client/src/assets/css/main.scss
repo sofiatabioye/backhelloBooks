@@ -373,6 +373,13 @@ div .mainbar-home{
 	padding: 0px !important;
 }
 
+#autocomplete-input {
+	width: 95%;
+	border: 1px solid #ccc;
+	border-radius: 25px;
+	text-align: center;
+}
+
 .authpage {
 	height: 100vh;
 	display: flex;

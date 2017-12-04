@@ -403,7 +403,7 @@ export function saveBooks(data, history) {
         dispatch(addBookBegins());
         return axios.post(`/api/v1/books/create`, data)
             .then((response) => {
-                dispatch(addBook(response.data.books, response.data.message));
+                dispatch(addBook(response.data.book, response.data.message));
                 toastr.success(response.data.message);
             })
             .catch((err) => {

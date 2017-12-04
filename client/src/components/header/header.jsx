@@ -111,18 +111,6 @@ class Header extends Component {
 
                 <Navbar brand="HelloBooks" right className="navbar-home">
                     <li><Link to={"/books"}>Home</Link></li>
-                    <li>
-                        <div className="center row">
-                            <div className="col s12 " >
-                                <div className="row" id="topbarsearch">
-                                    <div className="input-field col s6 s12 white-text">
-                                        <i className="white-text material-icons prefix">search</i>
-                                        <input type="text" placeholder="search" id="autocomplete-input" className="autocomplete white-text" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
                     <Dropdown trigger={
                         <li>
                             <a>Browse Categories

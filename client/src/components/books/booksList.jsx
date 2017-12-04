@@ -59,6 +59,7 @@ const BookList = (props) => {
                         errors={props.errors}
                         onChange={props.onChange}
                         categories={props.categories}
+                        openUploadWidget = {props.openUploadWidget}
                     />
                 </Modal>
                 <Modal

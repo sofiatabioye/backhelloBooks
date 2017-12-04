@@ -39,8 +39,9 @@ const BookForm = (props) => {
                             <div>
                                 {props.states.imageName}
                             </div>
-                            <div className="upload" id="filename">
-                                <button onClick={props.openUploadWidget} className="btn btn-primary btn-sm upload-button" name="image" value={props.states.image}>
+                            <div className="upload" id="filename" value={props.states.image}>
+                                <button onClick={props.openUploadWidget} className="btn btn-primary btn-sm upload-button"
+                                    value={props.states.image} name="image">
 
                                     {props.states.image === '' && <div>Add BookCover</div>}
 
