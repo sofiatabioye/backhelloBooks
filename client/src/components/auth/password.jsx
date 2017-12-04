@@ -44,6 +44,9 @@ class Password extends React.Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onForgotPassword = this.onForgotPassword.bind(this);
     this.onResetPassword = this.onResetPassword.bind(this);
+    $(document).ready(() => {
+      $('.collapsible').collapsible();
+    });
   }
 
   /**

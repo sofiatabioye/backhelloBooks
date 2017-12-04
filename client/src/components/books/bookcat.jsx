@@ -14,143 +14,146 @@ import Books from './allbooks.jsx';
  * @extends {Component}
  */
 class BookCat extends Component {
-    /**
+  /**
      * Creates an instance of BookCat.
      * @param {any} props 
      * @memberof BookCat
      */
-    constructor(props) {
-        super(props);
-        this.state = {
-            books: [],
-            isDisabled: false,
-            text: "",
-            offset: 0,
-            numPerPage: 8,
-            activePage: 1,
-            numOfPages: 0,
-            searchTerm: ''
-        };
-        this.handleSelect = this.handleSelect.bind(this);
-        this.borrowBook = this.borrowBook.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.searchBook = this.searchBook.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: [],
+      isDisabled: false,
+      text: "",
+      offset: 0,
+      numPerPage: 8,
+      activePage: 1,
+      numOfPages: 0,
+      searchTerm: ''
+    };
+    this.handleSelect = this.handleSelect.bind(this);
+    this.borrowBook = this.borrowBook.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.searchBook = this.searchBook.bind(this);
+  }
 
 
-    /**
+  /**
      * 
      * @returns {Books} Gets all books belonging to a category
      * @memberof BookCat
      */
-    componentDidMount() {
-        this.props.getBooksByCat(this.props.match.params.title);
-    }
+  componentDidMount() {
+    $(document).ready(() => {
+      $('.collapsible').collapsible();
+    });
+    this.props.getBooksByCat(this.props.match.params.title);
+  }
 
-
-    /**
+  /**
      * 
      * @returns {Books} Returns books belonging to a category
      * @param {any} nextProps 
      * @memberof BookCat
      */
-    componentWillReceiveProps(nextProps) {
-        if (this.props.match.params.title !== nextProps.match.params.title) {
-            nextProps.getBooksByCat(nextProps.match.params.title);
-        }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.title !== nextProps.match.params.title) {
+      nextProps.getBooksByCat(nextProps.match.params.title);
     }
+  }
 
-    handleSelect(event) {
-        this.setState({ activePage: event });
-        const offset = this.state.numPerPage * (event - 1);
-        this.props.getBooks(offset, this.state.numPerPage);
-    }
+  handleSelect(event) {
+    this.setState({ activePage: event });
+    const offset = this.state.numPerPage * (event - 1);
+    this.props.getBooks(offset, this.state.numPerPage);
+  }
 
-    /**
+  /**
      * @returns {Book } returns book information
      * @param {any} book 
      * @memberof Books
      */
-    bookModal(book) {
-        const modal = $('#foo');
-        modal.find('h4').text(book.title);
-        modal.find('.book-info').text(book.description);
-        $('#foo').modal('open');
-    }
+  bookModal(book) {
+    const modal = $('#foo');
+    modal.find('h4').text(book.title);
+    modal.find('.book-info').text(book.description);
+    $('#foo').modal('open');
+  }
 
-    /**
+  /**
      * 
      * @returns {userId, bookId} borrows book
      * @memberof Books
      */
-    borrowBook(userId, bookId) {
-        this.props.borrowBook(userId, bookId, this.props.history);
-    }
+  borrowBook(userId, bookId) {
+    this.props.borrowBook(userId, bookId, this.props.history);
+  }
 
-    /**
+  /**
      * 
      * @returns {changedInput} This saves input as it is changed
      * @param {any} e 
      * @memberof AddBook
      */
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-        console.log(this.state);
-    }
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state);
+  }
 
-    /**
+  /**
      * 
      * @returns {void}
      * @param {any} event 
      * @memberof AddBook
      */
-    searchBook(event) {
-        event.preventDefault();
-        console.log(this.state);
-        this.props.searchBook(this.state.searchTerm, this.props.match.params.title, this.state.offset, this.state.numPerPage);
-    }
+  searchBook(event) {
+    event.preventDefault();
+    this.props.searchBook(this.state.searchTerm, this.props.match.params.title, this.state.offset, this.state.numPerPage);
+  }
 
-    /**
+  /**
      * 
      * 
      * @returns {Books} By category
      * @memberof BookCat
      */
-    render() {
-        const title = this.props.match.params.title;
-        return (
-            <div>
-                <BookList
-                    title={title}
-                    user={this.props.user}
-                    books={this.props.books}
-                    states= {this.state}
-                    isDisabled = {this.state.isDisabled}
-                    bookModal = {this.bookModal}
-                    searchBook = {this.searchBook.bind(this)}
-                    numOfPages = {this.state.numOfPages}
-                    numPerPage={this.state.numPerPage}
-                    activePage= {this.state.activePage}
-                    borrowBook = {this.borrowBook.bind(this)}
-                    onChange = {this.onChange.bind(this)}
-                    handleSelect={this.handleSelect.bind(this)}
-                />
-            </div>
-        );
-    }
+  render() {
+    const title = this.props.match.params.title;
+    return (
+      <div>
+        <BookList
+          title={title}
+          user={this.props.user}
+          books={this.props.books}
+          categories={this.props.categories}
+          states= {this.state}
+          isDisabled = {this.state.isDisabled}
+          bookModal = {this.bookModal}
+          searchBook = {this.searchBook.bind(this)}
+          numOfPages = {this.state.numOfPages}
+          numPerPage={this.state.numPerPage}
+          activePage= {this.state.activePage}
+          borrowBook = {this.borrowBook.bind(this)}
+          onChange = {this.onChange.bind(this)}
+          handleSelect={this.handleSelect.bind(this)}
+        />
+      </div>
+    );
+  }
 }
 
 BookCat.propTypes = {
-    books: PropTypes.array.isRequired,
+  books: PropTypes.array.isRequired,
 };
 
 BookCat.contextTypes = {
-    router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    books: state.booksCategory.booksCategory,
-    user: state.auth
+  books: state.booksCategory.booksCategory,
+  user: state.auth,
+  categories: state.categories.categories.categories
 });
 
 
