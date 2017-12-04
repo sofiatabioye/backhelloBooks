@@ -28,7 +28,7 @@ const helloRoutes = () => (
             <Route exact path="/books" component={Books}/>
             <Route exact path="/book/show/:id" component={GetBook}/>
             <Route exact path="/books/categories" component={requireAuth(Category)}/>
-            <Route exact path="/books/:title" component={requireAuth(BookCat)}/>
+            <Route exact path="/books/genre/:title" component={requireAuth(BookCat)}/>
             <Route exact path="/librarybooks" component={requireAdmin(LibraryBooks)}/>
             <Route exact path="/signin" component={Login}/>
             <Route exact path="/signup" component={SignUp}/>

@@ -74,7 +74,7 @@ const BookList = (props) => {
                     categories={props.categories}
                     user={props.user}
                     openAddBookModal={props.openAddBookModal}
-                    openAddCategoryModal ={props.openAddCategoryModal}
+                    openAddCategoryModal={props.openAddCategoryModal}
                 />
                 <div className="books-container">
                     <Row>

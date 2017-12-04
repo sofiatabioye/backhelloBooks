@@ -330,6 +330,9 @@ export function getBooks(offset, limit) {
 export function searchBook(searchTerm, category, offset, limit) {
     return (dispatch) => axios.get(`/api/v1/searchbooks?searchTerm=${searchTerm}&catgegory=${category}&offset=${offset}&limit=${limit}`)
         .then((response) => {
+            if (category !== null) {
+                dispatch(getBooksByCategory(response.data.booksFound));
+            }
             dispatch(setBooks(response.data.booksFound));
         })
         .catch((error) => {

@@ -61,7 +61,7 @@ class Header extends Component {
             categories.map((category) => (
                 <Col s={12} m={3} l={3} key={category.id}>
                     <li className="genreList__genre">
-                        <Link to={`/books/${category.title}`}>{category.title}</Link>
+                        <Link to={`/books/genre/${category.title}`}>{category.title}</Link>
                     </li>
                 </Col>
             )) : <h6>No Categories yet </h6>;
