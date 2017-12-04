@@ -9,19 +9,19 @@ import Routes from './components/common/myroutes.jsx';
  * @extends {Component}
  */
 class App extends Component {
-    /**
+  /**
      * 
      * 
      * @returns {Routes} This returns all the routes
      * @memberof App
      */
-    render() {
-        return (
-            <div>
-                <Routes />
-            </div >
-        );
-    }
+  render() {
+    return (
+      <div>
+        <Routes />
+      </div >
+    );
+  }
 }
 
 export default App;

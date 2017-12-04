@@ -13,15 +13,15 @@ import { fetchBorrowedBooks, getBorrowedBooksSuccess } from './actions/bookActio
 
 // const user = jwt.decode(localStorage['x-access-token']);
 if (localStorage['x-access-token']) {
-    setAuthorizationToken(localStorage['x-access-token']);
-    store.dispatch(setCurrentUser(jwt.decode(localStorage['x-access-token'])));
-    //   store.dispatch(getBorrowedBooksSuccess(userId));
+  setAuthorizationToken(localStorage['x-access-token']);
+  store.dispatch(setCurrentUser(jwt.decode(localStorage['x-access-token'])));
+  //   store.dispatch(getBorrowedBooksSuccess(userId));
 }
 
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
 );

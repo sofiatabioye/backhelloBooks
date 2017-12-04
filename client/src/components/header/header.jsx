@@ -42,7 +42,7 @@ class Header extends Component {
      */
     logout(event) {
         event.preventDefault();
-        this.props.logout();
+        this.props.logout(this.props.history);
     }
 
     /**
