@@ -11,17 +11,20 @@ import isEmpty from 'lodash/isEmpty';
 export default function validateInput(data) {
     let errors = {};
 
-    // if (Validator.isEmpty(data.username)) {
-    //     errors.username = 'This field is required ';
-    // }
+    if (data.username.length < 3 || data.username.length > 10) {
+        errors.username = 'Username must contain a minimum of 4 characters and maximum of 10 ';
+    }
+    if (Validator.isAlpha(data.username) !== true) {
+        errors.username = 'Username cannot contain such characters ';
+    }
 
-    // if (Validator.isEmpty(data.password)) {
-    //     errors.password = 'This field is required ';
-    // }
+    if (data.password.length < 6) {
+        errors.password = 'Password must contain a minimum of 6 characters ';
+    }
 
-    // if (Validator.isEmpty(data.confirm_password)) {
-    //     errors.confirm_password = 'This field is required ';
-    // }
+    if (data.password !== data.confirmPassword) {
+        errors.confirmPassword = 'Passwords do not match';
+    }
 
     return {
         errors,

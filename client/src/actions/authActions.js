@@ -15,10 +15,10 @@ export function setCurrentUser(user) {
     };
 }
 
-export function setCurrentUserFails(errors) {
+export function setCurrentUserFails(error) {
     return {
         type: USER_LOGIN_FAILURE,
-        errors
+        error
     };
 }
 
@@ -86,6 +86,7 @@ export function logout() {
     };
 }
 export function login(userData, history) {
+    console.log(userData);
     return (dispatch) => axios.post('/api/v1/users/signin', userData)
         .then((response) => {
             const token = response.data.token;
@@ -96,7 +97,7 @@ export function login(userData, history) {
             history.push('/books');
         })
         .catch((err) => {
-            dispatch(setCurrentUserFails(err.response.data));
+            dispatch(setCurrentUserFails(err.response.data.message));
             toastr.warning(err.response.data.message);
         });
 }
@@ -109,7 +110,7 @@ export function signup(userData, history) {
             history.push('/books');
         })
         .catch((err) => {
-            dispatch(setNewUserFails(err.response.data));
+            dispatch(setNewUserFails(err.response.data.message));
             toastr.warning(err.response.data.message);
         });
 }

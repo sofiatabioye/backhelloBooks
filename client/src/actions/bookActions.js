@@ -322,8 +322,21 @@ export function getBooks(offset, limit) {
         .then((response) => {
             dispatch(setBooks(response.data));
         })
-        .catch((error) => error);
+        .catch((error) =>
+            error
+        );
 }
+
+export function searchBook(searchTerm, category, offset, limit) {
+    return (dispatch) => axios.get(`/api/v1/searchbooks?searchTerm=${searchTerm}&catgegory=${category}&offset=${offset}&limit=${limit}`)
+        .then((response) => {
+            dispatch(setBooks(response.data.booksFound));
+        })
+        .catch((error) => {
+            toastr.warning(error.response.data.message);
+        });
+}
+
 
 /**
  * @export
@@ -371,7 +384,8 @@ export function updateBook(id, bookData) {
                 const message = response.data.message;
                 dispatch(updateBookSuccess(book, message));
                 toastr.success("Book Updated Successfully");
-            }, (err) => {
+            })
+            .catch((err) => {
                 const errors = err.response.data;
                 dispatch(updateBookFailure(errors));
                 toastr.warning("Error Updating Book");

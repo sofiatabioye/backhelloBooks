@@ -22,8 +22,11 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            email: '',
             identifier: '',
+            username: '',
             password: '',
+            confirmPassword: '',
             errors: {},
             isLoading: false
         };
@@ -40,21 +43,6 @@ class Login extends React.Component {
      */
     onChange(event) {
         this.setState({ [event.target.name]: event.target.value });
-    }
-
-    /**
-     * 
-     * 
-     * @returns {validatedInput} Validates form input
-     * @memberof Login
-     */
-    isValid() {
-        const { errors, isValid } = validateInput(this.state);
-        if (!isValid) {
-            this.setState({ errors });
-            return;
-        }
-        return isValid;
     }
 
     /**
@@ -81,9 +69,7 @@ class Login extends React.Component {
      */
     onSignIn(event) {
         event.preventDefault();
-        if (this.isValid()) {
-            this.props.login(this.state, this.props.history);
-        }
+        this.props.login({ email: this.state.email, password: this.state.password }, this.props.history);
     }
 
     /**
@@ -111,7 +97,7 @@ class Login extends React.Component {
 
                 <Home
                     isLoggedIn = {isLoggedIn}
-                    errors={this.props.errors}
+                    errors={this.state.errors}
                     onChange={this.onChange.bind(this)}
                     onSignUp ={this.onSignUp.bind(this)}
                     onSignIn={this.onSignIn.bind(this)} />

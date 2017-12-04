@@ -35,19 +35,19 @@ const checkReturnDate = (expectedReturnDate, returnDate, email, res) => {
 export default {
     // user signup on hellobooks. This creates a new user
     create(req, res) {
-        const usernames = req.body.username;
+        const email = req.body.email;
         const password = req.body.password;
-        if (usernames == null) {
-            res.status(400).send({ message: 'Username cannot be null' });
+        if (email == null) {
+            res.status(400).send({ message: 'Email cannot be null' });
         }
-        User.findOne({ where: { username: usernames } })
+        User.findOne({ where: { email } })
             .then((user) => {
                 if (user) {
-                    res.status(400).send({ message: 'Username exists already' });
+                    res.status(400).send({ message: 'Email exists already' });
                 } else {
                     bcrypt.hash(password, salt, (err, hashedPassword) => User
                         .create({
-                            username: usernames,
+                            username: req.body.username,
                             email: req.body.email,
                             password: hashedPassword,
                             role: 'user',
@@ -66,18 +66,10 @@ export default {
 
     // User logs in to hellobooks. Generates token on login
     login(req, res) {
+        console.log(req);
+        const email = req.body.email;
         return User
-            .findOne({
-                where: { $or: [
-                    {
-                        email: req.body.identifier
-                    },
-                    {
-                        username: req.body.identifier
-                    }
-                ]
-                }
-            })
+            .findOne({ where: { email } })
             .then((user) => {
                 if (!user) {
                     res.status(404).send({ message: 'Invalid login credentials' });
@@ -108,6 +100,9 @@ export default {
 
     forgotPassword(req, res) {
         const userEmail = req.body.email;
+        if (userEmail === null) {
+            res.status(400).send({ message: "Email cannot be null" });
+        }
         const today = new Date();
         const tokenExpires = new Date(today.getTime() + (24 * 60 * 60));
         const token = crypto.randomBytes(16).toString('hex');

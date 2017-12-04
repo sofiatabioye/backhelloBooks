@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { swal } from 'sweetalert2';
 
-import { getBooks, borrowBook, saveBooks, deleteBook } from '../../actions/bookActions';
+import { getBooks, borrowBook, saveBooks, deleteBook, searchBook } from '../../actions/bookActions';
 import { getCategories, saveCategory } from '../../actions/categoryActions';
 import { logout } from '../../actions/authActions';
 import validateBook from '../utils/validateBook.jsx';
+import validateCategory from '../utils/validateCategory.jsx';
 import BookList from './booksList.jsx';
 
 /**
@@ -26,6 +26,7 @@ class Books extends Component {
         this.state = {
             books: [],
             book: {},
+            errors: {},
             categories: [],
             user: [],
             isDisabled: false,
@@ -47,6 +48,7 @@ class Books extends Component {
             imageName: '',
             public_id: null,
             imageVersion: null,
+            searchTerm: '',
 
         };
         this.handleSelect = this.handleSelect.bind(this);
@@ -58,6 +60,7 @@ class Books extends Component {
         this.openAddCategoryModal = this.openAddCategoryModal.bind(this);
         this.openUploadWidget = this.openUploadWidget.bind(this);
         this.showBook = this.showBook.bind(this);
+        this.searchBook = this.searchBook.bind(this);
     }
 
 
@@ -156,8 +159,23 @@ class Books extends Component {
      * @returns  {validatedInput} This checks if form input is correct
      * @memberof AddBook
      */
-    isValid() {
+    isBookValid() {
         const { errors, isValid } = validateBook(this.state);
+        if (!isValid) {
+            this.setState({ errors });
+            return;
+        }
+        return isValid;
+    }
+
+    /**
+     * 
+     * 
+     * @returns  {validatedInput} This checks if form input is correct
+     * @memberof AddBook
+     */
+    isCategoryValid() {
+        const { errors, isValid } = validateCategory(this.state.newCategory);
         if (!isValid) {
             this.setState({ errors });
             return;
@@ -170,9 +188,20 @@ class Books extends Component {
      * @param {any} event 
      * @memberof AddBook
      */
+    searchBook(event) {
+        event.preventDefault();
+        this.props.searchBook(this.state.searchTerm, this.state.category, this.state.offset, this.state.numPerPage);
+    }
+
+    /**
+     * 
+     * @returns {void}
+     * @param {any} event 
+     * @memberof AddBook
+     */
     onAddBook(event) {
         event.preventDefault();
-        if (this.isValid()) {
+        if (this.isBookValid()) {
             this.props.saveBooks(this.state, this.props.history);
         }
     }
@@ -183,9 +212,10 @@ class Books extends Component {
      * @memberof AddBook
      */
     saveCategory(event) {
-        console.log("hello", this.state.newCategory);
         event.preventDefault();
-        this.props.saveCategory({ title: this.state.newCategory });
+        if (this.isCategoryValid()) {
+            this.props.saveCategory({ title: this.state.newCategory });
+        }
     }
 
     /**
@@ -220,9 +250,11 @@ class Books extends Component {
                     book ={this.state.book}
                     user={this.props.user}
                     categories={this.props.categories}
+                    errors={this.state.errors}
                     isDisabled = {this.state.isDisabled}
                     openBook = {this.openBook}
                     onAddBook= {this.onAddBook.bind(this)}
+                    searchBook = {this.searchBook.bind(this)}
                     saveCategory = {this.saveCategory.bind(this)}
                     onChange = {this.onChange.bind(this)}
                     states= {this.state}
@@ -248,7 +280,7 @@ Books.propTypes = {
 Books.contextTypes = {
     router: PropTypes.object.isRequired
 };
-const mapDispatchToProps = { getBooks, getCategories, saveCategory, borrowBook, saveBooks, deleteBook, logout };
+const mapDispatchToProps = { getBooks, getCategories, saveCategory, borrowBook, saveBooks, searchBook, deleteBook, logout };
 
 const mapStateToProps = state => ({
     books: state.books.books,

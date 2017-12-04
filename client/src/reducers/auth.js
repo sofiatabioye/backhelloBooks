@@ -1,10 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
-import { SET_CURRENT_USER, SIGN_UP, CHANGE_PASSWORD_FAILURE, CHANGE_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE, RESET_PASSWORD_SUCCESS, USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILURE } from '../actions/actionTypes';
-
-const initialState = {
-    isAuthenticated: false,
-    user: {}
-};
+import { SET_CURRENT_USER, USER_LOGIN_FAILURE,
+    SIGN_UP, CHANGE_PASSWORD_FAILURE, CHANGE_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE, RESET_PASSWORD_SUCCESS, USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILURE } from '../actions/actionTypes';
 
 export default (state = { user: [], loading: false, errors: [], success: [] }, action = {}) => {
     switch (action.type) {
@@ -12,6 +8,10 @@ export default (state = { user: [], loading: false, errors: [], success: [] }, a
             return {
                 isAuthenticated: !isEmpty(action.user),
                 user: action.user
+            };
+        case USER_LOGIN_FAILURE:
+            return { ...state,
+                errors: action.error
             };
 
         case FORGOT_PASSWORD_SUCCESS:
