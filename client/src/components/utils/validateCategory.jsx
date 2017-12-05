@@ -10,9 +10,10 @@ import isEmpty from 'lodash/isEmpty';
  */
 export default function validateBook(data) {
   let errors = {};
+  console.log(data);
 
-  if (data.newCategory.length < 2 || data.title.length > 20) {
-    errors.title = 'Title must contain a minimum of 2 characters';
+  if (data.length < 3 || data.length > 20) {
+    errors.newCategory = 'Title must contain a minimum of 2 characters';
   }
 
   return {

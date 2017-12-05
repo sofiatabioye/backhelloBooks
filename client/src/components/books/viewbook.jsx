@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Button, Modal } from 'react-materialize';
 import { Link } from 'react-router-dom';
 
-import SideBar from './sidebar.jsx';
+import SideBar from '../sidebar/sidebar.jsx';
 import Header from '../header/header.jsx';
 import BookForm from './bookForm.jsx';
 
@@ -22,10 +22,24 @@ const Book = (props) => {
   const adminAction = currentBook => (
     <div className="valign-wrapper">
       <div className="">
-        <span><Link to="#" className="btn amber darken-3" onClick={() => props.openEditBookModal(currentBook)} ><i className="fa fa-edit fa-actions" /></Link></span>
+        <span>
+          <Link
+            to="#"
+            className="btn amber darken-3"
+            onClick={() => props.openEditBookModal(currentBook)} >
+            <i className="fa fa-edit fa-actions" />
+          </Link>
+        </span>
       </div>
       <div className="right-align">
-        <span><Link to="#" className="btn amber darken-3" onClick={() => props.onDeleteBook(currentBook.id)}><i className="fa fa-trash fa-actions" /></Link></span>
+        <span>
+          <Link
+            to="#"
+            className="btn amber darken-3"
+            onClick={() => props.onDeleteBook(currentBook.id)}>
+            <i className="fa fa-trash fa-actions" />
+          </Link>
+        </span>
       </div>
     </div>
   );

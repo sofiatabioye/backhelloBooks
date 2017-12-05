@@ -13,7 +13,7 @@ const propTypes = {
   changePassword: PropTypes.func.isRequired,
   resetPassword: PropTypes.func.isRequired,
   forgotPassword: PropTypes.func.isRequired,
-  history: PropTypes.element.isRequired,
+  history: PropTypes.element,
   auth: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired

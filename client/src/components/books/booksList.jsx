@@ -2,13 +2,32 @@ import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { Row, Col, Modal } from 'react-materialize';
 import Header from '../header/header.jsx';
-import SideBar from './sidebar.jsx';
+import SideBar from '../sidebar/sidebar.jsx';
 import BookForm from './bookForm.jsx';
 import CategoryForm from './categoryForm.jsx';
 
+const propTypes = {
+  title: PropTypes.element,
+  books: PropTypes.object,
+  user: PropTypes.object.isRequired,
+  numOfPages: PropTypes.element,
+  activePage: PropTypes.element,
+  handleSelect: PropTypes.func,
+  errors: PropTypes.object,
+  categories: PropTypes.object.isRequired,
+  states: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  openUploadWidget: PropTypes.func.isRequired,
+  saveBook: PropTypes.func.isRequired,
+  saveCategory: PropTypes.func.isRequired,
+  searchBook: PropTypes.func.isRequired,
+  openAddBookModal: PropTypes.func.isRequired,
+  openAddCategoryModal: PropTypes.func.isRequired
+};
 const BookList = (props) => {
   const title = props.title ? props.title : "Our Collection";
 
@@ -73,17 +92,24 @@ const BookList = (props) => {
         <SideBar
           categories={props.categories}
           user={props.user}
+          errors={props.errors}
           openAddBookModal={props.openAddBookModal}
           openAddCategoryModal={props.openAddCategoryModal}
         />
         <div className="books-container">
           <Row>
-            <Col s={12} m={6} l={6}>
+            <Col s={12} m={4} l={6}>
               <h5>{title}</h5>
             </Col>
-            <Col s={12} m={6} l={6}>
+            <Col s={12} m={8} l={6}>
               <form onSubmit= {props.searchBook}>
-                <input type="text" placeholder="search" name="searchTerm" onChange= {props.onChange}id="autocomplete-input" className="autocomplete" />
+                <input
+                  type="text"
+                  placeholder="search"
+                  name="searchTerm"
+                  onChange= {props.onChange
+                  }id="autocomplete-input"
+                  className="autocomplete" />
               </form>
             </Col>
 
@@ -101,5 +127,6 @@ const BookList = (props) => {
   );
 };
 
+BookList.propTypes = propTypes;
 
 export default BookList;

@@ -9,7 +9,7 @@ import BookCat from '../books/bookcat.jsx';
 import Password from '../auth/password.jsx';
 import NotFound from './notfound.jsx';
 import requireAuth from '../../helper/authenticate';
-import requireAdmin from '../../helper/adminAuth';
+// import requireAdmin from '../../helper/adminAuth';
 import GetBook from '../books/getbook.jsx';
 
 

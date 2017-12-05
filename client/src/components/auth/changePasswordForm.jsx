@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '../header/header.jsx';
-import Sidebar from '../books/sidebar.jsx';
+import Sidebar from '../sidebar/sidebar.jsx';
 
 const propTypes = {
   password: PropTypes.element.isRequired,

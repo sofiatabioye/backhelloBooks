@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-materialize';
 
 import Header from '../header/header.jsx';
-import SideBar from '../books/sidebar.jsx';
+import SideBar from '../sidebar/sidebar.jsx';
 
 const UserRecordsDisplay = (props) => {
   const books = props.books.borrowedBooks;
