@@ -4,29 +4,20 @@ import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Row, Col, Modal } from 'react-materialize';
+import { Row, Col } from 'react-materialize';
 import Header from '../header/header.jsx';
-import SideBar from '../sidebar/sidebar.jsx';
-import BookForm from './bookForm.jsx';
-import CategoryForm from './categoryForm.jsx';
+import SideBarMain from '../sidebar/sidebar.jsx';
 
 const propTypes = {
-  title: PropTypes.element,
-  books: PropTypes.object,
-  user: PropTypes.object.isRequired,
-  numOfPages: PropTypes.element,
-  activePage: PropTypes.element,
+  title: PropTypes.string,
+  books: PropTypes.array,
+  numOfPages: PropTypes.number,
+  activePage: PropTypes.number,
   handleSelect: PropTypes.func,
   errors: PropTypes.object,
-  categories: PropTypes.object.isRequired,
   states: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  openUploadWidget: PropTypes.func.isRequired,
-  saveBook: PropTypes.func.isRequired,
-  saveCategory: PropTypes.func.isRequired,
   searchBook: PropTypes.func.isRequired,
-  openAddBookModal: PropTypes.func.isRequired,
-  openAddCategoryModal: PropTypes.func.isRequired
 };
 const BookList = (props) => {
   const title = props.title ? props.title : "Our Collection";
@@ -69,33 +60,8 @@ const BookList = (props) => {
   return (
     <div>
       <Header />
+      <SideBarMain />
       <main>
-        <Modal
-          id= "addBook">
-          <BookForm
-            saveBook = {props.saveBook}
-            states={props.states}
-            errors={props.errors}
-            onChange={props.onChange}
-            categories={props.categories}
-            openUploadWidget = {props.openUploadWidget}
-          />
-        </Modal>
-        <Modal
-          id="addCategory">
-          <CategoryForm
-            saveCategory = {props.saveCategory}
-            states={props.states}
-            onChange={props.onChange}
-          />
-        </Modal>
-        <SideBar
-          categories={props.categories}
-          user={props.user}
-          errors={props.errors}
-          openAddBookModal={props.openAddBookModal}
-          openAddCategoryModal={props.openAddCategoryModal}
-        />
         <div className="books-container">
           <Row>
             <Col s={12} m={4} l={6}>

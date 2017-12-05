@@ -13,7 +13,7 @@ const propTypes = {
   changePassword: PropTypes.func.isRequired,
   resetPassword: PropTypes.func.isRequired,
   forgotPassword: PropTypes.func.isRequired,
-  history: PropTypes.element,
+  history: PropTypes.object,
   auth: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired
@@ -44,9 +44,6 @@ class Password extends React.Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onForgotPassword = this.onForgotPassword.bind(this);
     this.onResetPassword = this.onResetPassword.bind(this);
-    $(document).ready(() => {
-      $('.collapsible').collapsible();
-    });
   }
 
   /**

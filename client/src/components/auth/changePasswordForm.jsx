@@ -5,10 +5,10 @@ import Header from '../header/header.jsx';
 import Sidebar from '../sidebar/sidebar.jsx';
 
 const propTypes = {
-  password: PropTypes.element.isRequired,
-  confirmPassword: PropTypes.element.isRequired,
-  newPassword: PropTypes.element.isRequired,
-  errors: PropTypes.element.isRequired,
+  password: PropTypes.element,
+  confirmPassword: PropTypes.element,
+  newPassword: PropTypes.element,
+  errors: PropTypes.object,
   categories: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,

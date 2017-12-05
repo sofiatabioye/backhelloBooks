@@ -2,26 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getBooksByCat, searchBook, saveBooks } from '../../actions/bookActions';
-import { saveCategory } from '../../actions/categoryActions';
+import { getBooksByCat, searchBook } from '../../actions/bookActions';
 import {
-  openAddBookModal,
-  openAddCategoryModal,
   handleSelect,
-  isBookValid,
-  isCategoryValid,
   onChange,
-  openUploadWidget,
   searchBookByCategory,
-  onAddBook,
-  onSaveCategory
 } from './commonActions.jsx';
 import BookList from './booksList.jsx';
 
 const propTypes = {
-  books: PropTypes.object,
+  books: PropTypes.array,
   getBooksByCat: PropTypes.func.isRequired,
-  categories: PropTypes.object.isRequired,
+  categories: PropTypes.array,
   user: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
@@ -41,7 +33,7 @@ class BookCat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: {},
+      books: [],
       isDisabled: false,
       text: "",
       offset: 0,
@@ -52,12 +44,7 @@ class BookCat extends Component {
     };
     this.handleSelect = handleSelect.bind(this);
     this.onChange = onChange.bind(this);
-    this.onAddBook = onAddBook.bind(this);
-    this.saveCategory = onSaveCategory.bind(this);
-    this.openUploadWidget = openUploadWidget.bind(this);
     this.searchBook = searchBookByCategory.bind(this);
-    this.isCategoryValid = isCategoryValid.bind(this);
-    this.isBookValid = isBookValid.bind(this);
   }
 
 
@@ -67,9 +54,7 @@ class BookCat extends Component {
      * @memberof BookCat
      */
   componentDidMount() {
-    $(document).ready(() => {
-      $('.collapsible').collapsible();
-    });
+    $('.collapsible').collapsible();
     this.props.getBooksByCat(this.props.match.params.title);
   }
 
@@ -97,9 +82,7 @@ class BookCat extends Component {
       <div>
         <BookList
           title={title}
-          user={this.props.user}
           books={this.props.books}
-          categories={this.props.categories}
           states= {this.state}
           isDisabled = {this.state.isDisabled}
           searchBook = {this.searchBook.bind(this)}
@@ -108,11 +91,6 @@ class BookCat extends Component {
           activePage= {this.state.activePage}
           onChange = {this.onChange.bind(this)}
           handleSelect={this.handleSelect.bind(this)}
-          openAddBookModal = {openAddBookModal}
-          openAddCategoryModal = {openAddCategoryModal}
-          saveBook = {this.onAddBook.bind(this)}
-          saveCategory = {this.saveCategory.bind(this)}
-          openUploadWidget = {this.openUploadWidget.bind(this)}
         />
       </div>
     );
@@ -131,7 +109,7 @@ const mapStateToProps = state => ({
   categories: state.categories.categories.categories
 });
 
-const mapDispatchToProps = { getBooksByCat, searchBook, saveBooks, saveCategory };
+const mapDispatchToProps = { getBooksByCat, searchBook };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookCat);
 

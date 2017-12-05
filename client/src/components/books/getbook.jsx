@@ -4,7 +4,24 @@ import { connect } from 'react-redux';
 import swal from 'sweetalert';
 
 import { borrowBook, getBookById, deleteBook, updateBook } from '../../actions/bookActions';
+import {
+  handleSelect,
+  onChange,
+  openUploadWidget
+} from './commonActions.jsx';
 import ShowBook from './viewbook.jsx';
+
+const propTypes = {
+  book: PropTypes.object,
+  user: PropTypes.object,
+  borrowBook: PropTypes.func,
+  updateBook: PropTypes.func,
+  deleteBook: PropTypes.func,
+  openUploadWidget: PropTypes.func,
+  history: PropTypes.object,
+  match: PropTypes.object.isRequired,
+  getBookById: PropTypes.func.isRequired
+};
 /**
  * 
  * 
@@ -34,10 +51,11 @@ class GetBook extends Component {
     };
     this.borrowBook = this.borrowBook.bind(this);
     this.onDeleteBook = this.onDeleteBook.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.openEditBookModal = this.openEditBookModal.bind(this);
     this.saveBook = this.saveBook.bind(this);
-    this.openUploadWidget = this.openUploadWidget.bind(this);
+    this.handleSelect = handleSelect.bind(this);
+    this.onChange = onChange.bind(this);
+    this.openUploadWidget = openUploadWidget.bind(this);
   }
 
   /**
@@ -57,11 +75,7 @@ class GetBook extends Component {
      * @memberof Books
      */
   componentWillReceiveProps(nextProps) {
-    $(document).ready(() => {
-      $('select').material_select();
-      $('.collapsible').collapsible();
-    });
-
+    $('select').material_select();
     if (nextProps.book) {
       this.setState({
         id: nextProps.book.id,
@@ -81,28 +95,20 @@ class GetBook extends Component {
   }
 
   /**
-     * 
-     * @returns {void} 
-     * @param {any} event 
-     * @memberof Books
-     */
-  onChange(event) {
-    event.preventDefault();
-    this.setState({
-      ...this.state,
-      [event.target.name]: event.target.value
-    });
-  }
-
-  /**
      * @returns {void} borrows book
      * @param {any} userId
+     * @param {any} bookId
      * @memberof Books
      */
   borrowBook(userId, bookId) {
     this.props.borrowBook(userId, bookId, this.props.history);
   }
 
+  /**
+   * @returns {void} updates book
+   * @param {any} event 
+   * @memberof GetBook
+   */
   saveBook(event) {
     event.preventDefault();
     this.props.updateBook(this.props.match.params.id, this.state);
@@ -131,23 +137,6 @@ class GetBook extends Component {
     });
   }
 
-  /**
-     * @returns {Image} This uploads the image to cloudinary
-     * 
-     * @memberof AddBook
-     */
-  openUploadWidget() {
-    cloudinary.openUploadWidget({ cloud_name: 'ddvm5tzhm', upload_preset: 'sxzf4j4p', tags: ['books'], public_id: this.state.public_id, version: this.state.imageVersion },
-      (error, result) => {
-        this.setState({
-          image: result[0].url,
-          imageName: result[0].original_filename,
-          public_id: result[0].public_id,
-          imageVersion: result[0].version,
-        });
-      });
-  }
-
 
   onDeleteBook(bookId) {
     swal({
@@ -174,10 +163,9 @@ class GetBook extends Component {
     return (
       <div>
         <ShowBook
-          book={this.props.book || {}}
-          user= {this.props.user}
+          book={this.props.book}
           states={this.state}
-          categories ={this.props.categories}
+          user={this.props.user}
           onChange = {this.onChange.bind(this)}
           borrowBook = {this.borrowBook.bind(this)}
           onDeleteBook = {this.onDeleteBook.bind(this)}
@@ -190,10 +178,7 @@ class GetBook extends Component {
   }
 }
 
-GetBook.propTypes = {
-  books: PropTypes.array,
-  getBookById: PropTypes.func.isRequired,
-};
+GetBook.propTypes = propTypes;
 
 GetBook.contextTypes = {
   router: PropTypes.object.isRequired

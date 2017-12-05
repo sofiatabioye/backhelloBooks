@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const propTypes = {
   errors: PropTypes.object,
   states: PropTypes.object.isRequired,
-  saveCategory: PropTypes.func.isRequired,
+  saveCategory: PropTypes.func,
   onChange: PropTypes.func.isRequired
 };
 const CategoryForm = (props) => {

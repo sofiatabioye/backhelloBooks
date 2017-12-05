@@ -1,57 +1,121 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Modal } from 'react-materialize';
 
+import { saveBooks } from '../../actions/bookActions';
+import { saveCategory } from '../../actions/categoryActions';
+import SideBar from './showSidebar.jsx';
+import BookForm from '../books/bookForm.jsx';
+import CategoryForm from '../books/categoryForm.jsx';
+import {
+  openAddBookModal,
+  openAddCategoryModal,
+  isBookValid,
+  isCategoryValid,
+  onChange,
+  openUploadWidget,
+  onAddBook,
+  onSaveCategory
+} from '../books/commonActions.jsx';
 
-const SideBar = (props) => {
-  const user = props.user ? props.user.user : null;
-  const categories = props.categories ? props.categories : null;
-  const userRole = props.user.user.role;
-  const categoriesList = categories && categories.length ?
-    categories.map((category) => (
-      <li key={category.id}>
-        <Link to={`/books/genre/${category.title}`}>{category.title}</Link>
-      </li>
-    )) : <h6>No Categories</h6>;
-
-  const userActions = (
-    <span>
-      <li><Link to={"/profile"} >Borrowed Books</Link></li>
-      <li><Link to={"/history"}>Borrow History</Link></li>
-    </span>
-  );
-  const adminActions = (
-    <span>
-      <li><Link to="#" onClick={props.openAddBookModal}>Add new Book</Link></li>
-      <li><Link to="#" onClick={props.openAddCategoryModal} >Add new Category</Link></li>
-    </span>
-  );
-
-  return (
-    <div>
-      <ul id="slide-out" className="side-nav fixed">
-        <li><div className="user-view">
-          <img className="circle" src="http://res.cloudinary.com/ddvm5tzhm/image/upload/c_scale,h_100/v1510679454/man_cidthh.png" role="presentation"/>
-        </div>
-        <a href="#!name"><span className="name"><i className="fa fa-user" />{user.name}</span></a>
-        <a href="#!email"><span className="email"><i className="fa fa-envelope" />{user.email}</span></a>
-        <a href="#!level"> <span><i className="fa fa-tag" />{user.level}</span></a>
-        </li>
-        <li><div className="divider" /></li>
-        <li><a className="subheader">My Account</a></li>
-        { userRole === "user" ? userActions : adminActions}
-        <li><Link to={"/changepassword"}>Change Password</Link></li>
-        <li><div className="divider" /></li>
-        <ul className="collapsible" data-collapsible="accordion">
-          <li>
-            <div className="collapsible-header"><span className="category"><i className="fa fa-chevron-down"/>Categories</span></div>
-            <div className="collapsible-body"> {categoriesList}</div>
-          </li>
-
-        </ul>
-
-      </ul>
-    </div>
-  );
+const propTypes = {
+  categories: PropTypes.array,
+  user: PropTypes.object.isRequired,
+  match: PropTypes.object
 };
 
-export default SideBar;
+/**
+ * 
+ * 
+ * @class BookCat
+ * @extends {Component}
+ */
+class SideBarMain extends Component {
+  /**
+     * Creates an instance of BookCat.
+     * @param {any} props 
+     * @memberof BookCat
+     */
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: {},
+      categories: [],
+      title: '',
+      description: '',
+      category: '',
+      quantity: '',
+      author: '',
+      ISBN: '',
+      bookEdition: '',
+      publisher: '',
+      bookSize: '',
+      image: '',
+      imageName: '',
+      newCategory: ''
+    };
+    this.onChange = onChange.bind(this);
+    this.onAddBook = onAddBook.bind(this);
+    this.saveCategory = onSaveCategory.bind(this);
+    this.openUploadWidget = openUploadWidget.bind(this);
+    this.isCategoryValid = isCategoryValid.bind(this);
+    this.isBookValid = isBookValid.bind(this);
+  }
+
+  /**
+     * 
+     * 
+     * @returns {Books} By category
+     * @memberof BookCat
+     */
+  render() {
+    return (
+      <div>
+        <Modal
+          id= "addBook">
+          <BookForm
+            saveBook = {this.onAddBook.bind(this)}
+            openUploadWidget = {this.openUploadWidget.bind(this)}
+            states={this.state}
+            errors={this.state.errors}
+            onChange = {this.onChange.bind(this)}
+            categories={this.props.categories}
+          />
+        </Modal>
+        <Modal
+          id="addCategory">
+          <CategoryForm
+            saveCategory = {this.saveCategory.bind(this)}
+            states={this.state}
+            errors={this.state.errors}
+            onChange = {this.onChange.bind(this)}
+            categories={this.props.categories}
+          />
+        </Modal>
+        <SideBar
+          categories={this.props.categories}
+          user={this.props.user}
+          openAddBookModal={openAddBookModal}
+          openAddCategoryModal={openAddCategoryModal}
+        />
+      </div>
+    );
+  }
+}
+
+SideBarMain.propTypes = propTypes;
+
+SideBarMain.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.auth,
+  categories: state.categories.categories.categories
+});
+
+const mapDispatchToProps = { saveBooks, saveCategory };
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBarMain);
+

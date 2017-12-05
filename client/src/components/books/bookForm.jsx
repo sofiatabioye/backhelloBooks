@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   errors: PropTypes.object,
-  categories: PropTypes.object.isRequired,
+  categories: PropTypes.array,
   states: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  openUploadWidget: PropTypes.func.isRequired,
+  openUploadWidget: PropTypes.func,
   saveBook: PropTypes.func.isRequired
 };
 const BookForm = (props) => {
   const errors = props.errors ? props.errors : '';
   return (
     <div>
-      { errors.form && <div className="alert alert-danger">{errors.form}</div> }
       <form onSubmit={props.saveBook} className="form-responsive">
         <div className="form-group">
           <div className="row">
@@ -64,7 +63,6 @@ const BookForm = (props) => {
             <div className="col s6">
               <h6>Book Cover</h6>
               <img src={props.states.image} value={props.states.image} name="image"/>
-
               <div>
                 {props.states.imageName}
               </div>

@@ -3,13 +3,11 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import Authenticate from '../auth/auth.jsx';
 import Books from '../books/allbooks.jsx';
-import Profile from './profile.jsx';
-import UserHistory from './history.jsx';
+import Borrowed from '../borrowed/borrowed.jsx';
 import BookCat from '../books/bookcat.jsx';
 import Password from '../auth/password.jsx';
 import NotFound from './notfound.jsx';
 import requireAuth from '../../helper/authenticate';
-// import requireAdmin from '../../helper/adminAuth';
 import GetBook from '../books/getbook.jsx';
 
 
@@ -24,9 +22,9 @@ const helloRoutes = () => (
       <Route exact path="/signup" component={Authenticate}/>
       <Route exact path="/forgotpassword" component={Password}/>
       <Route exact path="/changepassword" component={Password}/>
-      <Route exact path="/history" component={requireAuth(UserHistory)}/>
+      <Route exact path="/books/borrowhistory" component={requireAuth(Borrowed)}/>
       <Route exact path="/api/v1/reset/:token" component={Password}/>
-      <Route exact path="/profile" component={requireAuth(Profile)}/>
+      <Route exact path="/books/borrowed" component={requireAuth(Borrowed)}/>
       <Route path="/*" component={NotFound}/>
     </Switch>
   </BrowserRouter>

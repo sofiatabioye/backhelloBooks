@@ -1,16 +1,27 @@
 import React from 'react';
 import { Row, Col, Button, Modal } from 'react-materialize';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import SideBar from '../sidebar/sidebar.jsx';
 import Header from '../header/header.jsx';
 import BookForm from './bookForm.jsx';
 
+const propTypes = {
+  user: PropTypes.object,
+  borrowBook: PropTypes.func,
+  openEditBookModal: PropTypes.func,
+  onDeleteBook: PropTypes.func,
+  openUploadWidget: PropTypes.func,
+  categories: PropTypes.array,
+  onChange: PropTypes.func,
+  states: PropTypes.object,
+  saveBook: PropTypes.func
+};
 
 const Book = (props) => {
   const userRole = props.user.user.role;
   const userId = props.user.user.user;
-
 
   const userAction = currentBook => (
     <Button waves="light" className="amber darken-3"
@@ -46,10 +57,7 @@ const Book = (props) => {
   return (
     <div>
       <Header />
-      <SideBar
-        categories={props.categories}
-        user={props.user}
-      />
+      <SideBar />
       <Modal
         id= "editBook">
         <BookForm
@@ -66,11 +74,13 @@ const Book = (props) => {
         </span>
 
         <Row>
-          <Col s={4} m={4} l={4}>
+          <Col s={12} m={4} l={4}>
             <img src={props.states.image} role="presentation"/>
-            { userRole === "user" ? userAction(props.states) : adminAction(props.states) }
+            <div>
+              { userRole === "user" ? userAction(props.states) : adminAction(props.states) }
+            </div>
           </Col>
-          <Col s={8} m={8} l={8}>
+          <Col s={12} m={8} l={8}>
                          Author: {props.states.author}
             <p>Category: {props.states.category}</p>
             <p>Published By: {props.states.publisher}</p>
@@ -88,5 +98,7 @@ const Book = (props) => {
     </div>
   );
 };
+
+Book.propTypes = propTypes;
 
 export default Book;
