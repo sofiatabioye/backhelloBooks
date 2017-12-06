@@ -1,20 +1,42 @@
-export default (state = { categories: [], categories2: [], loading: false, errors: [] }, action = {}) => {
-    switch (action.type) {
-        case 'FETCH_CAT_BEGINS':
-            return Object.assign({}, state, { loading: true });
-        case 'FETCH_CAT_SUCCESS':
-            return Object
-                .assign({}, state, {
-                    loading: false,
-                    categories: action.categories
-                });
-        case 'FETCH_CAT_FAILURE':
-            return Object.assign({}, state, { loading: false, errors: action.errors });
-        case 'ADD_CATEGORY_SUCCESS':
-            return Object.assign({}, state, { loading: false, categories: action.categories });
-        case 'ADD_CATEGORY_FAILURE':
-            return Object.assign({}, state, { loading: false, errors: action.errors });
+import { FETCH_CAT_SUCCESS, ADD_CATEGORY_BEGINS, ADD_CATEGORY_SUCCESS, ADD_CATEGORY_FAILURE } from '../actions/actionTypes';
 
-        default: return state;
+export default (state = { categories: [], loading: false, errors: {}, message: {} }, action = {}) => {
+  switch (action.type) {
+  case 'FETCH_CAT_BEGINS':
+    return {
+      loading: true
+    };
+
+  case FETCH_CAT_SUCCESS:
+    return { ...state,
+      loading: false,
+      categories: action.categories
+    };
+
+  case 'FETCH_CAT_FAILURE':
+    return { ...state,
+      loading: false,
+      errors: action.errors
+
+    };
+  case ADD_CATEGORY_BEGINS:
+    return {
+      loading: true
+    };
+
+  case ADD_CATEGORY_SUCCESS:
+    return { ...state,
+      categories: {
+        categories: state.categories.categories.concat(action.category)
+      }
+    };
+
+  case ADD_CATEGORY_FAILURE:
+    return { ...state,
+      errors: action.errors
     }
+    ;
+
+  default: return state;
+  }
 };

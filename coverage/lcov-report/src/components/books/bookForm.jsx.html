@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/books/bookForm.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/components/books</a> bookForm.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/6</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+import PropTypes from 'prop-types';
+&nbsp;
+const propTypes = {
+  errors: PropTypes.object,
+  categories: PropTypes.array,
+  states: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  openUploadWidget: PropTypes.func,
+  saveBook: PropTypes.func.isRequired
+};
+const BookForm = <span class="fstat-no" title="function not covered" >(p</span>rops) =&gt; {
+  const errors = <span class="cstat-no" title="statement not covered" >props.errors ? props.errors : '';</span>
+<span class="cstat-no" title="statement not covered" >  return (</span>
+    &lt;div&gt;
+      &lt;form onSubmit={props.saveBook} className="form-responsive"&gt;
+        &lt;div className="form-group"&gt;
+          &lt;div className="row"&gt;
+            &lt;div className="col s6"&gt;
+              &lt;div className="input-field"&gt;
+                &lt;label className="active" htmlFor="title"&gt;Title&lt;/label&gt;
+                &lt;input
+                  type="text"
+                  placeholder="Title"
+                  value={props.states.title}
+                  onChange={props.onChange}
+                  className="active validate"
+                  name="title" required/&gt;
+                &lt;div className="red-text"&gt;{errors.title}&lt;/div&gt;
+              &lt;/div&gt; &lt;div className="input-field"&gt;
+                &lt;label className="active" htmlFor="category"&gt;Category&lt;/label&gt;
+                &lt;select name="category" onChange={props.onChange} className="form-control"&gt;
+                  &lt;option value={props.states.category}&gt;{props.states.category}&lt;/option&gt;
+                  { props &amp;&amp; props.categories ?
+                    props.categories.map(<span class="fstat-no" title="function not covered" >(c</span>ategory) =&gt; (
+<span class="cstat-no" title="statement not covered" >                      &lt;option id="rm" value={category.title || ""} key={category.id}&gt;{category.title || ""}&lt;/option&gt;</span>
+                    )) : &lt;option&gt;There are no categories in the library&lt;/option&gt;}
+&nbsp;
+                &lt;/select&gt;
+              &lt;/div&gt;
+              {errors.category &amp;&amp; &lt;div className="red-text"&gt;{errors.category}&lt;/div&gt; }
+              &lt;label className="active" htmlFor="author"&gt;Author&lt;/label&gt;
+              &lt;input
+                type="text"
+                placeholder="Author"
+                value={props.states.author}
+                onChange={props.onChange}
+                className="validate"
+                name="author"
+                required /&gt;
+              {errors.author &amp;&amp; &lt;div className="red-text"&gt;{errors.author}&lt;/div&gt; }
+              &lt;label className="active" htmlFor="isbn"&gt;ISBN&lt;/label&gt;
+              &lt;input
+                type="number"
+                placeholder="ISBN"
+                value={props.states.ISBN}
+                onChange={props.onChange}
+                className="validate"
+                name="ISBN"
+                required /&gt;
+              {errors.isbn &amp;&amp; &lt;div className="red-text"&gt;{errors.isbn}&lt;/div&gt; }
+            &lt;/div&gt;
+            &lt;div className="col s6"&gt;
+              &lt;h6&gt;Book Cover&lt;/h6&gt;
+              &lt;img src={props.states.image} value={props.states.image} name="image"/&gt;
+              &lt;div&gt;
+                {props.states.imageName}
+              &lt;/div&gt;
+              &lt;div className="upload" id="filename" value={props.states.image}&gt;
+                &lt;button onClick={props.openUploadWidget} className="btn btn-primary btn-sm upload-button"
+                  value={props.states.image} name="image"&gt;
+&nbsp;
+                  {props.states.image === '' &amp;&amp; &lt;div&gt;Add BookCover&lt;/div&gt;}
+&nbsp;
+                  {props.states.image !== '' &amp;&amp; &lt;div&gt;Change BookCover&lt;/div&gt;}
+                &lt;/button&gt;
+              &lt;/div&gt;
+&nbsp;
+              {errors.image &amp;&amp; &lt;div className="red-text"&gt;{errors.image}&lt;/div&gt; }
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;label className="active" htmlFor="description"&gt;Description&lt;/label&gt;
+          &lt;textarea
+            placeholder="Description"
+            value={props.states.description}
+            onChange={props.onChange}
+            className="validate"
+            name="description"
+            required /&gt;
+          {errors.description &amp;&amp; &lt;div className="red-text"&gt;{errors.description}&lt;/div&gt; }
+          &lt;label className="active" htmlFor="Edition"&gt;Edition&lt;/label&gt;
+          &lt;input
+            type="number"
+            placeholder="Edition"
+            value={props.states.bookEdition}
+            onChange={props.onChange}
+            className="form-control"
+            name="bookEdition"
+            required /&gt;
+          {errors.edition &amp;&amp; &lt;div className="red-text"&gt;{errors.edition}&lt;/div&gt; }
+          &lt;label className="active" htmlFor="Publisher"&gt;Publisher&lt;/label&gt;
+          &lt;input
+            type="text"
+            placeholder="Publisher"
+            value={props.states.publisher}
+            onChange={props.onChange}
+            className="form-control"
+            name="publisher"
+            required /&gt;
+          {errors.publisher &amp;&amp; &lt;div className="red-text"&gt;{errors.publisher}&lt;/div&gt; }
+          &lt;label className="active" htmlFor="Size"&gt;Book Size (pages)&lt;/label&gt;
+          &lt;input
+            type="number"
+            placeholder="Size"
+            value={props.states.bookSize}
+            onChange={props.onChange}
+            className="form-control"
+            name="bookSize"
+            required /&gt;
+          {errors.size &amp;&amp; &lt;div className="red-text"&gt;{errors.size}&lt;/div&gt; }
+          &lt;label className="active" htmlFor="Quantity"&gt;Quantity&lt;/label&gt;
+          &lt;input
+            type="number"
+            placeholder="Quantity"
+            name="quantity"
+            value={props.states.quantity}
+            onChange={props.onChange}
+            className="form-control"
+            min={1}
+            required /&gt;
+          {errors.quantity &amp;&amp; &lt;div className="red-text"&gt;{errors.quantity}&lt;/div&gt; }
+&nbsp;
+        &lt;/div&gt;
+        &lt;button type="submit" className="btn btn-info btn-lg" &gt;Save Book&lt;/button&gt;
+&nbsp;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};
+&nbsp;
+BookForm.propTypes = propTypes;
+&nbsp;
+export default BookForm;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 05 2017 23:38:05 GMT+0100 (WAT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
