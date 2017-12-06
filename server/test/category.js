@@ -1,18 +1,21 @@
 import chai from 'chai';
 import supertest from 'supertest';
-import app from '../../app';
+import dotenv from 'dotenv';
+
+import app from '../app';
 
 const assert = chai.assert;
+dotenv.config();
 
 describe('Category, ', () => {
-  const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDM1MjQ2MTIsImV4cCI6MTUwMzc4MzgxMn0.fxewHIqNLoEqX6CmkNB2CFwv_BIenesm-y-qHA9BnxQ';
-  function makeText() {
+  const adminToken = process.env.ADMIN_TOKEN;
+  const makeText = () => {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (let i = 0; i < 5; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
     return text;
-  }
+  };
 
   // tests if admin can get all categories
 
@@ -36,6 +39,7 @@ describe('Category, ', () => {
       supertest(app).post('/api/v1/categories/create').send(cat).end((err, res) => {
         assert.equal(res.statusCode, 201);
         assert.equal(res.body.message, 'Category Created Successfully');
+        if (err) return done(err);
         done();
       });
     });
@@ -51,7 +55,10 @@ describe('Category, ', () => {
         token: adminToken
       };
       supertest(app).post('/api/v1/categories/create').send(cat).end((err, res) => {
-        assert.equal(res.statusCode, 400);
+        assert.equal(res.statusCode, 409);
+        assert.equal(res.body.message, 'Category already exists');
+        assert.isObject(res.body);
+        if (err) return done(err);
         done();
       });
     });
@@ -61,9 +68,11 @@ describe('Category, ', () => {
 
   describe('test if admin can get category by Id if it exists, ', () => {
     it('return category at specified id', (done) => {
-      supertest(app).get('/api/v1/categories/1').set('x-access-token', adminToken).send()
+      supertest(app).get('/api/v1/categories/21').set('x-access-token', adminToken).send()
         .end((err, res) => {
+          assert.isOk(res.body);
           assert.equal(res.statusCode, 200);
+          if (err) return done(err);
           done();
         });
     });
@@ -71,9 +80,10 @@ describe('Category, ', () => {
 
   describe('test if user can get category by Id if it does not exist, ', () => {
     it('return category not found', (done) => {
-      supertest(app).get('/api/v1/categories/100').set('x-access-token', adminToken).send()
+      supertest(app).get('/api/v1/categories/1000').set('x-access-token', adminToken).send()
         .end((err, res) => {
           assert.equal(res.statusCode, 404);
+          assert.isObject(res.body);
           assert.equal(res.body.message, 'Category Not Found');
           done();
         });
@@ -89,15 +99,15 @@ describe('Category, ', () => {
         title: makeText,
         token: adminToken
       };
-      supertest(app).put('/api/v1/categories/1').send(cat)
+      supertest(app).put('/api/v1/categories/21').send(cat)
         .end((err, res) => {
           assert.equal(res.statusCode, 200);
+          assert.equal(res.body.message, 'Category Updated Successfully');
+          assert.isObject(res.body);
           done();
         });
     });
   });
 
   // tests if admin can delete category
-
-  
 });

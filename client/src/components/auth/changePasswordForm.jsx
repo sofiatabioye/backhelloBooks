@@ -9,8 +9,6 @@ const propTypes = {
   confirmPassword: PropTypes.element,
   newPassword: PropTypes.element,
   errors: PropTypes.object,
-  categories: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onChangePassword: PropTypes.func.isRequired
 
@@ -20,11 +18,7 @@ const PasswordForm = (props) => {
   return (
     <div>
       <Header />
-      <Sidebar
-        categories={props.categories}
-        user={props.user}
-      />
-
+      <Sidebar/>
       <div className="books-container">
         <div className="row">
           <div className="col s6 offset-s2">

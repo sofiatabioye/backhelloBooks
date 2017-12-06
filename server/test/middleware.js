@@ -1,13 +1,16 @@
 import chai from 'chai';
 import supertest from 'supertest';
-import app from '../../app';
+import dotenv from 'dotenv';
+
+import app from '../app';
 
 const assert = chai.assert;
+dotenv.config();
 
 // This contains tests for the middlewares
 describe('Middleware', () => {
-  const usertoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoyMSwicm9sZSI6InVzZXIiLCJpYXQiOjE1MDM1MjQ1MjUsImV4cCI6MTUwMzc4MzcyNX0.CToCrTrKcztjT3SJODuVCoI0F6CfnIcNZBnYTFkd8LY';
-  const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1MDM1MjQ2MTIsImV4cCI6MTUwMzc4MzgxMn0.fxewHIqNLoEqX6CmkNB2CFwv_BIenesm-y-qHA9BnxQ';
+  const usertoken = process.env.USER_TOKEN;
+  const adminToken = process.env.ADMIN_TOKEN;
   const invalidToken = 'invalid token';
 
   // tests if user can get all books when token is not provided
@@ -17,7 +20,7 @@ describe('Middleware', () => {
       supertest(app).get('/api/v1/books').send()
         .end((err, res) => {
           assert.equal(res.statusCode, 412);
-          assert.equal(res.body.message, 'Token not provided');
+          assert.equal(res.body.message, 'You need to sign in first');
           done();
         });
     });
@@ -48,12 +51,12 @@ describe('Middleware', () => {
   });
 
   // test if user can access admin specific route
-  describe('should test if user can get all categories which is specific to admin, ', () => {
-    it('return user not priviledged', (done) => {
-      supertest(app).get('/api/v1/categories').set('x-access-token', usertoken).send()
+  describe('should test if a non-logged in user can get all categories, ', () => {
+    it('return all categories', (done) => {
+      supertest(app).get('/api/v1/categories').set('x-access-token', invalidToken).send()
         .end((err, res) => {
-          assert.equal(res.statusCode, 401);
-          assert.equal(res.body.message, 'You do not have the privilege');
+          assert.equal(res.statusCode, 403);
+          assert.equal(res.body.message, 'You are not signed in');
           done();
         });
     });

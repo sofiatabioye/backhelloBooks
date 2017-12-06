@@ -11,7 +11,7 @@ const propTypes = {
   login: PropTypes.func.isRequired,
   signup: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  history: PropTypes.element.isRequired
+  history: PropTypes.object.isRequired
 };
 /**
  * 

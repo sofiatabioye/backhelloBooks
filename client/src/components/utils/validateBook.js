@@ -45,7 +45,6 @@ export default function validateBook(data) {
     errors.image = "Image cannot be empty";
   }
 
-
   return {
     errors,
     isValid: isEmpty(errors)

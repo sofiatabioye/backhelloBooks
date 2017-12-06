@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/actions/actionTypes.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/actions</a> actionTypes.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>47/47</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>47/47</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
+export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
+export const DELETE_FLASH_MESSAGE = 'DELETE_FLASH_MESSAGE';
+export const SET_BOOKS = 'SET_BOOKS';
+export const GET_BOOK = 'GET_BOOK';
+export const GET_BOOK_FAILURE = 'GET_BOOK_FAILURE';
+export const ADD_BOOK = 'ADD_BOOK';
+export const UPDATE_BOOK = 'UPDATE_BOOK';
+export const SIGN_UP = 'SIGN_UP';
+export const SET_CATEGORY = 'SET_CATEGORY';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const BOOKS_CATEGORY_SUCCESS = 'BOOKS_CATEGORY_SUCCESS';
+export const FETCH_CAT_SUCCESS = 'FETCH_CAT_SUCCESS';
+export const BORROW_BOOK_BEGINS = 'BORROW_BOOK_BEGINS';
+export const BORROW_BOOK_SUCCESS = 'BORROW_BOOK_SUCCESS';
+export const BORROW_BOOK_FAILURE = 'BORROW_BOOK_FAILURE';
+export const FETCH_BORROWED_BOOKS_BEGINS = 'FETCH_BORROWED_BOOKS_BEGINS';
+export const FETCH_BORROWED_BOOKS_SUCCESS = 'FETCH_BORROWED_BOOKS_SUCCESS';
+export const FETCH_BORROWED_BOOKS_FAILURE = 'FETCH_BORROWED_BOOKS_FAILURE';
+export const USER_SIGNUP_FAILIURE = 'USER_SIGNUP_FAILIURE';
+export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS';
+export const CHANGE_PASSWORD_SUCCESS = 'CHANGE_PASSWORD_SUCCESS';
+export const CHANGE_PASSWORD_FAILURE = 'CHANGE_PASSWORD_FAILURE';
+export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
+export const FORGOT_PASSWORD_FAILURE = 'FORGOT_PASSWORD_FAILURE';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAILURE = 'RESET_PASSWORD_FAILURE';
+export const SAVE_BOOK_BEGINS = 'SAVE_BOOK_BEGINS';
+export const SAVE_BOOK_SUCCESS = 'SAVE_BOOK_SUCCESS';
+export const SAVE_BOOK_FAILURE = 'SAVE_BOOK_FAILURE';
+export const BORROW_HISTORY_BEGINS = 'BORROW_HISTORY_BEGINS';
+export const BORROW_HISTORY_SUCCESS = 'SAVE_BOOK_SUCCESS';
+export const BORROW_HISTORY_FAILURE = 'BORROW_HISTORY_FAILURE';
+export const RETURN_BOOK_BEGINS = 'RETURN_BOOK_BEGINS';
+export const RETURN_BOOK_SUCCESS = 'RETURN_BOOK_SUCCESS';
+export const RETURN_BOOK_FAILURE = 'RETURN_BOOK_FAILURE';
+export const DELETE_BOOK_BEGINS = 'DELETE_BOOK_BEGINS';
+export const DELETE_BOOK_SUCCESS = 'DELETE_BOOK_SUCCESS';
+export const DELETE_BOOK_FAILURE = 'DELETE_BOOK_FAILURE';
+export const UPDATE_BOOK_BEGINS = 'UPDATE_BOOK_BEGINS';
+export const UPDATE_BOOK_SUCCESS = 'UPDATE_BOOK_SUCCESS';
+export const UPDATE_BOOK_FAILURE = 'UPDATE_BOOK_FAILURE';
+export const ADD_CATEGORY_BEGINS = 'ADD_CATEGORY_BEGINS';
+export const ADD_CATEGORY_SUCCESS = 'ADD_CATEGORY_SUCCESS';
+export const ADD_CATEGORY_FAILURE = 'ADD_CATEGORY_FAILURE';
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 05 2017 23:38:05 GMT+0100 (WAT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@ import { Row, Col } from 'react-materialize';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  email: PropTypes.element.isRequired,
+  email: PropTypes.element,
   onChange: PropTypes.func.isRequired,
   onForgotPassword: PropTypes.func.isRequired
 

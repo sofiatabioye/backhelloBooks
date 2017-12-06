@@ -1,5 +1,5 @@
-import validateBook from '../utils/validateBook.jsx';
-import validateCategory from '../utils/validateCategory.jsx';
+import validateBook from '../utils/validateBook';
+import validateCategory from '../utils/validateCategory';
 
 /**
      * 
@@ -19,8 +19,8 @@ export function onChange(event) {
 export function openUploadWidget() {
   cloudinary.openUploadWidget(
     {
-      cloud_name: 'ddvm5tzhm',
-      upload_preset: 'sxzf4j4p',
+      cloud_name: process.env.CLOUDINARY_NAME,
+      upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
       tags: ['books'],
       public_id: this.state.public_id,
       version: this.state.imageVersion

@@ -6,7 +6,7 @@ import ChangePasswordForm from './changePasswordForm.jsx';
 import ForgotPasswordForm from './forgotPasswordForm.jsx';
 import ResetPasswordForm from './resetPasswordForm.jsx';
 import { changePassword, forgotPassword, resetPassword } from '../../actions/authActions';
-import validatePassword from '../utils/validatePassword.jsx';
+import validatePassword from '../utils/validatePassword';
 
 
 const propTypes = {
@@ -14,8 +14,6 @@ const propTypes = {
   resetPassword: PropTypes.func.isRequired,
   forgotPassword: PropTypes.func.isRequired,
   history: PropTypes.object,
-  auth: PropTypes.object.isRequired,
-  categories: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired
 };
 /**
@@ -127,8 +125,6 @@ class Password extends React.Component {
             errors={this.state.errors}
             onChange = {this.onChange.bind(this)}
             onChangePassword = {this.onChangePassword.bind(this)}
-            user = {this.props.auth}
-            categories={this.props.categories}
           /> }
         {this.props.match.path === forgotpassword &&
             <ForgotPasswordForm
@@ -141,7 +137,6 @@ class Password extends React.Component {
                 errors={this.state.errors}
                 onChange = {this.onChange.bind(this)}
                 onResetPassword = {this.onResetPassword.bind(this)}
-                auth = {this.props.auth}
               />
         }
         }
@@ -161,13 +156,9 @@ Password.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  user: state.auth,
-  categories: state.categories.categories.categories
-});
-
 const mapDispatchToProps = { changePassword, resetPassword, forgotPassword };
+
+const mapStateToProps = state => ({});
 
 Password.propTypes = propTypes;
 

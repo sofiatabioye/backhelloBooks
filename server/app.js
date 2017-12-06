@@ -7,6 +7,7 @@ import routes from './routes';
 import authorize from './helper/auth';
 import checkadmin from './helper/checkadmin';
 import canBorrow from './helper/canBorrow';
+import validateBook from './helper/validateBook';
 
 // Set up the express app
 const app = express();
@@ -23,15 +24,15 @@ app.use(express.static(path.join(__dirname, './client')));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 
-routes(app, authorize, checkadmin, canBorrow);
+routes(app, authorize, checkadmin, canBorrow, validateBook);
 
 
 app.get('/bundle.js', (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, '../client', 'bundle.js'));
+  res.status(200).sendFile(path.join(__dirname, '../client', 'bundle.js'));
 });
 
 app.get('*', (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, '../client', 'index.html'));
+  res.status(200).sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
 
