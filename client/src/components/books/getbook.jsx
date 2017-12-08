@@ -148,7 +148,7 @@ class GetBook extends Component {
       .then(willDelete => {
         if (willDelete) {
           this.props.deleteBook(bookId, this.props.history);
-          swal("Deleted!", "Your imaginary file has been deleted!", "success");
+          swal("Deleted!", "The book has been deleted!", "success");
         }
       });
   }

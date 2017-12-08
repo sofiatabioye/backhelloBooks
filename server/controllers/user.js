@@ -82,12 +82,17 @@ export default {
                 email: user.email },
               secret,
               { expiresIn: 72 * 60 * 60 });
-              res.send(200, { token: myToken,
+              res.send(200, {
+                token: myToken,
                 message: 'You are signed in',
-                userId: user.id,
-                userName: user.username,
-                level: user.level,
-                role: user.role });
+                payload: {
+                  userId: user.id,
+                  level: user.level,
+                  role: user.role,
+                  name: user.username,
+                  email: user.email
+                }
+              });
             } else {
               res.status(400).send({ message: 'Invalid login credentials' });
             }
@@ -122,6 +127,7 @@ export default {
             .then(() => {
               const successMessage = `An e-mail has been sent to ${user.email} with further instructions.`;
               sendmail(forgotPassword(user.email, req.headers.host, token), res, successMessage);
+              res.status(200).send({ message: 'Password reset email sent successfully' });
             })
             .catch(error => res.status(400).send(error));
         }

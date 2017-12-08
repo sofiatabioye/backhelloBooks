@@ -164,7 +164,7 @@ export function login(userData, history) {
       const token = response.data.token;
       localStorage.setItem('x-access-token', token);
       setAuthorizationToken(token);
-      dispatch(setCurrentUser(jwt.decode(token)));
+      dispatch(setCurrentUser(response.data.payload));
       toastr.success("You are signed In");
       history.push('/books');
     })
@@ -223,7 +223,7 @@ export function forgotPassword(email) {
       toastr.success(response.data.message);
     })
     .catch((err) => {
-      dispatch(forgotPasswordFailure(err.response));
+      dispatch(forgotPasswordFailure(err.response.data));
       toastr.warning(err.response.data.message);
     });
 }
