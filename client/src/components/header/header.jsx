@@ -80,7 +80,7 @@ class Header extends Component {
       <Dropdown trigger={
         <li>
           <a><i className="fa fa-user"/> {userName}
-            <i className="material-icons right">arrow_drop_down</i>
+            <i className="fa fa-chevron-down"/>
           </a>
         </li>
       }>

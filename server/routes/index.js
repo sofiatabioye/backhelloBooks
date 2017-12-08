@@ -4,7 +4,7 @@ import categoriesController from '../controllers/category';
 
 const routes = (app, authorize, checkadmin, canBorrow, validateBook) => {
   app.get('/api', (req, res) => res.status(200).send({
-    message: 'Welcome to the Libraries API!',
+    message: 'Welcome to the HelloBooks Libraries API!',
   }));
 
   // User Login Routes

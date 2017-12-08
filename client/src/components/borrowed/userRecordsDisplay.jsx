@@ -68,7 +68,7 @@ const UserRecordsDisplay = (props) => {
           <tbody key={book.id}>
             <tr>
               <th scope="row">{index + 1 }</th>
-              <td><Link to={`/book/${book.book_id}`}>{book.Book.title}</Link></td>
+              <td><Link to={`/book/show/${book.book_id}`}>{book.Book.title}</Link></td>
               <td>{moment(book.borrowDate).format('MM/DD/YYYY')}</td>
               <td>{moment(book.expectedReturnDate).fromNow()}</td>
               { props.userPage === '/books/borrowhistory' ? historyCol(book) : profileCol(book)}

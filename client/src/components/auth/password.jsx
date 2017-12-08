@@ -46,6 +46,15 @@ class Password extends React.Component {
 
   /**
      * 
+     * @returns {void} This fetches all books from the api
+     * @memberof Password
+     */
+  componentDidMount() {
+    $('.collapsible').collapsible();
+  }
+
+  /**
+     * 
      * @returns {void}
      * @param {any} e 
      * @memberof Password

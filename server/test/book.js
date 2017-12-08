@@ -34,30 +34,31 @@ describe('In the Book controller, ', () => {
   });
 
   // tests if admin can create book with correct information
-  // describe('test if book can be created with correct and complete parameters', () => {
-  //   it('returns a new book', (done) => {
-  //     const book = {
-  //       title: 'test title',
-  //       description: 'this is a test description',
-  //       quantity: 5,
-  //       image: 'http://res.cloudinary.com/ddvm5tzhm/image/upload/v1511345818/HelloBooks/xfrcwdttvdhccc20xofx.jpg',
-  //       category: makeText(),
-  //       publisher: 'Test',
-  //       author: 'Testing Test',
-  //       bookSize: 250,
-  //       bookEdition: 2010,
-  //       ISBN: 6788865467896,
-  //       token: adminToken
-  //     };
-  //     supertest(app).post('/api/v1/books/create').send(book).end((err, res) => {
-  //       assert.equal(res.statusCode, 201);
-  //       assert.equal(res.body.message, 'Book Created Successfully.');
-  //       assert.isObject(res.body);
-  //       if (err) return done(err);
-  //       done();
-  //     });
-  //   });
-  // });
+
+  describe('test if book can be created with correct and complete parameters', () => {
+    it('returns a new book', (done) => {
+      const book = {
+        title: 'test title',
+        description: 'this is a test description',
+        quantity: 5,
+        image: 'http://res.cloudinary.com/ddvm5tzhm/image/upload/v1511345818/HelloBooks/xfrcwdttvdhccc20xofx.jpg',
+        category: makeText(),
+        publisher: 'Test',
+        author: 'Testing Test',
+        bookSize: 250,
+        bookEdition: 2010,
+        ISBN: 6788865467896,
+        token: adminToken
+      };
+      supertest(app).post('/api/v1/books/create').send(book).end((err, res) => {
+        assert.equal(res.statusCode, 201);
+        assert.equal(res.body.message, 'Book Created Successfully.');
+        assert.isObject(res.body);
+        if (err) return done(err);
+        done();
+      });
+    });
+  });
 
   // tests if admin can creat book with incomplete information
 
