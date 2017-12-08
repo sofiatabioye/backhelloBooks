@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 // create reusable transporter object using the default SMTP transport
 export const smtpTransport = nodemailer.createTransport({
@@ -7,8 +9,8 @@ export const smtpTransport = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: "abisoph16@gmail.com", // generated ethereal user
-    pass: "farouk14" // generated ethereal password
+    user: process.env.EMAIL_SENDER, // generated ethereal user
+    pass: process.env.EMAIL_SENDER_PASSWORD // generated ethereal password
   }
 });
 
