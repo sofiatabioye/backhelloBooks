@@ -1,11 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Navbar, Dropdown, Col, Row } from 'react-materialize';
-import { Link } from 'react-router-dom';
+import { Modal } from 'react-materialize';
 
-import { getCategories } from '../../actions/categoryActions';
+import DisplayHeader from './displayHeader.jsx';
+import { saveBooks } from '../../actions/bookActions';
+import { getCategories, saveCategory } from '../../actions/categoryActions';
 import { logout } from '../../actions/authActions';
+import BookForm from '../books/bookForm.jsx';
+import CategoryForm from '../books/categoryForm.jsx';
+import {
+  openAddBookModal,
+  openAddCategoryModal,
+  isBookValid,
+  isCategoryValid,
+  onChange,
+  openUploadWidget,
+  onAddBook,
+  onSaveCategory
+} from '../books/commonActions.jsx';
+
+const propTypes = {
+  categories: PropTypes.array,
+  user: PropTypes.object.isRequired,
+  history: PropTypes.object,
+  logout: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  getCategories: PropTypes.func.isRequired
+};
 
 /**
  * 
@@ -22,8 +44,27 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
+      errors: {},
+      categories: {},
+      title: '',
+      description: '',
+      category: '',
+      quantity: '',
+      author: '',
+      ISBN: '',
+      bookEdition: '',
+      publisher: '',
+      bookSize: '',
+      image: '',
+      imageName: '',
+      newCategory: ''
     };
+    this.onChange = onChange.bind(this);
+    this.onAddBook = onAddBook.bind(this);
+    this.saveCategory = onSaveCategory.bind(this);
+    this.openUploadWidget = openUploadWidget.bind(this);
+    this.isCategoryValid = isCategoryValid.bind(this);
+    this.isBookValid = isBookValid.bind(this);
   }
 
   /**
@@ -50,103 +91,47 @@ class Header extends Component {
      * @memberof Header
      */
   render() {
-    const categories = this.props.categories.categories;
-    const userType = this.props.user.user.role || null;
-    const userName = this.props.user.user.name;
-    const isLoggedIn = this.props.user.isAuthenticated;
-
-    const categoriesList = categories && categories.length ?
-      categories.map((category) => (
-        <Col s={12} m={3} l={3} key={category.id}>
-          <li className="genreList__genre">
-            <Link to={`/books/genre/${category.title}`}>{category.title}</Link>
-          </li>
-        </Col>
-      )) : <h6>No Categories yet </h6>;
-
-    const userActions = (
-      <span>
-        <li><Link to={"/profile"} >Borrowed Books</Link></li>
-        <li><Link to={"/history"}>Borrow History</Link></li>
-      </span>
-    );
-    const adminActions = (
-      <span>
-        <li><Link to="#">Add new Book</Link></li>
-        <li><Link to="#">Add new Category</Link></li>
-      </span>
-    );
-    const profileList = (
-      <Dropdown trigger={
-        <li>
-          <a><i className="fa fa-user"/> {userName}
-            <i className="material-icons right">arrow_drop_down</i>
-          </a>
-        </li>
-      }>
-        <li className="dropdown">
-          <Link
-            to="#"
-            className="dropdown-toggle"
-            data-toggle="dropdown"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="false">
-            <img src="http://res.cloudinary.com/ddvm5tzhm/image/upload/c_scale,h_100/v1510679454/man_cidthh.png" role="presentation" className="usr-img"/>
-            <span className="caret" />
-          </Link>
-          <ul className="dropdown-menu">
-            { userType === "user" ? userActions : adminActions}
-
-            <li><Link to="#" onClick={this.props.logout} >Logout</Link></li>
-          </ul>
-        </li>
-      </Dropdown>
-    );
-
-    const guestLinks = (
-      <span>
-        <li><Link to={"/signin"}>Sign In </Link></li>
-        <li><Link to={"/signup"}>Sign Up </Link></li>
-      </span>
-    );
-
     return (
       <div>
-
-        <Navbar brand="HelloBooks" right className="navbar-home">
-          <li><Link to={"/books"}>Home</Link></li>
-          <Dropdown trigger={
-            <li>
-              <a>Browse Categories
-                <i className="material-icons right">arrow_drop_down</i>
-              </a>
-            </li>
-          }>
-            <Row id="dropdown_0">
-              {categoriesList }
-            </Row>
-          </Dropdown>
-          <ul id="dropdown1" className="dropdown-content genreList" style={{ height: `${100}px !important ` }} />
-          {isLoggedIn ? profileList : guestLinks }
-        </Navbar>
+        <Modal
+          id= "addBook">
+          <BookForm
+            saveBook = {this.onAddBook.bind(this)}
+            openUploadWidget = {this.openUploadWidget.bind(this)}
+            states={this.state}
+            errors={this.state.errors}
+            onChange = {this.onChange.bind(this)}
+            categories={this.props.categories}
+          />
+        </Modal>
+        <Modal
+          id="addCategory">
+          <CategoryForm
+            saveCategory = {this.saveCategory.bind(this)}
+            states={this.state}
+            errors={this.state.errors}
+            onChange = {this.onChange.bind(this)}
+            categories={this.props.categories}
+          />
+        </Modal>
+        <DisplayHeader
+          categories={this.props.categories}
+          user={this.props.user}
+          openAddBookModal={openAddBookModal}
+          openAddCategoryModal={openAddCategoryModal}
+          logout={this.props.logout}
+        />
       </div>
 
     );
   }
 }
 
-const mapDispatchToProps = { getCategories, logout };
-Header.propTypes = {
-  auth: PropTypes.object,
-  user: PropTypes.object,
-  logout: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  getCategories: PropTypes.func.isRequired
-};
+const mapDispatchToProps = { getCategories, saveBooks, saveCategory, logout };
+Header.propTypes = propTypes;
 
 const mapStateToProps = state => ({
-  categories: state.categories.categories,
+  categories: state.categories.categories.categories,
   user: state.auth
 });
 

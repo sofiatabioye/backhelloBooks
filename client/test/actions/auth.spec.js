@@ -3,14 +3,15 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 
 
-import { logout,
-  login,
+import { 
   signup,
+  login,
+  logout,
   changePassword,
   forgotPassword,
   resetPassword
 } from '../../src/actions/authActions';
-import { response, signupResponseFailure, signinResponseFailure, changePasswordResponse, passwordResponseFailure, forgotPasswordResponse } from '../mock/user';
+import { response, signupResponseFailure, signupResponse, signinResponseFailure, changePasswordResponse, passwordResponseFailure, forgotPasswordResponse } from '../mock/user';
 
 const mockStore = configureMockStore([
   thunk
@@ -30,7 +31,7 @@ describe('# Auth', () => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
           status: 200,
-          response: response,
+          response: signupResponse,
         });
       });
 
@@ -165,7 +166,7 @@ describe('# Auth', () => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
           status: 400,
-          response: response,
+          response: passwordResponseFailure,
         });
       });
 

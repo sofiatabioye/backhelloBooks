@@ -16,7 +16,6 @@ const propTypes = {
   books: PropTypes.array,
   pager: PropTypes.object.isRequired,
   getBooks: PropTypes.func.isRequired,
-  saveBooks: PropTypes.func,
   searchBook: PropTypes.func
 };
 
