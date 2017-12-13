@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/kidah/backhelloBooks.svg?branch=master)](https://travis-ci.org/kidah/backhelloBooks)
 [![Coverage Status](https://coveralls.io/repos/github/kidah/backhelloBooks/badge.svg)](https://coveralls.io/github/kidah/backhelloBooks)
 [![Code Climate](https://codeclimate.com/github/kidah/backhelloBooks/badges/gpa.svg)](https://codeclimate.com/github/kidah/backhelloBooks?branch=master)
+<<<<<<< HEAD
 
 ## Hello Books
 Hello books is an online library management application that provides users with access to books from wherever they are.
@@ -61,8 +62,71 @@ Run database migration with npm start:migrate
 Start app development with npm run start or npm start
 To start the client npm run build:dev
 Install Postman and use to test all endpoints
+=======
+## Hello Books
+Hello books is an online library management application that provides users with access to books from wherever they are.
+Being a virtual library, users can borrow and read their favorite books using any device.
+Admin has the permission to add, edit and delete books and categories
 
+#### Table of Content
+Getting Started
+Dependencies
+Installation
+Limitation
+Tests
+Usage
+API Documentation
+Models
+Testing
+Express Routes
+License
+Current state
 
+### Getting Started
+This is a full stack javascript application built with React Js using Express framework on the nodejs platform. Authentication of users is done via JSON Web Tokens.  
+
+#### Dependencies
+Postgres
+Node
+
+#### Installation
+Install Node JS.
+Install Postgres .
+Clone the repository here
+[cd] into the root of the project directory.
+Run npm install on the terminal to install Dependecies
+Install sequelize-cli, Create Postgresql database, Navigate to server directory and run migrations:
+npm install -g seqeulize-cli
+cd server
+sequelize db:migrate
+Create a .env file in the root directory of the application. Use a different database for your testing and development. Example of the content of a .env file is shown in the .env.sample
+
+Development/Production
+npm run build:dev
+npm start
+
+#### Limitations
+The limitations with this current version of Hello Books includes:
+
+The Administrator has no control overs users on the client side
+Users cannot contribute books to the application based on their location
+
+#### Tests
+Sever side tests - npm run test 
+
+Client side tests - npm run test-client 
+
+#### Usage
+Run database migration with npm start:migrate
+Start app development with npm run start or npm start
+To start the client npm run build:dev
+Install Postman and use to test all endpoints
+
+>>>>>>> 1b2027aebf86df2f5609c933141108b3884ab070
+
+#### API Documentation
+
+<<<<<<< HEAD
 #### API Documentation
 
 You can view the API Documentation here
@@ -87,6 +151,30 @@ Questions
 
 For more details contact abioye.sofiat@outlook.com
 
+=======
+You can view the API Documentation here
+
+Technology Stack
+
+UI & Templates
+
+HTML & CSS
+Materialize CSS Framework
+Javascript
+JQuery
+Server Side
+
+NodeJs
+Express
+Sequelize
+Client Side
+
+React(Redux)
+Questions
+
+For more details contact abioye.sofiat@outlook.com
+
+>>>>>>> 1b2027aebf86df2f5609c933141108b3884ab070
 #### Support or Contribution
 
 For any suggestions or contributions please do not hesistate to contact me
