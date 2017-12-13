@@ -2,9 +2,9 @@
 [![Build Status](https://travis-ci.org/kidah/backhelloBooks.svg?branch=master)](https://travis-ci.org/kidah/backhelloBooks)
 [![Coverage Status](https://coveralls.io/repos/github/kidah/backhelloBooks/badge.svg)](https://coveralls.io/github/kidah/backhelloBooks)
 [![Code Climate](https://codeclimate.com/github/kidah/backhelloBooks/badges/gpa.svg)](https://codeclimate.com/github/kidah/backhelloBooks?branch=master)
-#### Hello Books
-Hello books is an application that provides users with access to books from wherever they are.
-Beeing a virtual library, users can borrow and read their favorite books using any device.
+## Hello Books
+Hello books is an online library management application that provides users with access to books from wherever they are.
+Being a virtual library, users can borrow and read their favorite books using any device.
 Admin has the permission to add, edit and delete books and categories
 
 #### Table of Content
@@ -92,7 +92,9 @@ For any suggestions or contributions please do not hesistate to contact me
 
 Contributions to this project are welcomed by all, If you need to contribute to this project, follow the steps below
 
-## Fork the repository
+
+#### Fork the repository
+
 Follow Installation and Setup as explained earlier
 Create a branch off development for the feature you wish to add
 Make neccessary changes, commit and raise a pull request against develop Note when making contributions, please endevour to follow the Airbnb javascript style guide. check out the [wiki]
