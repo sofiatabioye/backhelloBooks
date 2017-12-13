@@ -87,6 +87,7 @@ export function saveCategory(data) {
       })
       .catch((err) => {
         dispatch(addCategoryFailure(err.response));
+        toastr.warning(err.response.data.message);
       });
   };
 }
@@ -104,11 +105,9 @@ export function deleteCategory(id) {
     return axios.delete(`/api/v1/categories/${id}`)
       .then((response) => {
         dispatch({ type: 'DELETE_CATEGORY_SUCCESS', books: response.data });
-        return response.data;
       })
       .catch((err) => {
         dispatch({ type: 'DELETE_CATEGORY_FAILURE', errors: err.response.data });
-        return err;
       });
   };
 }

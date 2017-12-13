@@ -13,12 +13,13 @@ const SideBar = (props) => {
   const user = props.user ? props.user.user : "";
   const categories = props ? props.categories : "";
   const userRole = props.user.user.role;
-  const categoriesList = categories && categories.length ?
-    categories.map((category) => (
-      <li key={category.id}>
-        <Link to={`/books/genre/${category.title}`}>{category.title}</Link>
-      </li>
-    )) : <h6>No Categories</h6>;
+  const categoriesList =
+   categories && categories.length ?
+     categories.map((category) => (
+       <span key={category.id}>
+         <Link to={`/books/genre/${category.title}`}>{category.title}</Link>
+       </span>
+     )) : <h6>No Categories</h6>;
 
   const userActions = (
     <span>
@@ -35,7 +36,7 @@ const SideBar = (props) => {
 
   return (
     <div>
-      <ul id="slide-out" className="side-nav fixed">
+      <ul>
         <li><div className="user-view">
           <img className="circle"
             src="http://res.cloudinary.com/ddvm5tzhm/image/upload/c_scale,h_100/v1510679454/man_cidthh.png" role="presentation"/>
@@ -52,9 +53,9 @@ const SideBar = (props) => {
         <ul className="collapsible" data-collapsible="accordion">
           <li>
             <div className="collapsible-header">
+                Categories
               <span className="category">
                 <i className="fa fa-chevron-down"/>
-                Categories
               </span>
             </div>
             <div className="collapsible-body"> {categoriesList}</div>

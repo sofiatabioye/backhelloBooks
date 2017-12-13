@@ -368,6 +368,20 @@ main {
 	background-size: cover;
 	height: 100vh;
 }
+.sidebar {
+	background-color: #f5f5f5;
+	height: fit-content;
+	text-align: center;
+}
+
+.sidebar a {
+	color: cadetblue;
+}
+.sidebar li {
+	display: block;
+	line-height: 2em;
+	font-size: 12px;
+}
 
 div .mainbar-home{
 	padding: 0px !important;
@@ -420,9 +434,7 @@ div .mainbar-home{
 .authpage input {
 	font-size: 26px !important;
 }
-.genreList {
-	display: inline-block;
-}
+
 .genreList__genre {
 	list-style-type: none;
 	line-height: 18px;
@@ -437,7 +449,17 @@ div .mainbar-home{
 @media screen and (min-width: 1024px){
 	#dropdown_0 {
 		width: 500px !important;
-		top: 50px !important;
+		top: 8vh !important;
+	}
+  .sidebar {
+		background-color: #f5f5f5;
+		height: 92vh;
+		text-align: left;
+	}
+	.sidebar a {
+		color: cadetblue;
+		display: block;
+		line-height: 2.5em;
 	}
 
 	#slide-out {
@@ -453,8 +475,6 @@ div .mainbar-home{
 		height: 36px !important;
 	}
 	.books-container {
-		width: 80%;
-		margin-left: 20%;
 		padding: 20px;
 	}
  .side-nav.fixed .collapsible-header {

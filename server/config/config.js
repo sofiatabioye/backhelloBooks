@@ -12,9 +12,9 @@ module.exports = {
   },
 
   test: {
-    username: "postgres",
-    password: null,
-    database: "hellobooks-test",
+    username: "userhello",
+    password: "ThePassword$",
+    database: "hellobooks_test",
     host: "127.0.0.1",
     port: 5432,
     dialect: "postgres"

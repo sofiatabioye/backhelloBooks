@@ -9,7 +9,7 @@ import Header from '../header/header.jsx';
 import SideBar from '../sidebar/sidebar.jsx';
 
 const propTypes = {
-  books: PropTypes.array,
+  books: PropTypes.object,
   numOfPages: PropTypes.number,
   activePage: PropTypes.number,
   handleSelect: PropTypes.func,
@@ -82,18 +82,24 @@ const UserRecordsDisplay = (props) => {
   return (
     <div>
       <Header/>
-      <SideBar/>
-      <div className="books-container">
-        <Row>
-          <Col s={12} m={12} l={12} >
-            <div className="profile-content">
-              <h5>{title}</h5>
-              {booklist}
-            </div>
-          </Col>
-        </Row>
-        { props.userPage === '/books/borrowhistory' ? pagination : null }
-      </div>
+      <Row>
+        <Col s={12} m={12} l={3} className="sidebar">
+          <SideBar />
+        </Col>
+        <Col s={12} m={12} l={9}>
+          <div className="books-container">
+            <Row>
+              <Col s={12} m={12} l={12} >
+                <div className="profile-content">
+                  <h5>{title}</h5>
+                  {booklist}
+                </div>
+              </Col>
+            </Row>
+            { props.userPage === '/books/borrowhistory' ? pagination : null }
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 };

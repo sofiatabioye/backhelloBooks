@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1512754252486" clover="3.2.0">
-  <project timestamp="1512754252486" name="All files">
-    <metrics statements="620" coveredstatements="181" conditionals="269" coveredconditionals="17" methods="232" coveredmethods="35" elements="1121" coveredelements="233" complexity="0" loc="620" ncloc="620" packages="14" files="43" classes="43">
+<coverage generated="1512981449782" clover="3.2.0">
+  <project timestamp="1512981449782" name="All files">
+    <metrics statements="629" coveredstatements="186" conditionals="267" coveredconditionals="17" methods="233" coveredmethods="35" elements="1129" coveredelements="238" complexity="0" loc="629" ncloc="629" packages="14" files="44" classes="44">
       <package name="src.actions">
-        <metrics statements="207" coveredstatements="80" conditionals="2" coveredconditionals="0" methods="117" coveredmethods="22"/>
+        <metrics statements="206" coveredstatements="80" conditionals="2" coveredconditionals="0" methods="117" coveredmethods="22"/>
         <file name="actionTypes.js" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/src/actions/actionTypes.js">
           <metrics statements="47" coveredstatements="47" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="2" type="stmt"/>
@@ -62,7 +62,7 @@
           <line num="62" count="1" type="stmt"/>
           <line num="74" count="1" type="stmt"/>
           <line num="86" count="0" type="stmt"/>
-          <line num="98" count="1" type="stmt"/>
+          <line num="98" count="2" type="stmt"/>
           <line num="110" count="0" type="stmt"/>
           <line num="122" count="0" type="stmt"/>
           <line num="134" count="0" type="stmt"/>
@@ -93,8 +93,8 @@
           <line num="209" count="0" type="stmt"/>
           <line num="210" count="0" type="stmt"/>
           <line num="220" count="2" type="stmt"/>
-          <line num="222" count="1" type="stmt"/>
-          <line num="223" count="1" type="stmt"/>
+          <line num="222" count="2" type="stmt"/>
+          <line num="223" count="2" type="stmt"/>
           <line num="226" count="0" type="stmt"/>
           <line num="227" count="0" type="stmt"/>
           <line num="239" count="0" type="stmt"/>
@@ -200,7 +200,7 @@
           <line num="547" count="0" type="stmt"/>
         </file>
         <file name="categoryActions.js" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/src/actions/categoryActions.js">
-          <metrics statements="21" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="16" coveredmethods="0"/>
+          <metrics statements="20" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="16" coveredmethods="0"/>
           <line num="16" count="0" type="stmt"/>
           <line num="28" count="0" type="stmt"/>
           <line num="40" count="0" type="stmt"/>
@@ -215,13 +215,12 @@
           <line num="85" count="0" type="stmt"/>
           <line num="86" count="0" type="stmt"/>
           <line num="89" count="0" type="stmt"/>
-          <line num="102" count="0" type="stmt"/>
+          <line num="90" count="0" type="stmt"/>
           <line num="103" count="0" type="stmt"/>
           <line num="104" count="0" type="stmt"/>
-          <line num="106" count="0" type="stmt"/>
+          <line num="105" count="0" type="stmt"/>
           <line num="107" count="0" type="stmt"/>
           <line num="110" count="0" type="stmt"/>
-          <line num="111" count="0" type="stmt"/>
         </file>
       </package>
       <package name="src.components.auth">
@@ -321,22 +320,22 @@
         <file name="allbooks.jsx" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/src/components/books/allbooks.jsx">
           <metrics statements="17" coveredstatements="5" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="0"/>
           <line num="13" count="1" type="stmt"/>
+          <line num="35" count="0" type="stmt"/>
           <line num="36" count="0" type="stmt"/>
-          <line num="37" count="0" type="stmt"/>
+          <line num="48" count="0" type="stmt"/>
           <line num="49" count="0" type="stmt"/>
           <line num="50" count="0" type="stmt"/>
-          <line num="51" count="0" type="stmt"/>
-          <line num="60" count="0" type="stmt"/>
-          <line num="70" count="0" type="stmt"/>
+          <line num="59" count="0" type="stmt"/>
+          <line num="69" count="0" type="stmt"/>
+          <line num="72" count="0" type="stmt"/>
           <line num="73" count="0" type="stmt"/>
-          <line num="74" count="0" type="stmt"/>
-          <line num="75" count="0" type="cond" truecount="0" falsecount="4"/>
-          <line num="76" count="0" type="stmt"/>
-          <line num="88" count="0" type="stmt"/>
-          <line num="106" count="1" type="stmt"/>
-          <line num="109" count="1" type="stmt"/>
-          <line num="111" count="1" type="stmt"/>
-          <line num="118" count="1" type="stmt"/>
+          <line num="74" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="75" count="0" type="stmt"/>
+          <line num="87" count="0" type="stmt"/>
+          <line num="105" count="1" type="stmt"/>
+          <line num="108" count="1" type="stmt"/>
+          <line num="110" count="1" type="stmt"/>
+          <line num="117" count="1" type="stmt"/>
         </file>
         <file name="bookForm.jsx" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/src/components/books/bookForm.jsx">
           <metrics statements="6" coveredstatements="3" conditionals="32" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -525,28 +524,40 @@
         </file>
       </package>
       <package name="src.components.header">
-        <metrics statements="19" coveredstatements="3" conditionals="10" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <metrics statements="28" coveredstatements="7" conditionals="8" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <file name="displayHeader.jsx" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/src/components/header/displayHeader.jsx">
+          <metrics statements="12" coveredstatements="3" conditionals="8" coveredconditionals="0" methods="2" coveredmethods="0"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="18" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="28" count="0" type="stmt"/>
+          <line num="34" count="0" type="stmt"/>
+          <line num="40" count="0" type="stmt"/>
+          <line num="66" count="0" type="stmt"/>
+          <line num="88" count="1" type="stmt"/>
+        </file>
         <file name="header.jsx" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/src/components/header/header.jsx">
-          <metrics statements="19" coveredstatements="3" conditionals="10" coveredconditionals="0" methods="6" coveredmethods="0"/>
-          <line num="23" count="0" type="stmt"/>
-          <line num="24" count="0" type="stmt"/>
-          <line num="35" count="0" type="stmt"/>
-          <line num="44" count="0" type="stmt"/>
+          <metrics statements="16" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+          <line num="23" count="1" type="stmt"/>
           <line num="45" count="0" type="stmt"/>
-          <line num="53" count="0" type="stmt"/>
-          <line num="54" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="55" count="0" type="stmt"/>
-          <line num="56" count="0" type="stmt"/>
-          <line num="58" count="0" type="cond" truecount="0" falsecount="4"/>
-          <line num="60" count="0" type="stmt"/>
-          <line num="68" count="0" type="stmt"/>
-          <line num="74" count="0" type="stmt"/>
-          <line num="80" count="0" type="stmt"/>
-          <line num="108" count="0" type="stmt"/>
-          <line num="114" count="0" type="stmt"/>
-          <line num="139" count="1" type="stmt"/>
-          <line num="140" count="1" type="stmt"/>
-          <line num="148" count="1" type="stmt"/>
+          <line num="46" count="0" type="stmt"/>
+          <line num="62" count="0" type="stmt"/>
+          <line num="63" count="0" type="stmt"/>
+          <line num="64" count="0" type="stmt"/>
+          <line num="65" count="0" type="stmt"/>
+          <line num="66" count="0" type="stmt"/>
+          <line num="67" count="0" type="stmt"/>
+          <line num="76" count="0" type="stmt"/>
+          <line num="85" count="0" type="stmt"/>
+          <line num="86" count="0" type="stmt"/>
+          <line num="94" count="0" type="stmt"/>
+          <line num="130" count="1" type="stmt"/>
+          <line num="131" count="1" type="stmt"/>
+          <line num="133" count="1" type="stmt"/>
         </file>
       </package>
       <package name="src.components.sidebar">
@@ -775,7 +786,7 @@
         </file>
       </package>
       <package name="test.mock">
-        <metrics statements="10" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="2"/>
+        <metrics statements="11" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="2"/>
         <file name="localStorage.js" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/test/mock/localStorage.js">
           <metrics statements="4" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="2"/>
           <line num="13" count="1" type="stmt"/>
@@ -784,13 +795,14 @@
           <line num="42" count="0" type="stmt"/>
         </file>
         <file name="user.js" path="/Users/andeladeveloper/Documents/backhellobooks-copy/client/test/mock/user.js">
-          <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="1" type="stmt"/>
-          <line num="10" count="1" type="stmt"/>
-          <line num="14" count="1" type="stmt"/>
-          <line num="18" count="1" type="stmt"/>
-          <line num="22" count="1" type="stmt"/>
-          <line num="26" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+          <line num="28" count="1" type="stmt"/>
         </file>
       </package>
     </metrics>

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Row, Col } from 'react-materialize';
 
 import Header from '../header/header.jsx';
-import Sidebar from '../sidebar/sidebar.jsx';
+import SidebarMain from '../sidebar/sidebar.jsx';
 
 const propTypes = {
   password: PropTypes.element,
@@ -18,52 +19,58 @@ const PasswordForm = (props) => {
   return (
     <div>
       <Header />
-      <Sidebar/>
-      <div className="books-container">
-        <div className="row">
-          <div className="col s6 offset-s2">
-            <div className="profile-content">
-              <h3>Change Password</h3>
-              <form onSubmit={props.onChangePassword} className="form-responsive">
-                <div className="form-group">
-                  <label htmlFor="pwd">Old Password</label>
-                  <input
-                    type="password"
-                    value={props.password}
-                    onChange={props.onChange}
-                    name="password"
-                    placeholder="Password"
-                    className="form-control"
-                    required />
+      <Row>
+        <Col s={12} m={12} l={3} className="sidebar">
+          <SidebarMain />
+        </Col>
+        <Col s={12} m={12} l={9}>
+          <div className="books-container">
+            <div className="row">
+              <div className="col s6 offset-s2">
+                <div className="profile-content">
+                  <h3>Change Password</h3>
+                  <form onSubmit={props.onChangePassword} className="form-responsive">
+                    <div className="form-group">
+                      <label htmlFor="pwd">Old Password</label>
+                      <input
+                        type="password"
+                        value={props.password}
+                        onChange={props.onChange}
+                        name="password"
+                        placeholder="Password"
+                        className="form-control"
+                        required />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="pwd">New Password</label>
+                      <input
+                        type="password"
+                        value={props.newPassword}
+                        onChange={props.onChange}
+                        name="newPassword"
+                        placeholder="Password"
+                        className="form-control" required />
+                      {errors.newPassword && <div className="red-text">{errors.newPassword}</div> }
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="pwd">Confirm Password</label>
+                      <input
+                        type="password"
+                        value={props.confirmPassword}
+                        onChange={props.onChange}
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        className="form-control" required />
+                      {errors.confirmPassword && <div className="red-text">{errors.confirmPassword}</div> }
+                    </div>
+                    <button type="submit" className="btn btn-lg btn-info">Change Password</button>
+                  </form>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="pwd">New Password</label>
-                  <input
-                    type="password"
-                    value={props.newPassword}
-                    onChange={props.onChange}
-                    name="newPassword"
-                    placeholder="Password"
-                    className="form-control" required />
-                  {errors.newPassword && <div className="red-text">{errors.newPassword}</div> }
-                </div>
-                <div className="form-group">
-                  <label htmlFor="pwd">Confirm Password</label>
-                  <input
-                    type="password"
-                    value={props.confirmPassword}
-                    onChange={props.onChange}
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    className="form-control" required />
-                  {errors.confirmPassword && <div className="red-text">{errors.confirmPassword}</div> }
-                </div>
-                <button type="submit" className="btn btn-lg btn-info">Change Password</button>
-              </form>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </div>
   );
 };

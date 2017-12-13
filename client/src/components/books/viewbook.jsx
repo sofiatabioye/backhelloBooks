@@ -57,44 +57,49 @@ const Book = (props) => {
   return (
     <div>
       <Header />
-      <SideBar />
-      <Modal
-        id= "editBook">
-        <BookForm
-          saveBook = {props.saveBook}
-          onChange={props.onChange}
-          states={props.states}
-          categories={props.categories}
-          openUploadWidget = {props.openUploadWidget}
-        />
-      </Modal>
-      <div className="books-container">
-        <span>
-          <h2>{props.states.title}</h2>
-        </span>
+      <Row>
+        <Col s={12} m={12} l={3} className="sidebar">
+          <SideBar />
+        </Col>
+        <Col s={12} m={12} l={9}>
+          <Modal
+            id= "editBook">
+            <BookForm
+              saveBook = {props.saveBook}
+              onChange={props.onChange}
+              states={props.states}
+              categories={props.categories}
+              openUploadWidget = {props.openUploadWidget}
+            />
+          </Modal>
+          <div className="books-container">
+            <span>
+              <h2>{props.states.title}</h2>
+            </span>
 
-        <Row>
-          <Col s={12} m={4} l={4}>
-            <img src={props.states.image} role="presentation"/>
-            <div>
-              { userRole === "user" ? userAction(props.states) : adminAction(props.states) }
-            </div>
-          </Col>
-          <Col s={12} m={8} l={8}>
+            <Row>
+              <Col s={12} m={4} l={4}>
+                <img src={props.states.image} role="presentation"/>
+                <div>
+                  { userRole === "user" ? userAction(props.states) : adminAction(props.states) }
+                </div>
+              </Col>
+              <Col s={12} m={8} l={8}>
                          Author: {props.states.author}
-            <p>Category: {props.states.category}</p>
-            <p>Published By: {props.states.publisher}</p>
-            <p>ISBN: {props.states.ISBN}</p>
-            <p>Edition: {props.states.bookEdition}</p>
-            <p>Size: {props.states.bookSize} pages </p>
-            <p>Quantity: {props.states.quantity}</p>
+                <p>Category: {props.states.category}</p>
+                <p>Published By: {props.states.publisher}</p>
+                <p>ISBN: {props.states.ISBN}</p>
+                <p>Edition: {props.states.bookEdition}</p>
+                <p>Size: {props.states.bookSize} pages </p>
+                <p>Quantity: {props.states.quantity}</p>
                       *********
-            <p>Description: {props.states.description}</p>
+                <p>Description: {props.states.description}</p>
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </Row>
 
-          </Col>
-
-        </Row>
-      </div>
     </div>
   );
 };

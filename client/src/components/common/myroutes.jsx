@@ -21,7 +21,7 @@ const helloRoutes = () => (
       <Route exact path="/signin" component={Authenticate}/>
       <Route exact path="/signup" component={Authenticate}/>
       <Route exact path="/forgotpassword" component={Password}/>
-      <Route exact path="/changepassword" component={Password}/>
+      <Route exact path="/changepassword" component={requireAuth(Password)}/>
       <Route exact path="/books/borrowhistory" component={requireAuth(Borrowed)}/>
       <Route exact path="/api/v1/reset/:token" component={Password}/>
       <Route exact path="/books/borrowed" component={requireAuth(Borrowed)}/>

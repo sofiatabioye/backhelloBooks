@@ -11,7 +11,7 @@ import {
 import BookList from './booksList.jsx';
 
 const propTypes = {
-  books: PropTypes.array,
+  books: PropTypes.object,
   getBooksByCat: PropTypes.func.isRequired,
   categories: PropTypes.array,
   user: PropTypes.object.isRequired,
@@ -33,7 +33,7 @@ class BookCat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
+      books: {},
       isDisabled: false,
       text: "",
       offset: 0,

@@ -60,35 +60,38 @@ const BookList = (props) => {
   return (
     <div>
       <Header />
-      <SideBarMain />
-      <main>
-        <div className="books-container">
-          <Row>
-            <Col s={12} m={4} l={6}>
-              <h5>{title}</h5>
-            </Col>
-            <Col s={12} m={8} l={6}>
-              <form onSubmit= {props.searchBook}>
-                <input
-                  type="text"
-                  placeholder="search"
-                  name="searchTerm"
-                  onChange= {props.onChange
-                  }id="autocomplete-input"
-                  className="autocomplete" />
-              </form>
-            </Col>
+      <Row>
+        <Col s={12} m={12} l={3} className="sidebar">
+          <SideBarMain />
+        </Col>
+        <Col s={12} m={12} l={9}>
+          <main>
+            <Row className="books-container">
+              <Col s={12} m={4} l={6}>
+                <h5>{title}</h5>
+              </Col>
+              <Col s={12} m={8} l={6}>
+                <form onSubmit= {props.searchBook}>
+                  <input
+                    type="text"
+                    placeholder="search"
+                    name="searchTerm"
+                    onChange= {props.onChange
+                    }id="autocomplete-input"
+                    className="autocomplete" />
+                </form>
+              </Col>
 
-          </Row>
-          <Row>
-            {books}
-          </Row>
-          <div className="pager">
-            {pagination}
-          </div>
-        </div>
-
-      </main>
+            </Row>
+            <Row>
+              {books}
+            </Row>
+            <div className="pager">
+              {pagination}
+            </div>
+          </main>
+        </Col>
+      </Row>
     </div>
   );
 };

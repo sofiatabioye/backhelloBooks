@@ -45,10 +45,10 @@ class Password extends React.Component {
   }
 
   /**
-     * 
-     * @returns {void} This fetches all books from the api
-     * @memberof Password
-     */
+   * @returns {void}
+   * @param {any} void 
+   * @memberof Password
+   */
   componentDidMount() {
     $('.collapsible').collapsible();
   }
@@ -147,7 +147,6 @@ class Password extends React.Component {
                 onChange = {this.onChange.bind(this)}
                 onResetPassword = {this.onResetPassword.bind(this)}
               />
-        }
         }
       </div>
 
