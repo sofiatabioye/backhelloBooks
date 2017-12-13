@@ -67,18 +67,18 @@ const displayHeader = (props) => {
     <div>
       <Navbar brand="HelloBooks" right className="navbar-home">
         <li><Link to={"/books"}>Home</Link></li>
-        <Dropdown trigger={
+        <Dropdown id="dropdown_0" trigger={
           <li>
             <a>Browse Categories
               <i className="material-icons right">arrow_drop_down</i>
             </a>
           </li>
         }>
-          <Row id="dropdown_0">
+          <Row>
             {categoriesList }
           </Row>
         </Dropdown>
-        <ul id="dropdown1" className="dropdown-content genreList" style={{ height: `${100}px !important ` }} />
+        <ul id="dropdown1" className="dropdown-content genreList"/>
         {profileList }
       </Navbar>
     </div>

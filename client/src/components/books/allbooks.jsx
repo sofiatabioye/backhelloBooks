@@ -66,9 +66,6 @@ class Books extends Component {
      * @memberof Books
      */
   componentWillReceiveProps(nextProps) {
-    $('.button-collapse').sideNav({
-      closeOnClick: true
-    });
     $('select').material_select();
     $('.collapsible').collapsible();
     if (nextProps.books && (nextProps.pager !== undefined)) {

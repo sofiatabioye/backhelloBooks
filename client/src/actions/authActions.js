@@ -1,7 +1,7 @@
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import toastr from 'toastr';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
+
 import {
   SET_CURRENT_USER,
   USER_SIGNUP_SUCCESS,

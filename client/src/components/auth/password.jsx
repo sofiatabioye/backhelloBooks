@@ -45,6 +45,14 @@ class Password extends React.Component {
   }
 
   /**
+   * @returns {void}
+   * @param {any} void 
+   * @memberof Password
+   */
+  componentDidMount() {
+    $('.collapsible').collapsible();
+  }
+  /**
      * 
      * @returns {void}
      * @param {any} e 
@@ -138,7 +146,6 @@ class Password extends React.Component {
                 onChange = {this.onChange.bind(this)}
                 onResetPassword = {this.onResetPassword.bind(this)}
               />
-        }
         }
       </div>
 

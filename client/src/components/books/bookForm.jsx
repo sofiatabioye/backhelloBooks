@@ -42,6 +42,7 @@ const BookForm = (props) => {
               <label className="active" htmlFor="author">Author</label>
               <input
                 type="text"
+                id="ISBN"
                 placeholder="Author"
                 value={props.states.author}
                 onChange={props.onChange}
@@ -52,10 +53,11 @@ const BookForm = (props) => {
               <label className="active" htmlFor="isbn">ISBN</label>
               <input
                 type="number"
+                maxLength= {13}
                 placeholder="ISBN"
                 value={props.states.ISBN}
                 onChange={props.onChange}
-                className="validate"
+                className="form-control"
                 name="ISBN"
                 required />
               {errors.isbn && <div className="red-text">{errors.isbn}</div> }

@@ -31,7 +31,7 @@ class Borrowed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
+      books: {},
       offset: 0,
       numPerPage: 10,
       activePage: 1,
