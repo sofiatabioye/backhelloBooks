@@ -177,7 +177,7 @@ export default {
                 .then(() => {
                   res.status(200).send({ message: 'Password Changed Successfully' });
                 })
-                .catch(error => res.status(400).send({ error: 'An error occured' }));
+                .catch(error => res.status(500).send({ error: 'An error occured' }));
             } else {
               res.status(400).send({ message: 'Oops, your old password is incorrect' });
             }

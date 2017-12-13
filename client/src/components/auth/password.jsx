@@ -52,6 +52,7 @@ class Password extends React.Component {
   componentDidMount() {
     $('.collapsible').collapsible();
   }
+
   /**
      * 
      * @returns {void}

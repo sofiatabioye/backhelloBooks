@@ -9,7 +9,7 @@ services:
 before_script:
   - npm install -g codeclimate-test-reporter
   - psql -c 'drop database if exists hellobooks_test;' -U postgres
-  - psql -c 'create database dbhellobooks_test;' -U postgres
+  - psql -c 'create database hellobooks_test;' -U postgres
   - psql -c "create user userhello with login password 'ThePassword$';" -U postgres
 
 env:
